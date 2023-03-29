@@ -1,3 +1,5 @@
+@import "./Layout.module.scss";
+
 .logosLogo{
     width: 175px;
     height: 90.12px;
@@ -38,6 +40,55 @@
     align-items: center;
 }
 
+.headerLink{
+    @include respond('tablet'){
+       display: none;
+    }
+    @include respond('mobile'){
+       display: none;
+    }
+}
+
+.dropdownMenu{
+    @include respond('desktop'){
+        display: none;
+     }
+     @include respond('tablet'){
+        display: flex;
+     }
+     @include respond('mobile'){
+        display: flex;
+     }
+}
+
+.mobileBtnDiv{
+    @include respond('desktop'){
+       display: none;
+    }
+    @include respond('tablet'){
+       display: flex;
+    }
+    @include respond('mobile'){
+       display: flex;
+    }
+
+    & .hamburgerMenu{
+        color: #e2e1e3;
+        font-size: 30px;
+        margin-left: 20px;
+    }
+}
+
+.hamburgerBg{
+    background-color: #0A010D;
+    padding-top: 53px;
+}
+
+.lighthamburgerBg{
+    background-color: #e2e1e3;
+    padding-top: 53px;
+}
+
 .headerLinkItem{
     font-family: 'Inter';
     font-style: normal;
@@ -66,6 +117,12 @@
     & .headerLinkItem{
        margin-right: 17px; 
     }
+    @include respond('tablet'){
+        display: none;
+     }
+     @include respond('mobile'){
+        display: none;
+     }
 }
 
 .firstCard{
@@ -492,6 +549,53 @@
             display: flex;
             flex-direction: row;
         }
+    }
+}
+@media screen and (max-width: 1771px) {
+    .thirdImg{
+        left: 225px !important;
+    }
+    .purpleContent{
+        margin-left: 55% !important;
+    }
+    .purpleTitle{
+        width: 75% !important;
+    }
+    .purpleText{
+        width: 80% !important;
+    }
+}
+@media screen and (max-width: 1480px) {
+    .thirdImg{
+        left: 150px !important;
+    }
+}
+@media screen and (max-width: 1340px) {
+    .thirdImg{
+        left: 100px !important;
+    }
+}
+@media screen and (max-width: 1701px) {
+    .cardKaralama{
+        right: 41% !important;
+    }
+    .sssBG{
+        top: -1540px !important;
+    }
+}
+@media screen and (max-width: 1409px) {
+    .cardKaralama{
+        bottom: 190px !important;
+    }
+}
+@media screen and (max-width: 1490px) {
+    .sssBG{
+        top: -1300px !important;
+    }
+}
+@media screen and (max-width: 1363px) {
+    .cardKaralama{
+        right: 39% !important;
     }
 }
 

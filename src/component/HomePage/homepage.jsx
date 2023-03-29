@@ -30,6 +30,7 @@ import bg from '../../img/lastBG.svg';
 
 function Homepage() {
     const [theme, setTheme] = useState(true);
+    const [open, setOpen] = useState(false)
 
     const arr = [
         {
@@ -118,8 +119,7 @@ function Homepage() {
             title:'Uygun doktor ile görüş.',
             text: 'Birçok kişinin sağlık sorunlarına yönelik çözüm aradıklarında tercih ettikleri bir yöntemdir'
         }
-    ]
-    
+    ]  
     const arrFaq = [
         {
             title1:'Lorem Impus',
@@ -211,7 +211,7 @@ function Homepage() {
 
   return (
     <>
-        <section className={theme ? styles.headers : styles.lightHeaders}>
+        <section className={open ? styles.hamburgerBg : theme ? styles.headers : styles.lightHeaders}>
             <section className={`${layout.container} ${styles.headersDiv}`}>
                 <img src={theme ? logosLogo : logosLogoLight} alt='logo' className={styles.logosImage}/>
                 <div className={styles.headerLink}>
@@ -223,6 +223,25 @@ function Homepage() {
                     <button className={styles.headerLinkItem}>Giriş Yap</button>
                     <Button type='primary' text='Kayıt Ol'/>
                     {theme ? <button onClick={()=>setTheme(!theme)} className={styles.themeBtn}><i className={`ri-sun-line ${styles.dark}`}></i></button> : <button onClick={()=>setTheme(!theme)}><i className={`ri-moon-line ${styles.light}`}></i></button>}
+                </div>
+                <div className={styles.mobileBtnDiv}>
+                    {theme ? <button onClick={()=>setTheme(!theme)} className={styles.themeBtn}><i className={`ri-sun-line ${styles.dark}`}></i></button> : <button onClick={()=>setTheme(!theme)}><i className={`ri-moon-line ${styles.light}`}></i></button>}
+                    <button className={styles.mobileBtn} onClick={()=>setOpen(!open)}>
+                        {open ? <i className={`ri-close-line ${styles.hamburgerMenu}`}></i> : <i className={`ri-menu-line ${styles.hamburgerMenu}`}></i>}
+                    </button>
+                </div>
+            </section>
+            <section className={styles.dropdownMenu}>
+                <div>
+                    <div>
+                        {arr.map((item)=>
+                            <a className={theme ? styles.headerLinkItem : styles.lightheaderLinkItem} href={item.link}>{item.text}</a>
+                        )}
+                    </div>
+                    <div>
+                        <button className={styles.headerLinkItem}>Giriş Yap</button>
+                        <Button type='primary' text='Kayıt Ol'/>
+                    </div>
                 </div>
             </section>
             <div className={`${styles.firstCard} ${layout.container}`}>
