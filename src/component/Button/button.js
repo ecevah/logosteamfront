@@ -5,7 +5,7 @@ export default function Buttons(props) {
     const Primary = (props) => {
         return (
             <>
-                <button className={styles.PrimaryBtn}><button className={styles.text}>{props.text}</button></button>
+                <button className={props.drop ? styles.dropPrimary : styles.PrimaryBtn}><button className={styles.text}>{props.text}</button></button>
             </>
         )
     }
@@ -13,7 +13,7 @@ export default function Buttons(props) {
     const Second = (props) => {
         return (
             <>
-                <button className={`${styles.SecondBtn} ${styles[props.theme]} ${styles[props.width]}`}><button className={styles.text}>{props.text}</button></button>
+                <button className={`${props.drop ? styles.dropSecond :styles.SecondBtn} ${styles[props.theme]} ${styles[props.width]}`}><button className={styles.text}>{props.text}</button></button>
             </>
         )
     }

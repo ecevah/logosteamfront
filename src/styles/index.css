@@ -4,9 +4,9 @@ font-family: 'Poppins', sans-serif;*/
 @import url("./Layout.module.scss");
 @import url("./prelight.css");
 
-body{
-    padding: 0px;
-    margin: 0px;
+body {
+    padding: 0px !important;
+    margin: 0px !important;
 }
 
 button { 

@@ -15,6 +15,11 @@
     background: #e8e8e8 url("../img/firstBG.svg") no-repeat;
     background-size: cover;
     padding-top: 53px;
+    position: relative;
+    top: -2px;
+    outline-style: solid;
+    outline-color: #e8e8e8;
+    outline-width: 4px;
 }
 
 .themeBtn{
@@ -31,6 +36,12 @@
     margin-left: 5px;
     font-size: 20px;
     color: #e2e1e3;
+}
+
+.openlight{
+    margin-left: 5px;
+    font-size: 20px;
+    color: #373737;
 }
 
 .headersDiv{
@@ -54,11 +65,86 @@
         display: none;
      }
      @include respond('tablet'){
-        display: flex;
+        display: block;
+        position: fixed;
+        z-index: 998;
+        background: #0A010D;
+        width: 100%;
+        top: -20px;
      }
      @include respond('mobile'){
-        display: flex;
+        display: block;
+        position: fixed;
+        z-index:998;
+        background: #0A010D;
+        width: 100%;
+        top: -20px;
      }
+}
+
+.lightdropdownMenu{
+    @include respond('desktop'){
+        display: none;
+     }
+     @include respond('tablet'){
+        display: block;
+        position: fixed;
+        z-index: 998;
+        background: #e2e1e3;
+        width: 100%;
+        top: -20px;
+        padding-bottom: 3000px;
+     }
+     @include respond('mobile'){
+        display: block;
+        position: fixed;
+        z-index:998;
+        background: #e2e1e3;
+        width: 100%;
+        top: -20px;
+        padding-bottom: 3000px;
+     }
+}
+
+.dropdownMenuNone{
+    display: none;
+}
+
+.headerFixed{
+    position: fixed;
+    background-color: #0A010D;
+    width: 100%;
+    z-index: 999;
+}
+
+.lightheaderFixed{
+    position: fixed;
+    background-color: #e2e1e3;
+    width: 100%;
+    z-index: 999;
+}
+
+.dropdownInclusive{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    height: calc(100vh + 200px);
+    margin-top: 250px;
+}
+
+.dropdownContent{
+    display: flex;
+    flex-direction: column;
+    margin-top: 400px;
+}
+
+.dropdawnBtn{
+    margin-top: 500px;
+    height: 110px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
 .mobileBtnDiv{
@@ -77,6 +163,12 @@
         font-size: 30px;
         margin-left: 20px;
     }
+
+    & .lighthamburgerMenu{
+        color: #373737;
+        font-size: 30px;
+        margin-left: 20px;
+    }
 }
 
 .hamburgerBg{
@@ -87,6 +179,28 @@
 .lighthamburgerBg{
     background-color: #e2e1e3;
     padding-top: 53px;
+}
+
+.headerLinkItemHamburger{
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 28px;
+    line-height: 35px;
+    color: #E8E6E3;
+    margin-bottom: 40px;
+    text-align: center;
+}
+
+.lightheaderLinkItemHamburger{
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 28px;
+    line-height: 35px;
+    color: #373737;
+    margin-bottom: 40px;
+    text-align: center;
 }
 
 .headerLinkItem{
@@ -118,11 +232,11 @@
        margin-right: 17px; 
     }
     @include respond('tablet'){
-        display: none;
-     }
-     @include respond('mobile'){
-        display: none;
-     }
+       display: none;
+    }
+    @include respond('mobile'){
+       display: none;
+    }
 }
 
 .firstCard{
@@ -353,6 +467,14 @@
     flex-direction: row;
     justify-content: center;
     align-items: center;
+
+    @include respond('tablet'){
+       flex-direction: column;
+    }
+    @include respond('mobile'){
+       flex-direction: column;
+    }
+
     & .cardCard{
         background: rgba(22, 3, 29, 0.75);
         border: 1px solid #8C10B8;
@@ -365,6 +487,14 @@
         padding-left: 31.6px;
         margin-right: 12.5px;
         margin-left: 12.5px;
+
+        @include respond('tablet'){
+           margin-top: 50px;
+        }
+        @include respond('mobile'){
+           margin-bottom: 50px;
+        }
+
         & .cardCardTitle{
             font-family: 'Inter';
             font-style: normal;
@@ -392,6 +522,13 @@
     flex-direction: row;
     justify-content: center;
     align-items: center;
+    @include respond('tablet'){
+        flex-direction: column;
+    }
+    @include respond('mobile'){
+       flex-direction: column;
+    }
+
     & .cardCard{
         background: #dededf;
         border: 1px solid #8C10B8;
@@ -404,6 +541,13 @@
         padding-left: 31.6px;
         margin-right: 12.5px;
         margin-left: 12.5px;
+        @include respond('tablet'){
+           margin-top: 50px;
+        }
+        @include respond('mobile'){
+           margin-bottom: 50px;
+        }
+
         & .cardCardTitle{
             font-family: 'Inter';
             font-style: normal;
@@ -431,6 +575,12 @@
     flex-direction: row;
     padding-top: 194.8px;
     padding-bottom: 140px;
+    @include respond('tablet'){
+       flex-direction: column;
+    }
+    @include respond('mobile'){
+       flex-direction: column;
+    }
     & .cardSecondContent{
         display: flex;
         flex-direction: column;
@@ -460,6 +610,12 @@
     flex-direction: row;
     padding-top: 194.8px;
     padding-bottom: 140px;
+    @include respond('tablet'){
+       flex-direction: column;
+    }
+    @include respond('mobile'){
+       flex-direction: column;
+    }
     & .cardSecondContent{
         display: flex;
         flex-direction: column;
@@ -496,6 +652,14 @@
             left:300px;
             top:-40px;
             height: 700px;
+            @include respond('tablet'){
+                left: 20% !important;
+                top: 480px !important;
+            }
+            @include respond('mobile'){
+                left: 20% !important;
+                top: 480px !important;
+            }
         }
     }
 
@@ -504,6 +668,21 @@
         flex-direction: column;
         justify-content: center;
         margin-left: 50%;
+
+        @include respond('tablet'){
+            justify-content: flex-start;
+            align-items: center;
+            text-align: center;
+            margin-left: 0px !important;
+            height: 1250px;
+        }
+        @include respond('mobile'){
+            justify-content: flex-start;
+            align-items: center ;
+            text-align: center ;
+            margin-left: 0px !important;
+            height: 1250px;
+        }
 
         & .lightText{
             font-family: 'Inter';
@@ -611,6 +790,14 @@
             left:300px;
             top:-40px;
             height: 700px;
+            @include respond('tablet'){
+                left: 20% !important;
+                top: 480px !important;
+            }
+            @include respond('mobile'){
+                left: 20% !important;
+                top: 480px !important;
+            }
         }
     }
 
@@ -619,6 +806,21 @@
         flex-direction: column;
         justify-content: center;
         margin-left: 50%;
+
+        @include respond('tablet'){
+            justify-content: flex-start;
+            align-items: center;
+            text-align: center;
+            margin-left: 0px !important;
+            height: 1250px;
+        }
+        @include respond('mobile'){
+            justify-content: flex-start;
+            align-items: center ;
+            text-align: center ;
+            margin-left: 0px !important;
+            height: 1250px;
+        }
 
         & .lightText{
             font-family: 'Inter';
@@ -674,11 +876,28 @@
     justify-content: space-between;
     align-items: center;
     padding-top: 268px;
+    @include respond('tablet'){
+        flex-direction: column;
+        padding-top: 70px;
+     }
+     @include respond('mobile'){
+        flex-direction: column;
+        padding-top: 70px;
+     }
 }
 
 .uiCardContent{
     display: flex;
     flex-direction: column;
+
+    @include respond('tablet'){
+        align-items: center;
+        margin-bottom: 30px;
+     }
+     @include respond('mobile'){
+        align-items: center;
+        margin-bottom: 30px;
+     }
 
     & .uiCardTitle{
         font-family: 'Inter';
@@ -687,6 +906,15 @@
         font-size: 51px;
         line-height: 64px;
         color: #E8E6E3;
+    
+        @include respond('tablet'){
+            width: 75%;
+            text-align: center;
+         }
+         @include respond('mobile'){
+            width: 75%;
+            text-align: center;
+         }
     }
 
     & .uiCardText{
@@ -698,6 +926,15 @@
         color: #E8E6E3;
         margin-top: 35px;
         margin-bottom: 44px;
+
+        @include respond('tablet'){
+            width: 75%;
+            text-align: center;
+         }
+         @include respond('mobile'){
+            width: 75%;
+            text-align: center;
+         }
     }
 
     & .lightuiCardTitle{
@@ -707,6 +944,14 @@
         font-size: 51px;
         line-height: 64px;
         color: #373737;
+        @include respond('tablet'){
+            width: 75%;
+            text-align: center;
+         }
+         @include respond('mobile'){
+            width: 75%;
+            text-align: center;
+         }
     }
 
     & .lightuiCardText{
@@ -718,6 +963,14 @@
         color: #373737;
         margin-top: 35px;
         margin-bottom: 44px;
+        @include respond('tablet'){
+            width: 75%;
+            text-align: center;
+         }
+         @include respond('mobile'){
+            width: 75%;
+            text-align: center;
+         }
     }
 }
 
@@ -736,7 +989,12 @@
         width: 690px;
         height: 292.57px;
         margin-left: 74px;
-        
+        @include respond('tablet'){
+            margin-left: 0px;
+         }
+         @include respond('mobile'){
+            margin-left: 0px;
+         }
         & .uiPurpleDiv{
             display: flex;
             flex-direction: column;
@@ -802,6 +1060,12 @@
         width: 690px;
         height: 292.57px;
         margin-left: 74px;
+        @include respond('tablet'){
+            margin-left: 0px;
+         }
+         @include respond('mobile'){
+            margin-left: 0px;
+         }
         
         & .uiPurpleDiv{
             display: flex;
@@ -863,6 +1127,12 @@
     top: 128px;
     left: -42px;
     z-index: 0;
+    @include respond('tablet'){
+        left: 30%;
+     }
+     @include respond('mobile'){
+        left: 30%;
+     }
 }
 
 .sssSection{
@@ -881,6 +1151,16 @@
         color: #E8E6E3;
         width: 40%;
         z-index: 2;
+        @include respond('tablet'){
+            width: 60%;
+            left: 20%;
+            text-align: center;
+         }
+         @include respond('mobile'){
+            width: 60%;
+            text-align: center;
+            left: 20%;
+         }
     }
     
     & .sssText{
@@ -893,6 +1173,16 @@
         width: 60%;
         margin-top: 26px;
         margin-bottom: 50px;
+        @include respond('tablet'){
+            width: 80%;
+            text-align: center;
+            margin-left: 10%;
+        }
+        @include respond('mobile'){
+            width: 80%;
+            text-align: center;
+            margin-left: 10%;
+        }
     }
     
     & .faqText{
@@ -921,6 +1211,16 @@
         color: #373737;
         width: 40%;
         z-index: 2;
+        @include respond('tablet'){
+            width: 60%;
+            left: 20%;
+            text-align: center;
+         }
+         @include respond('mobile'){
+            width: 60%;
+            text-align: center;
+            left: 20%;
+         }
     }
     
     & .sssText{
@@ -933,6 +1233,16 @@
         width: 60%;
         margin-top: 26px;
         margin-bottom: 50px;
+        @include respond('tablet'){
+            width: 80%;
+            text-align: center;
+            margin-left: 10%;
+        }
+        @include respond('mobile'){
+            width: 80%;
+            text-align: center;
+            margin-left: 10%;
+        }
     }
     
     & .faqText{
@@ -966,6 +1276,12 @@
     width: 100%;
     top: -1708px;
     z-index: 1;
+    @include respond('tablet'){
+        top: -875px !important;
+     }
+     @include respond('mobile'){
+        top: -875px !important;
+     }
 }
 
 .faqContainer{
@@ -1035,6 +1351,13 @@
     flex-direction: column;
     margin-right: 88px;
 
+    @include respond('tablet'){
+        margin-right: 30px;
+    }
+    @include respond('mobile'){
+        margin-right: 30px;
+    }
+
     & .footerItemTitle{
         font-family: 'Poppins';
         font-style: normal;
@@ -1058,6 +1381,12 @@
     display: flex;
     flex-direction: column;
     margin-right: 88px;
+    @include respond('tablet'){
+        margin-right: 30px;
+    }
+    @include respond('mobile'){
+        margin-right: 30px;
+    }
 
     & .footerItemTitle{
         font-family: 'Poppins';
@@ -1096,6 +1425,15 @@
         display: flex;
         flex-direction: row;
 
+        @include respond('tablet'){
+            flex-direction: column !important;
+            align-items: center;
+        }
+        @include respond('mobile'){
+           flex-direction: column !important;
+           align-items: center;
+        }
+
         & .socialCard{
             width: 26.41px;
             height: 26.41px;
@@ -1105,7 +1443,16 @@
             align-items: center;
             justify-content: center;
             margin-right: 10px;
-        
+            
+            @include respond('tablet'){
+                margin-right: 0px;
+                margin-bottom: 5px;
+            }
+            @include respond('mobile'){
+                margin-right: 0px;
+                margin-bottom: 5px;
+            }
+
             & .icon{
                 color: #0A010D;
             }
@@ -1131,16 +1478,34 @@
         display: flex;
         flex-direction: row;
 
+        @include respond('tablet'){
+            flex-direction: column !important;
+            align-items: center;
+        }
+        @include respond('mobile'){
+           flex-direction: column !important;
+           align-items: center;
+        }
+
         & .socialCard{
             width: 26.41px;
             height: 26.41px;
-            background: #373737;
+            background: #373737; 
             border-radius: 2.84982px;
             display: flex;
             align-items: center;
             justify-content: center;
             margin-right: 10px;
-        
+            
+            @include respond('tablet'){
+                margin-right: 0px;
+                margin-bottom: 5px;
+            }
+            @include respond('mobile'){
+                margin-right: 0px;
+                margin-bottom: 5px;
+            }
+
             & .icon{
                 color: #E8E6E3;
             }

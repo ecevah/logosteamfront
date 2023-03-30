@@ -211,35 +211,37 @@ function Homepage() {
 
   return (
     <>
-        <section className={open ? styles.hamburgerBg : theme ? styles.headers : styles.lightHeaders}>
-            <section className={`${layout.container} ${styles.headersDiv}`}>
-                <img src={theme ? logosLogo : logosLogoLight} alt='logo' className={styles.logosImage}/>
-                <div className={styles.headerLink}>
-                {arr.map((item)=>
-                    <a className={theme ? styles.headerLinkItem : styles.lightheaderLinkItem} href={item.link}>{item.text}</a>
-                )}
-                </div>
-                <div className={styles.btnHeaderDiv}>
-                    <button className={styles.headerLinkItem}>Giriş Yap</button>
-                    <Button type='primary' text='Kayıt Ol'/>
-                    {theme ? <button onClick={()=>setTheme(!theme)} className={styles.themeBtn}><i className={`ri-sun-line ${styles.dark}`}></i></button> : <button onClick={()=>setTheme(!theme)}><i className={`ri-moon-line ${styles.light}`}></i></button>}
-                </div>
-                <div className={styles.mobileBtnDiv}>
-                    {theme ? <button onClick={()=>setTheme(!theme)} className={styles.themeBtn}><i className={`ri-sun-line ${styles.dark}`}></i></button> : <button onClick={()=>setTheme(!theme)}><i className={`ri-moon-line ${styles.light}`}></i></button>}
-                    <button className={styles.mobileBtn} onClick={()=>setOpen(!open)}>
-                        {open ? <i className={`ri-close-line ${styles.hamburgerMenu}`}></i> : <i className={`ri-menu-line ${styles.hamburgerMenu}`}></i>}
-                    </button>
-                </div>
-            </section>
-            <section className={styles.dropdownMenu}>
-                <div>
-                    <div>
+        <section className={open ? theme ? styles.hamburgerBg : styles.lighthamburgerBg : theme ? styles.headers : styles.lightHeaders}>
+            <div className={ theme ? open ? styles.headerFixed : null : open ? styles.lightheaderFixed : null } >
+                <section className={`${layout.container} ${styles.headersDiv}`}>
+                    <img src={theme ? logosLogo : logosLogoLight} alt='logo' className={styles.logosImage}/>
+                    <div className={styles.headerLink}>
+                    {arr.map((item)=>
+                        <a className={theme ? styles.headerLinkItem : styles.lightheaderLinkItem} href={item.link}>{item.text}</a>
+                    )}
+                    </div>
+                    <div className={styles.btnHeaderDiv}>
+                        <button className={styles.headerLinkItem}>Giriş Yap</button>
+                        <Button type='primary' text='Kayıt Ol'/>
+                        {theme ? <button onClick={()=>setTheme(!theme)} className={styles.themeBtn}><i className={`ri-sun-line ${styles.dark}`}></i></button> : <button onClick={()=>setTheme(!theme)}><i className={`ri-moon-line ${styles.light}`}></i></button>}
+                    </div>
+                    <div className={styles.mobileBtnDiv}>
+                        {theme ? <button onClick={()=>setTheme(!theme)} className={styles.themeBtn}><i className={`ri-sun-line ${styles.dark}`}></i></button> : <button onClick={()=>setTheme(!theme)}><i className={`ri-moon-line ${open ? styles.openlight : styles.light}`}></i></button>}
+                        <button className={styles.mobileBtn} onClick={()=>setOpen(!open)}>
+                            {open ? <i className={`ri-close-line ${theme ? styles.hamburgerMenu : styles.lighthamburgerMenu}`}></i> : <i className={`ri-menu-line ${styles.hamburgerMenu}`}></i>}
+                        </button>
+                    </div>
+                </section>
+            </div>
+            <section className={open ? theme ? styles.dropdownMenu : styles.lightdropdownMenu : styles.dropdownMenuNone}>
+                <div className={styles.dropdownInclusive}>
+                    <div className={styles.dropdownContent}>
                         {arr.map((item)=>
-                            <a className={theme ? styles.headerLinkItem : styles.lightheaderLinkItem} href={item.link}>{item.text}</a>
+                            <a className={theme ? styles.headerLinkItemHamburger : styles.lightheaderLinkItemHamburger} href={item.link}>{item.text}</a>
                         )}
                     </div>
-                    <div>
-                        <button className={styles.headerLinkItem}>Giriş Yap</button>
+                    <div className={styles.dropdawnBtn}>
+                        <Button type='second' text='Giriş Yap' theme={theme ? null:'light'}/>
                         <Button type='primary' text='Kayıt Ol'/>
                     </div>
                 </div>
