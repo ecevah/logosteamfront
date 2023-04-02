@@ -403,6 +403,12 @@
         position: absolute;
         bottom: 161px;
         right: 43%;
+        @include respond('tablet'){
+            right: 35% !important;
+         }
+         @include respond('mobile'){
+            right: 35% !important;
+         }
     }
 }
 
@@ -758,9 +764,6 @@
     .cardKaralama{
         right: 41% !important;
     }
-    .sssBG{
-        top: -1540px !important;
-    }
 }
 @media screen and (max-width: 1409px) {
     .cardKaralama{
@@ -768,9 +771,6 @@
     }
 }
 @media screen and (max-width: 1490px) {
-    .sssBG{
-        top: -1300px !important;
-    }
 }
 @media screen and (max-width: 1363px) {
     .cardKaralama{
@@ -1141,6 +1141,15 @@
     padding-top: 250px;
     padding-bottom: 250px;
 
+    @include respond('tablet'){
+        padding-top: 165px;
+        padding-bottom: 165px;
+    }
+    @include respond('mobile'){
+        padding-top: 165px;
+        padding-bottom: 165px;
+    }
+
     & .sssTitle{
         position: relative;
         font-family: 'Inter';
@@ -1197,9 +1206,18 @@
 
 .lightsssSection{
     position: relative;
-    background: #e2e1e3;
+    background: #e0dddb;
     padding-top: 250px;
     padding-bottom: 250px;
+
+    @include respond('tablet'){
+        padding-top: 165px;
+        padding-bottom: 165px;
+    }
+    @include respond('mobile'){
+        padding-top: 165px;
+        padding-bottom: 165px;
+    }
 
     & .sssTitle{
         position: relative;
@@ -1274,14 +1292,15 @@
 .sssBG{
     position: absolute;
     width: 100%;
-    top: -1708px;
+    bottom: 1px;
     z-index: 1;
-    @include respond('tablet'){
-        top: -875px !important;
-     }
-     @include respond('mobile'){
-        top: -875px !important;
-     }
+}
+
+.lightsssBG{
+    position: absolute;
+    width: 100%;
+    bottom: 1px;
+    z-index: 1;
 }
 
 .faqContainer{
@@ -1530,6 +1549,9 @@
     letter-spacing: 0.1em;
     color: rgba(255, 255, 255, 0.85);
     border-top: 0.594503px solid rgba(255, 255, 255, 0.3);
+    outline-style: solid;
+    outline-color: #0A010D;
+    outline-width: 2px;
 }
 
 .lightcopyright{

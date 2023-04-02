@@ -372,7 +372,7 @@ function Homepage() {
             </div>
         </section>
         <div className={styles.cardStatic}>
-            <img className={styles.sssBG} src={bg} alt='bg'></img>
+            <img className={theme ? styles.sssBG : styles.lightsssBG} src={bg} alt='bg'></img>
         </div>
         <section className={theme ? styles.section : styles.lightsectionfooter}>
             <div className={layout.container}>

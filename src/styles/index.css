@@ -9,6 +9,10 @@ body {
     margin: 0px !important;
 }
 
+section{
+  border: none;
+}
+
 button { 
     border: none;
 }
@@ -58,3 +62,21 @@ details{
   details[open] div{
     padding: .5em 1em;
   }
+
+ul.slick-dots li div{
+  box-sizing: border-box;
+  width: 10px;
+  height: 10px;
+  background: rgba(0, 0, 0, 0.5);
+  border: 2px solid rgba(255, 255, 255, 0.5);
+  border-radius: 5px;
+}
+
+ul.slick-dots li.slick-active div{
+  box-sizing: border-box;
+  width: 10px;
+  height: 10px;
+  background: #8C10B8;
+  border: 2px solid #8C10B8;
+  border-radius: 5px;
+}

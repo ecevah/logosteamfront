@@ -34,6 +34,36 @@
     }
 }
 
+.containerDashboard {
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+@media (min-width: 572px) {
+    .containerDashboard {
+        max-width: 450px;
+    }
+}
+
+@media (min-width: 992px) {
+    .containerDashboard {
+        max-width: 842px;
+    }
+}
+
+@media (min-width: 1520px) {
+    .containerDashboard {
+        max-width: 1250px;
+    }
+}
+
+@media (min-width: 1920px) {
+    .containerDashboard {
+        max-width: 1650px;
+    }
+}
+
 .flex {
     display: flex;
 }
