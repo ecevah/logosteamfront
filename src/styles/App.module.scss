@@ -129,7 +129,7 @@
     flex-direction: column;
     justify-content: space-around;
     align-items: center;
-    height: calc(100vh + 200px);
+    height: calc(100vh - 200px);
     margin-top: 250px;
 }
 
@@ -137,6 +137,12 @@
     display: flex;
     flex-direction: column;
     margin-top: 400px;
+    @include respond('tablet'){
+       margin-top: 75px;
+    }
+    @include respond('mobile'){
+       margin-top: 400px;
+    }
 }
 
 .dropdawnBtn{
@@ -145,6 +151,12 @@
     display: flex;
     flex-direction: column;
     justify-content: space-between;
+    @include respond('tablet'){
+       margin-top: 50px;
+    }
+    @include respond('mobile'){
+       margin-top: 500px;
+    }
 }
 
 .mobileBtnDiv{
@@ -245,6 +257,12 @@
     justify-content: space-between;
     align-content: center;
     margin-top: 20px;
+    @include respond('tablet'){
+       flex-direction: column !important;
+    }
+    @include respond('mobile'){
+       flex-direction: column !important;
+    }
 }
 
 .firstCardDiv{
@@ -254,6 +272,17 @@
     background-image: url('../img/rightArrow.svg');
     background-repeat: no-repeat;
     background-position: center right;
+    align-items: flex-start;
+    @include respond('tablet'){
+        background-image: none;
+        align-items: center !important;
+        text-align: center;
+     }
+     @include respond('mobile'){
+        background-image: none;
+        align-items: center !important;
+        text-align: center;
+     }
 }
 
 .firstCardBtnDiv{
@@ -310,6 +339,17 @@
     width: 900px;
     margin-top: 50px;
     margin-bottom: 35px;
+
+    @include respond('tablet'){
+       margin-left: auto;
+       margin-right: auto;
+       width: 500px;
+    }
+    @include respond('mobile'){
+       margin-left: auto;
+       margin-right: auto;
+    }
+
 }
 
 .null{
@@ -368,7 +408,7 @@
 .sponsorImg {
     display: flex;
     flex-direction: row;
-    justify-content: space-around;
+    justify-content: space-between;
     align-items: center;
     margin-bottom: 25px;
 }
@@ -590,6 +630,15 @@
     & .cardSecondContent{
         display: flex;
         flex-direction: column;
+        @include respond('tablet'){
+           align-items: center;
+           text-align: center;
+        }
+        @include respond('mobile'){
+           align-items: center;
+           text-align: center;
+        }
+
         & .cardSecondTitle{
             font-family: 'Inter';
             font-style: normal;
@@ -1283,6 +1332,18 @@
 
 .faqCard{
     width:calc(50% - 12.5px);
+}
+
+@media screen and (max-width: 992px){
+    .faqCard{
+        width: 100% !important;
+        margin-top: 12.5px !important;
+        margin-bottom: 12.5px !important;
+    }
+    .sssCardDiv{
+        flex-direction: column !important;
+        margin-top: 0px !important;
+    }
 }
 
 .lightSummary{

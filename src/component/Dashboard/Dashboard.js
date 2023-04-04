@@ -7,15 +7,23 @@ import FeatherIcon from 'feather-icons-react';
 import styles from '../../styles/Dashboard.module.scss';
 import layout from '../../styles/Layout.module.scss';
 
-import logosLogo from '../../img/logosLogoLight.svg';
-import Buttons from '../Button/button';
-
+import logosLogo from '../../img/logosLogoDashboard.svg';
 import account from '../../img/01.jpg.png';
 import kyk from '../../img/kykSiyah.svg';
 import mimar from '../../img/mimarSiyah.svg';
 import mühendishane from '../../img/mühendishaneSiyah.svg';
 import teknofest from '../../img/teknofestSiyah.svg';
 import teknoloji from '../../img/teknolojiSiyah.svg';
+import mesaj from '../../img/mesaj.svg';
+import mesajpurple from '../../img/mesajpurple.svg';
+import odeme from '../../img/odeme.svg';
+import odemepurple from '../../img/odemepurple.svg';
+import onpanel from '../../img/onpanel.svg';
+import onpanelpurple from '../../img/onpanelpurple.svg';
+import profil from '../../img/profile.svg';
+import profilpurple from '../../img/profilepurple.svg';
+import randevu from '../../img/rendevu.svg';
+import randevupurple from '../../img/randevupurple.svg';
 
 export default function Dashboard(){
     
@@ -25,28 +33,38 @@ export default function Dashboard(){
         {
             text:'Ön Panel',
             href:'',
-            active: 'active'
+            active: 'active',
+            icon: onpanel,
+            purple: onpanelpurple
         },
         {
             text:'Randevular',
             href:'/randevu',
-            active: ''
+            active: '',
+            icon: randevu,
+            purple: randevupurple
 
         },
         {
             text:'Hasta Ödemeleri',
             href:'',
-            active: ''
+            active: '',
+            icon: odeme,
+            purple: odemepurple
         },
         {
             text:'Mesajlar',
             href:'',
-            active: ''
+            active: '',
+            icon: mesaj,
+            purple: mesajpurple
         },
         {
             text:'Profil Ayarları',
             href:'',
-            active: ''
+            active: '',
+            icon: profil,
+            purple: profilpurple
         }
     ]
 
@@ -142,114 +160,148 @@ export default function Dashboard(){
 
     return (
     <>
-        <section className={styles.header}>
-            <div className={`${styles.headerDiv} ${layout.containerDashboard}`}>
+        <section className={styles.headerSection}>
+            <div className={`${styles.headerInclusive} ${layout.containerDashboard}`}>
                 <div>
                     <img src={logosLogo} height={58} width={115} alt='logos'></img>
                 </div>
-                <div className={styles.headerItemDiv}>
-                    {arrHeader.map((item) =>
-                        <a href={item.href} className={`${styles.headerItem} ${styles[item.active]}`}>{item.text}</a>
-                    )}
+                <div>
+                    <button onClick={()=>setOpen(!open)}>
+                        <FeatherIcon icon={open ? 'x' : 'menu'} color='#858585' size="20" stroke-width="2.5"/>
+                    </button>
                 </div>
-                <div className={styles.headerBtn}>
-                    <Buttons type="dashboard" icon="settings" color="#FFFFFF" />
-                    <Buttons type="dashboard" icon="search" color="#FFFFFF"/>
-                </div>
-                <button onClick={()=>setOpen(!open)} className={styles.hamburgerMenu}>
-                    {open ? <FeatherIcon icon='x-circle' color='#858585' size='30' stroke-width='2.5' /> : <FeatherIcon icon='menu' color='#858585' size='30' stroke-width='2.5' /> }
-                </button>
             </div>
         </section>
-        <section className={styles.section}>
-            <div className={`${styles.inclusive} ${layout.containerDashboard}`}>
-                <div className={styles.sideContent}>
-                    <div className={styles.profilCard}>
-                        <div>
-                            <img className={styles.profilImg} src={account} alt='account'></img>
+        <section className={open ? styles.dropdawnOpen : styles.dropdawnClose}>
+            
+        </section>
+        <section className={styles.sectionInclusive}>
+            <div className={styles.navbar}>
+                <div className={styles.navbarContent}>
+                    <div>
+                        <img src={logosLogo} height={58} width={115} alt='logos'></img>
+                    </div>
+                    <div className={styles.sideContent}>
+                        <div className={styles.profilCard}>
+                            <div>
+                                <img className={styles.profilImg} src={account} alt='account'></img>
+                            </div>
+                            <div className={styles.profilContent}>
+                                <div className={styles.profilName}>Dr. Murat Yaşar</div>
+                                <div className={styles.profilTag}>Beyin Cerrahı</div>
+                            </div>
                         </div>
-                        <div className={styles.profilContent}>
-                            <div className={styles.profilName}>Dr. Murat Yaşar</div>
-                            <div className={styles.profilTag}>Beyin Cerrahı</div>
-                        </div>
+                    </div>
+                    <div className={styles.headerItemDiv}>
+                        {arrHeader.map((item) =>
+                            <button className={styles.navbarbtn}>
+                                <img src={item.active==='active' ? item.purple : item.icon} height={12} width={12} alt={item.text}/>
+                                <div href={item.href} className={`${styles.headerItem} ${styles[item.active]}`}>{item.text}</div>
+                            </button>
+                        )}
                     </div>
                 </div>
-                <div className={styles.contentInclusive}>
-                    <div className={styles.reservationInclusive}>
-                        <div className={styles.reservationTitle}>
-                            <div className={styles.resTitle}>Son Randevular</div>
-                            <div className={styles.resNumber}>{`${'55'} Hasta`}</div>
-                        </div>
-                        <div className="container">
-                            <div className="row row-cols-lg-3 row-cols-1">
-                            {arrClient.map((item)=>
-                                <button className={`col ${styles.mobileRow}`}>
-                                    <div className={styles.clientCard}>
-                                        <div>
-                                            <img className={styles.clientImg} src={item.img} alt={item.title} width={45} height={45}></img>
-                                        </div>
-                                        <div className={styles.clientContent}>
-                                            <div className={styles.clientTitle}>{item.title}</div>
-                                            <div className={styles.clientText}>{`Rezervasyon ${item.date}`}</div>
-                                        </div>
-                                    </div>
-                                    <div className={styles.mobileRowDiv}>
-                                        <FeatherIcon icon='chevron-right' color='#858585' size="15" stroke-width="2.5"/>
-                                    </div>
-                                </button>
-                            )}
-                            </div>
-                        </div>
-                    </div>
-                    <div className={styles.reservationInclusive}>
-                        <div className={styles.reservationTitle}>
-                            <div className={styles.resTitle}>Bekleyen Randevular</div>
-                            <div className={styles.resNumber}>{`${'55'} Hasta`}</div>
-                        </div>
-                        <div className="container">
-                            <div className="row row-cols-lg-3 row-cols-1">
-                            {arrClient.map((item)=>
-                                <button className={`col ${styles.mobileRow}`}>
-                                    <div className={styles.clientCard}>
-                                        <div>
-                                            <img className={styles.clientImg} src={item.img} alt={item.title} width={45} height={45}></img>
-                                        </div>
-                                        <div className={styles.clientContent}>
-                                            <div className={styles.clientTitle}>{item.title}</div>
-                                            <div className={styles.clientText}>{`Rezervasyon ${item.date}`}</div>
-                                        </div>
-                                    </div>
-                                    <div className={styles.mobileRowDiv}>
-                                        <FeatherIcon icon='chevron-right' color='#858585' size="15" stroke-width="2.5"/>
-                                    </div>
-                                </button>
-                            )}
-                            </div>
-                        </div>
-                    </div>
-                    <div className={styles.reservationInclusive}>
-                        <div className={styles.reservationTitle}>
-                            <div className={styles.resTitle}>Hasta Yorumları</div>
-                        </div>
-                        <div>
-                            <Slider {...settings}>
-                                {arrYorum.map((item) => 
-                                    <div>
-                                        <div>
-                                            <div className={styles.carouselText}>{`“${item.text}”`}</div>
-                                            <div className={styles.carouselName}>{`- ${item.name}`}</div>
-                                        </div>
-                                    </div>
-                                )}
-                            </Slider>
-                        </div>
-                    </div>
+                <div>
                     <div className={styles.sponsorContent}>
                         {arrSponsor.map((item)=>
                             <div>
-                                <img src={item.img} alt={item.alt} width={75}/>
+                                <img src={item.img} alt={item.alt} width={45}/>
                             </div>
                         )}
+                    </div>
+                </div>
+            </div>
+            <div className={styles.section}>
+                <div className={`${styles.inclusive}`}>
+                    <div className={styles.contentInclusive}>
+                        <div className={styles.sideContent}>
+                            <div className={styles.profilCard}>
+                                <div>
+                                    <img className={styles.profilImg} src={account} alt='account'></img>
+                                </div>
+                                <div className={styles.profilContent}>
+                                    <div className={styles.profilName}>Dr. Murat Yaşar</div>
+                                    <div className={styles.profilTag}>Beyin Cerrahı</div>
+                                </div>
+                            </div>
+                        </div>
+                        <div className={styles.title}>{`Hoş Geldin ${'Dr. Murat'}`}</div>
+                        <div className={styles.reservationInclusive}>
+                            <div className={styles.reservationTitle}>
+                                <div className={styles.resTitle}>Son Randevular</div>
+                                <div className={styles.resNumber}>{`${'55'} Hasta`}</div>
+                            </div>
+                            <div className="container">
+                                <div className="row row-cols-lg-3 row-cols-1">
+                                {arrClient.map((item)=>
+                                    <button className={`col ${styles.mobileRow}`}>
+                                        <div className={styles.clientCard}>
+                                            <div>
+                                                <img className={styles.clientImg} src={item.img} alt={item.title} width={45} height={45}></img>
+                                            </div>
+                                            <div className={styles.clientContent}>
+                                                <div className={styles.clientTitle}>{item.title}</div>
+                                                <div className={styles.clientText}>{`Rezervasyon ${item.date}`}</div>
+                                            </div>
+                                        </div>
+                                        <div className={styles.mobileRowDiv}>
+                                            <FeatherIcon icon='chevron-right' color='#858585' size="15" stroke-width="2.5"/>
+                                        </div>
+                                    </button>
+                                )}
+                                </div>
+                            </div>
+                        </div>
+                        <div className={styles.reservationInclusive}>
+                            <div className={styles.reservationTitle}>
+                                <div className={styles.resTitle}>Bekleyen Randevular</div>
+                                <div className={styles.resNumber}>{`${'55'} Hasta`}</div>
+                            </div>
+                            <div className="container">
+                                <div className="row row-cols-lg-3 row-cols-1">
+                                {arrClient.map((item)=>
+                                    <button className={`col ${styles.mobileRow}`}>
+                                        <div className={styles.clientCard}>
+                                            <div>
+                                                <img className={styles.clientImg} src={item.img} alt={item.title} width={45} height={45}></img>
+                                            </div>
+                                            <div className={styles.clientContent}>
+                                                <div className={styles.clientTitle}>{item.title}</div>
+                                                <div className={styles.clientText}>{`Rezervasyon ${item.date}`}</div>
+                                            </div>
+                                        </div>
+                                        <div className={styles.mobileRowDiv}>
+                                            <FeatherIcon icon='chevron-right' color='#858585' size="15" stroke-width="2.5"/>
+                                        </div>
+                                    </button>
+                                )}
+                                </div>
+                            </div>
+                        </div>
+                        <div className={styles.reservationInclusive}>
+                            <div className={styles.reservationTitle}>
+                                <div className={styles.resTitle}>Hasta Yorumları</div>
+                            </div>
+                            <div>
+                                <Slider {...settings}>
+                                    {arrYorum.map((item) => 
+                                        <div>
+                                            <div>
+                                                <div className={styles.carouselText}>{`“${item.text}”`}</div>
+                                                <div className={styles.carouselName}>{`- ${item.name}`}</div>
+                                            </div>
+                                        </div>
+                                    )}
+                                </Slider>
+                            </div>
+                        </div>
+                        <div className={styles.sponsorContent}>
+                            {arrSponsor.map((item)=>
+                                <div>
+                                    <img src={item.img} alt={item.alt} width={45}/>
+                                </div>
+                            )}
+                        </div>
                     </div>
                 </div>
             </div>

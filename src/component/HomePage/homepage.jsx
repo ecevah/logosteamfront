@@ -263,14 +263,14 @@ function Homepage() {
             <section className={theme ? styles.sponsorSection : styles.lightsponsorSection}>
                 <div className={theme ? `${styles.sponsorDiv} ${layout.container}` : `${styles.lightsponsorDiv} ${layout.container}`}>
                     <div className={theme ? styles.sponsorTitle : styles.lightsponsorTitle}>Önde gelen sponsorlar</div>
-                    <div className={styles.sponsorImg}>
-                        {arrSponsor.map((item)=>
-                            <div>
-                                <img src={theme ? item.item : item.light} alt={item.alt} height='83px'></img>
-                            </div>
-                        )}
+                        <div className={styles.sponsorImg}>
+                            {arrSponsor.map((item)=>
+                                <div>
+                                    <img src={theme ? item.item : item.light} alt={item.alt} height='83px'></img>
+                                </div>
+                            )}
+                        </div>
                     </div>
-                </div>
             </section>
         </section> 
         <section className={theme ? styles.section : styles.lightsection}>

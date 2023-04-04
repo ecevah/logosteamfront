@@ -1,19 +1,94 @@
-.header{
-    background: #FFFFFF;
-    padding-top: 56px;
+@import "./Layout.module.scss";
+
+.headerItemDiv{
+    display: flex;
+    flex-direction: column;
+    
+    & .headerItem{
+        font-family: 'Inter';
+        font-style: normal;
+        font-weight: 500;
+        font-size: 15px;
+        line-height: 27px;
+        color: #858585;
+        margin-right: 55px;
+        text-decoration: none;
+        text-align: start;
+        margin-left: 5px;
+    }
+
+    & .active{
+        font-family: 'Inter';
+        font-style: normal;
+        font-weight: 500;
+        font-size: 15px;
+        line-height: 27px;
+        color: #8C10B8;
+    }
+}
+
+.headerInclusive{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 50px;
+}
+
+.navbarbtn{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.title{
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 40px;
+    line-height: 27px;
+    color: #212529;
+    margin-bottom: 15px;
+}
+
+.sectionInclusive{
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+}
+
+.navbar{
+    width: 425px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background: url('../img/navbarBG.svg');
+    height: 100vh;
+    filter: drop-shadow(0.892857px 0px 44.6429px rgba(0, 0, 0, 0.1));
+    padding-bottom: 90px;
+    .navbarContent{
+        padding-top: 90px;
+        padding-left: 90px;
+    }
+}
+
+.section{
+    display: flex;
+    align-items: center;
+    background-color: #FFFFFF;
+    padding-top: 50px;
     border: none;
     margin: 0px;
-    
-    & .headerDiv{
+    height: 100vh;
+    margin-left: 112px;
+    & .inclusive{
         display: flex;
         flex-direction: row;
         justify-content: space-between;
-        align-items: center;
-
-        & .headerItemDiv{
+        .headerItemDiv{
             display: flex;
-            flex-direction: row;
-            
+            flex-direction: column;           
             & .headerItem{
                 font-family: 'Inter';
                 font-style: normal;
@@ -24,7 +99,6 @@
                 margin-right: 55px;
                 text-decoration: none;
             }
-
             & .active{
                 font-family: 'Inter';
                 font-style: normal;
@@ -32,72 +106,51 @@
                 font-size: 15px;
                 line-height: 27px;
                 color: #8C10B8;
+                text-align: start;
             }
-        }
-
-        & .headerBtn{
-            display: flex;
-            flex-direction: row;
-            width: 80px;
-            justify-content: space-between;
-        }
-
-        & .hamburgerMenu{
-            display: none;
         }
     }
 }
 
-.section{
-    background-color: #FFFFFF;
-    padding-top: 50px;
-    border: none;
-    margin: 0px;
+.sideContent{
+    display: flex;
+    flex-direction: column;
+    margin-top: 70px;
+    margin-bottom: 60px;
 
-    & .inclusive{
+    & .profilCard{
         display: flex;
         flex-direction: row;
-        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 50px;
 
-        & .sideContent{
-            display: flex;
-            flex-direction: column;
-        
-            & .profilCard{
-                display: flex;
-                flex-direction: row;
-                align-items: center;
-                margin-bottom: 50px;
+        & .profilImg{
+            box-sizing: border-box;
+            width: 80px;
+            height: 80px;
+            border: 1px solid #E9ECEF;
+            filter: drop-shadow(0px 0px 3px rgba(60, 72, 88, 0.15));
+            border-radius: 50px;
+            margin-right: 19px;
+        }
 
-                & .profilImg{
-                    box-sizing: border-box;
-                    width: 80px;
-                    height: 80px;
-                    border: 1px solid #E9ECEF;
-                    filter: drop-shadow(0px 0px 3px rgba(60, 72, 88, 0.15));
-                    border-radius: 50px;
-                    margin-right: 19px;
-                }
+        & .profilName{
+            font-family: 'Inter';
+            font-style: normal;
+            font-weight: 600;
+            font-size: 18px;
+            line-height: 27px;
+            color: #212529;
+            ;
+        }
 
-                & .profilName{
-                    font-family: 'Inter';
-                    font-style: normal;
-                    font-weight: 600;
-                    font-size: 18px;
-                    line-height: 27px;
-                    color: #212529;
-                    ;
-                }
-
-                & .profilTag{
-                    font-family: 'Inter';
-                    font-style: normal;
-                    font-weight: 400;
-                    font-size: 15px;
-                    line-height: 24px;
-                    color: #858585;
-                }
-            }
+        & .profilTag{
+            font-family: 'Inter';
+            font-style: normal;
+            font-weight: 400;
+            font-size: 15px;
+            line-height: 24px;
+            color: #858585;
         }
     }
 }
@@ -111,7 +164,8 @@
     & .reservationInclusive{
         display: flex;
         flex-direction: column;
-        margin-bottom: 50px;
+        margin-bottom: 35px;
+        margin-top: 35px;
 
         & .reservationTitle{
             display: flex;
@@ -206,14 +260,28 @@
     flex-direction: row;
     justify-content: space-between;
     mix-blend-mode: luminosity;
-    margin-top: 41px;
+    padding-left: 45px;
+    padding-right: 45px;
+    align-items: center;
 }
 
 .mobileRowDiv{
     display: none;
 }
 
-@media screen and (max-width: 1920px) {
+@media screen and (min-width: 1919px) {
+    .contentInclusive .sideContent{
+        display: none;   
+    }
+    .contentInclusive .sponsorContent{
+        display: none;
+    }
+    .headerSection{
+        display: none;
+    }
+}
+
+@media screen and (max-width: 1919px) {
     .contentInclusive{
         width: 843px;
     }
@@ -223,9 +291,18 @@
     .hamburgerMenu{
         display: none;
     }
+    .contentInclusive .sideContent{
+        display: none;   
+    }
+    .contentInclusive .sponsorContent{
+        display: none;
+    }
+    .headerSection{
+        display: none;
+    }
 }
 
-@media screen and (max-width: 1520px) {
+@media screen and (max-width: 1519px) {
     .contentInclusive{
         width: 843px;
     }
@@ -250,9 +327,31 @@
     .reservationInclusive{
         margin-bottom: 100px !important;
     }
+    .navbar{
+        display: none;
+    }
+    .section{
+        margin-left: auto;
+        margin-right: auto;
+        height: 100%;
+    }
+    .contentInclusive .sideContent{
+        display: flex;   
+        margin-top: 0px;
+    }
+    .contentInclusive .sideContent .profilCard{ 
+        margin-top: 0px;
+    }
+    .contentInclusive .sponsorContent{
+        display: flex;   
+        margin-bottom: 60px;   
+    }
+    .headerSection{
+        display: block;
+    }
 }
 
-@media screen and (max-width: 992px) {
+@media screen and (max-width: 991px) {
     .contentInclusive{
         width: 450px;
     }
@@ -277,5 +376,22 @@
     }
     .reservationInclusive{
         margin-bottom: 100px !important;
+    }
+    .contentInclusive .sideContent{
+        display: flex;   
+        margin-top: 0px;
+    }
+    .contentInclusive .sideContent .profilCard{ 
+        margin-top: 0px;
+    }
+    .contentInclusive .sponsorContent{
+        display: flex;   
+        margin-bottom: 60px;   
+    }
+    .section{
+        height: 100%;
+    }
+    .headerSection{
+        display: block;
     }
 }
