@@ -80,3 +80,8 @@ ul.slick-dots li.slick-active div{
   border: 2px solid #8C10B8;
   border-radius: 5px;
 }
+
+section{
+  margin: 0px;
+  padding: 0px;
+}

@@ -3,28 +3,55 @@
 .headerItemDiv{
     display: flex;
     flex-direction: column;
-    
-    & .headerItem{
-        font-family: 'Inter';
-        font-style: normal;
-        font-weight: 500;
-        font-size: 15px;
-        line-height: 27px;
-        color: #858585;
-        margin-right: 55px;
-        text-decoration: none;
-        text-align: start;
-        margin-left: 5px;
-    }
+}
 
-    & .active{
-        font-family: 'Inter';
-        font-style: normal;
-        font-weight: 500;
-        font-size: 15px;
-        line-height: 27px;
-        color: #8C10B8;
-    }
+.headerItem{
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 15px;
+    line-height: 27px;
+    color: #858585;
+    margin-right: 55px;
+    text-decoration: none;
+    text-align: start;
+    margin-left: 5px;
+}
+
+.active{
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 15px;
+    line-height: 27px;
+    color: #8C10B8;
+}
+
+.dropdawnList{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    padding-top: 20px;
+    padding-bottom: 20px;
+}
+
+.navbarbtn .headerItem{
+    margin-right: 0px;
+}
+
+.dropdawnOpen{
+    background-color: #e9e9e9;
+    transform: scaleY(1);
+    transform-origin: top;
+    transition: transform 0.26s ease;
+}
+
+.dropdawnClose{
+    background-color: #FFFFFF;
+    transform: scaleY(0);    
+    transform-origin: top;
+    transition: transform 0.26s ease;
 }
 
 .headerInclusive{
@@ -40,6 +67,8 @@
     flex-direction: row;
     justify-content: flex-start;
     align-items: center;
+    margin-left: 25px;
+    margin-right: 25px;
 }
 
 .title{

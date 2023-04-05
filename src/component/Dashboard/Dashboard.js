@@ -173,7 +173,14 @@ export default function Dashboard(){
             </div>
         </section>
         <section className={open ? styles.dropdawnOpen : styles.dropdawnClose}>
-            
+                <div className={`${styles.dropdawnList}`}>
+                    {arrHeader.map((item) =>
+                        <button className={styles.navbarbtn}>
+                            <img src={item.active==='active' ? item.purple : item.icon} height={12} width={12} alt={item.text}/>
+                            <div href={item.href} className={`${styles.headerItem} ${styles[item.active]}`}>{item.text}</div>
+                        </button>
+                        )}
+                </div>
         </section>
         <section className={styles.sectionInclusive}>
             <div className={styles.navbar}>

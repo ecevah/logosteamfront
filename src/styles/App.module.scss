@@ -35,7 +35,7 @@
 .light{
     margin-left: 5px;
     font-size: 20px;
-    color: #e2e1e3;
+    color: #373737;
 }
 
 .openlight{
@@ -1631,4 +1631,12 @@
 
 .lightsectionfooter{
     background-color: white;
+}
+
+.sub .lightsectionfooter{
+    background-image: url('../img/lastBG.svg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    background-color: #e8e8e8;
 }
