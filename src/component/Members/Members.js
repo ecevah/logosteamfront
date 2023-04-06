@@ -29,42 +29,42 @@ function Homepage() {
     const arr = [
         {
             text:'Nasıl Çalışır',
-            link:''
+            link:'/howto'
         },
         {
             text:'Hakkımızda',
-            link:''
+            link:'/about'
         },
         {
-            text:'Sponsorlar',
-            link:''
+            text:'Takım Üyeleri',
+            link:'/members'
         },
         {
             text:'İletişim',
-            link:''
+            link:'/contact'
         }
     ]
 
     const arrlogos = [
         {
             text:'Hakkımızda',
-            href:''
+            href:'/about'
         },
         {
             text:'Misyon&Vizyon',
-            href:''
+            href:'/'
         },
         {
             text:'Ekip Üyelerimiz',
-            href:''
+            href:'/members'
         },
         {
             text:'Projemiz',
-            href:''
+            href:'/howto'
         },
         {
             text:'KVKK',
-            href:''
+            href:'/kvkk'
         }
     ]
     const arrBlog = [
@@ -76,7 +76,7 @@ function Homepage() {
     const arrSocial = [
         {
             text:'Linkedin',
-            href:''
+            href:'https://www.linkedin.com/company/logos-team/'
         },
         {
             text:'Twitter',
@@ -84,7 +84,7 @@ function Homepage() {
         },
         {
             text:'Instagram',
-            href:''
+            href:'https://www.instagram.com/logos_team2023/'
         },
         {
             text:'YouTube',
@@ -94,11 +94,11 @@ function Homepage() {
     const arrIcon = [
         {
             icon:'ri-instagram-line',
-            href:''
+            href:'https://www.linkedin.com/company/logos-team/'
         },
         {
             icon:'ri-linkedin-fill',
-            href:''
+            href:'https://www.linkedin.com/company/logos-team/'
         },
         {
             icon:'ri-twitter-fill',
@@ -119,30 +119,33 @@ function Homepage() {
             name:'Okan Bursa',
             tag:'Danışman',
             title:'İzmir Bakırçay Üniversitesi Bilgisayar Müh. Bölüm Başkan Yardımcısı',
-            linkedin:'',
+            linkedin:'https://www.linkedin.com/in/okan-bursa-phd-99841b8',
             instagram:'',
             github:'',
-            twitter:''
+            twitter:'',
+            behance:''
         },
         {
             photo:kerem,
             name:'Nihat Kerem Bora',
             tag:'Ekip Kaptanı',
             title:'İzmir Bakırçay Üniversitesi Bilgisayar Müh. - 3. Sınıf',
-            linkedin:'',
+            linkedin:'https://www.linkedin.com/in/nihat-kerem-bora-2ba933209    ',
             instagram:'',
-            github:'',
-            twitter:''
+            github:'https://github.com/NKeremBora',
+            twitter:'',
+            behance:''
         },
         {
             photo:mehmetcan,
             name:'Mehmetcan Sevinçli',
             tag:'Ruh Sağlığı Profesyoneli',
             title:'Hacettepe Üniversitesi Doktora Sosyal Psikoloji',
-            linkedin:'',
+            linkedin:'https://www.linkedin.com/in/mehmet-can-sevincli',
             instagram:'',
             github:'',
-            twitter:''
+            twitter:'',
+            behance:''
         },
         {
             photo:ahmet,
@@ -152,74 +155,80 @@ function Homepage() {
             linkedin:'https://www.linkedin.com/in/ahmet-ecevit/',
             instagram:'https://www.instagram.com/eecevah/',
             github:'https://github.com/ecevah',
-            twitter:'https://twitter.com/ecevah'
+            twitter:'https://twitter.com/ecevah',
+            behance:''
         },
         {
             photo:alper,
             name:'Ali Alper Şahin',
             tag:'Backend Developer',
             title:'İzmir Bakırçay Üniversitesi Bilgisayar Müh. - 3. Sınıf',
-            linkedin:'',
-            instagram:'',
-            github:'',
-            twitter:''
+            linkedin:'https://www.linkedin.com/in/ali-alper-%C5%9Fahin-363bb9209/',
+            instagram:'https://www.instagram.com/alialper_sahin/?hl=tr',
+            github:'https://github.com/alialpershn',
+            twitter:'',
+            behance:''
         },
         {
             photo: bora,
             name:'Bora Körpe',
             tag:'Flutter Developer',
             title:'İzmir Bakırçay Üniversitesi Bilgisayar Müh. - 3. Sınıf',
-            linkedin:'',
+            linkedin:'https://tr.linkedin.com/in/bora-k%C3%B6rpe-4603121b5',
             instagram:'',
-            github:'',
-            twitter:''
+            github:'https://github.com/borakorpee',
+            twitter:'',
+            behance:''
         },
         {
             photo:halil,
             name:'Halil İbrahim Hatun',
             tag:'Ai Developer',
             title:'İzmir Bakırçay Üniversitesi Bilgisayar Müh. - 3. Sınıf',
-            linkedin:'',
+            linkedin:'https://www.linkedin.com/in/halil-ibrahim-hatun-8535a01bb/',
             instagram:'',
-            github:'',
-            twitter:''
+            github:'https://github.com/Halil3509',
+            twitter:'',
+            behance:''
         },
         {
             photo:dincer,
             name:'Dinçer Kaan Turnalı',
             tag:'Ai Developer',
             title:'İzmir Bakırçay Üniversitesi Bilgisayar Müh. - 3. Sınıf',
-            linkedin:'',
+            linkedin:'https://www.linkedin.com/in/din%C3%A7er-kaan-turanl%C4%B1/',
             instagram:'',
-            github:'',
-            twitter:''
+            github:'https://github.com/dincerkaan',
+            twitter:'',
+            behance:''
         },
         {
             photo:samed,
             name:'Samed Karakuş',
             tag:'UI/UX Desinger',
             title:'İzmir Bakırçay Üniversitesi Bilgisayar Müh. - 2. Sınıf',
-            linkedin:'',
-            instagram:'',
-            github:'',
-            twitter:''
+            linkedin:'https://www.linkedin.com/in/samedkarakusceng',
+            instagram:'https://instagram.com/karakus.samed?igshid=YmMyMTA2M2Y=',
+            github:'https://github.com/samedkarakus',
+            twitter:'https://twitter.com/samed_karakus0',
+            behance:'https://www.behance.net/samedkarakus'
         }
     ]
 
   return (
     <>
         <section className={open ? theme ? styles.hamburgerBg : styles.lighthamburgerBg : theme ? styles.headers : styles.lightHeaders}>
-            <div className={ theme ? open ? styles.headerFixed : null : open ? styles.lightheaderFixed : null } >
+        <div className={ theme ? open ? styles.headerFixed : null : open ? styles.lightheaderFixed : null } >
                 <section className={`${layout.container} ${styles.headersDiv}`}>
-                    <img src={theme ? logosLogo : logosLogoLight} alt='logo' className={styles.logosImage}/>
+                    <button onClick={()=> navigate("")}><img src={theme ? logosLogo : logosLogoLight} alt='logo' className={styles.logosImage}/></button>
                     <div className={styles.headerLink}>
                     {arr.map((item)=>
-                        <a className={theme ? styles.headerLinkItem : styles.lightheaderLinkItem} href={item.link}>{item.text}</a>
+                        <button className={theme ? styles.headerLinkItem : styles.lightheaderLinkItem} onClick={()=> navigate(item.link)}>{item.text}</button>
                     )}
                     </div>
                     <div className={styles.btnHeaderDiv}>
-                        <button className={styles.headerLinkItem}>Giriş Yap</button>
-                        <Button type='primary' text='Kayıt Ol'/>
+                        <button onClick={()=>navigate("/login")} className={styles.headerLinkItem}>Giriş Yap</button>
+                        <button onClick={()=>navigate("/signup")}><Button type='primary' text='Kayıt Ol'/></button>
                         {theme ? <button onClick={()=>setTheme(!theme)} className={styles.themeBtn}><i className={`ri-sun-line ${styles.dark}`}></i></button> : <button onClick={()=>setTheme(!theme)}><i className={`ri-moon-line ${styles.light}`}></i></button>}
                     </div>
                     <div className={styles.mobileBtnDiv}>
@@ -234,12 +243,12 @@ function Homepage() {
                 <div className={styles.dropdownInclusive}>
                     <div className={styles.dropdownContent}>
                         {arr.map((item)=>
-                            <a className={theme ? styles.headerLinkItemHamburger : styles.lightheaderLinkItemHamburger} href={item.link}>{item.text}</a>
+                            <button onClick={()=> navigate(item.link)} className={theme ? styles.headerLinkItemHamburger : styles.lightheaderLinkItemHamburger} href={item.link}>{item.text}</button>
                         )}
                     </div>
                     <div className={styles.dropdawnBtn}>
-                        <Button type='second' text='Giriş Yap' theme={theme ? null:'light'}/>
-                        <Button type='primary' text='Kayıt Ol'/>
+                        <button onClick={()=> navigate("/login")}><Button type='second' text='Giriş Yap' theme={theme ? null:'light'}/></button>
+                        <button onClick={()=> navigate("/signup")}><Button type='primary' text='Kayıt Ol'/></button>
                     </div>
                 </div>
             </section>
@@ -249,7 +258,7 @@ function Homepage() {
                     <img className={sub.subKaralama} src={karalama} alt='karalama' height={40} width={304}></img>
                 </div>
                 <div className='container'>
-                    <div className="row row-cols-lg-3 row-cols-1">
+                    <div className={`row row-cols-1 row-cols-xl-3`}>
                         {arrMember.map((item)=>
                             <div className={theme ? `col ${sub.lightmember}` :`col ${sub.member}`}>
                                 <div>
@@ -259,17 +268,20 @@ function Homepage() {
                                 <div className={sub.memberName}>{item.tag} </div>
                                 <div className={sub.memberText}>{item.title}</div>
                                 <div>
-                                    <a className={item.linkedin===''? sub.none : null} target="_blank" rel="noopener noreferrer" href={item.linkedin}>
+                                    <a className={item.linkedin===''? sub.none : sub.a} target="_blank" rel="noopener noreferrer" href={item.linkedin}>
                                         <i className={`ri-linkedin-fill ${sub.icon}`}></i>
                                     </a>
-                                    <a className={item.instagram===''? sub.none : null} target="_blank" rel="noopener noreferrer" href={item.instagram}>
+                                    <a className={item.instagram===''? sub.none : sub.a} target="_blank" rel="noopener noreferrer" href={item.instagram}>
                                         <i className={`ri-instagram-line ${sub.icon}`}></i>
                                     </a>
-                                    <a className={item.github===''? sub.none : null} target="_blank" rel="noopener noreferrer" href={item.github}>
+                                    <a className={item.github===''? sub.none : sub.a} target="_blank" rel="noopener noreferrer" href={item.github}>
                                         <i className={`ri-github-fill ${sub.icon}`}></i>
                                     </a>
-                                    <a className={item.twitter===''? sub.none : null} target="_blank" rel="noopener noreferrer" href={item.twitter}>
+                                    <a className={item.twitter===''? sub.none : sub.a} target="_blank" rel="noopener noreferrer" href={item.twitter}>
                                         <i className={`ri-twitter-fill ${sub.icon}`}></i>
+                                    </a>
+                                    <a className={item.behance===''? sub.none : sub.a} target="_blank" rel="noopener noreferrer" href={item.twitter}>
+                                        <i className={`ri-behance-fill ${sub.icon}`}></i>
                                     </a>
                                 </div>
                             </div>
@@ -293,28 +305,28 @@ function Homepage() {
                             <div className={theme ? styles.footerItemContent : styles.lightfooterItemContent}>
                                 <div className={styles.footerItemTitle}>Logos</div>
                                 {arrlogos.map((item)=>
-                                    <a href={item.href} className={styles.footerItemText}>{item.text}</a>
+                                    <button onClick={()=> navigate(item.href)} className={styles.footerItemText}>{item.text}</button>
                                 )}
                             </div>
                             <div className={theme ? styles.footerItemContent : styles.lightfooterItemContent}>
                                 <div className={styles.footerItemTitle}>Blog</div>
                                 {arrBlog.map((item)=>
-                                    <a href={item.href} className={styles.footerItemText}>{item.text}</a>
+                                    <a href={item.href} target="_blank" rel="noopener noreferrer"className={styles.footerItemText}>{item.text}</a>
                                 )}
                             </div>
                             <div className={theme ? styles.footerItemContent : styles.lightfooterItemContent}>
                                 <div className={styles.footerItemTitle}>Sosyal Medya</div>
                                 {arrSocial.map((item)=>
-                                    <a href={item.href} className={styles.footerItemText}>{item.text}</a>
+                                    <a href={item.href} target="_blank" rel="noopener noreferrer" className={styles.footerItemText}>{item.text}</a>
                                 )}
                             </div>
                             <div className={theme ? styles.footerSocial : styles.lightfooterSocial}>
                             <div className={styles.footerSocialTitle}>Social</div>
                             <div className={styles.footerSocialCardDiv}>
                                 {arrIcon.map((item)=>
-                                    <div className={styles.socialCard}>
+                                    <a href={item.href} target="_blank" rel="noopener noreferrer" className={styles.socialCard}>
                                         <i className={`${item.icon} ${styles.icon}`}></i>
-                                    </div>
+                                    </a>
                                 )}
                             </div>
                         </div>

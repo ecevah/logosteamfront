@@ -1,5 +1,5 @@
-import React from 'react'
-import { useState } from "react";
+import React, { useState } from "react";
+import {useNavigate} from 'react-router-dom';
 
 import styles from '../../styles/App.module.scss';
 import sub from '../../styles/Sub.module.scss';
@@ -14,46 +14,47 @@ import karalama from '../../img/karalama.svg';
 function Homepage() {
     const [theme, setTheme] = useState(true);
     const [open, setOpen] = useState(false)
+    const navigate = useNavigate();
 
     const arr = [
         {
             text:'Nasıl Çalışır',
-            link:''
+            link:'/howto'
         },
         {
             text:'Hakkımızda',
-            link:''
+            link:'/about'
         },
         {
-            text:'Sponsorlar',
-            link:''
+            text:'Takım Üyeleri',
+            link:'/members'
         },
         {
             text:'İletişim',
-            link:''
+            link:'/contact'
         }
     ]
 
     const arrlogos = [
         {
             text:'Hakkımızda',
-            href:''
+            href:'/about'
         },
         {
             text:'Misyon&Vizyon',
-            href:''
+            href:'/'
         },
         {
             text:'Ekip Üyelerimiz',
-            href:''
+            href:'/members'
         },
         {
             text:'Projemiz',
-            href:''
+            href:'/howto'
         },
         {
             text:'KVKK',
-            href:''
+            href:'/kvkk'
         }
     ]
     const arrBlog = [
@@ -65,7 +66,7 @@ function Homepage() {
     const arrSocial = [
         {
             text:'Linkedin',
-            href:''
+            href:'https://www.linkedin.com/company/logos-team/'
         },
         {
             text:'Twitter',
@@ -73,7 +74,7 @@ function Homepage() {
         },
         {
             text:'Instagram',
-            href:''
+            href:'https://www.instagram.com/logos_team2023/'
         },
         {
             text:'YouTube',
@@ -83,11 +84,11 @@ function Homepage() {
     const arrIcon = [
         {
             icon:'ri-instagram-line',
-            href:''
+            href:'https://www.linkedin.com/company/logos-team/'
         },
         {
             icon:'ri-linkedin-fill',
-            href:''
+            href:'https://www.linkedin.com/company/logos-team/'
         },
         {
             icon:'ri-twitter-fill',
@@ -108,15 +109,15 @@ function Homepage() {
         <section className={open ? theme ? styles.hamburgerBg : styles.lighthamburgerBg : theme ? styles.headers : styles.lightHeaders}>
             <div className={ theme ? open ? styles.headerFixed : null : open ? styles.lightheaderFixed : null } >
                 <section className={`${layout.container} ${styles.headersDiv}`}>
-                    <img src={theme ? logosLogo : logosLogoLight} alt='logo' className={styles.logosImage}/>
+                    <button onClick={()=> navigate("")}><img src={theme ? logosLogo : logosLogoLight} alt='logo' className={styles.logosImage}/></button>
                     <div className={styles.headerLink}>
                     {arr.map((item)=>
-                        <a className={theme ? styles.headerLinkItem : styles.lightheaderLinkItem} href={item.link}>{item.text}</a>
+                        <button className={theme ? styles.headerLinkItem : styles.lightheaderLinkItem} onClick={()=> navigate(item.link)}>{item.text}</button>
                     )}
                     </div>
                     <div className={styles.btnHeaderDiv}>
-                        <button className={styles.headerLinkItem}>Giriş Yap</button>
-                        <Button type='primary' text='Kayıt Ol'/>
+                        <button onClick={()=>navigate("/login")} className={styles.headerLinkItem}>Giriş Yap</button>
+                        <button onClick={()=>navigate("/signup")}><Button type='primary' text='Kayıt Ol'/></button>
                         {theme ? <button onClick={()=>setTheme(!theme)} className={styles.themeBtn}><i className={`ri-sun-line ${styles.dark}`}></i></button> : <button onClick={()=>setTheme(!theme)}><i className={`ri-moon-line ${styles.light}`}></i></button>}
                     </div>
                     <div className={styles.mobileBtnDiv}>
@@ -131,12 +132,12 @@ function Homepage() {
                 <div className={styles.dropdownInclusive}>
                     <div className={styles.dropdownContent}>
                         {arr.map((item)=>
-                            <a className={theme ? styles.headerLinkItemHamburger : styles.lightheaderLinkItemHamburger} href={item.link}>{item.text}</a>
+                            <button onClick={()=> navigate(item.link)} className={theme ? styles.headerLinkItemHamburger : styles.lightheaderLinkItemHamburger} href={item.link}>{item.text}</button>
                         )}
                     </div>
                     <div className={styles.dropdawnBtn}>
-                        <Button type='second' text='Giriş Yap' theme={theme ? null:'light'}/>
-                        <Button type='primary' text='Kayıt Ol'/>
+                        <button onClick={()=> navigate("/login")}><Button type='second' text='Giriş Yap' theme={theme ? null:'light'}/></button>
+                        <button onClick={()=> navigate("/signup")}><Button type='primary' text='Kayıt Ol'/></button>
                     </div>
                 </div>
             </section>
@@ -163,28 +164,28 @@ function Homepage() {
                             <div className={theme ? styles.footerItemContent : styles.lightfooterItemContent}>
                                 <div className={styles.footerItemTitle}>Logos</div>
                                 {arrlogos.map((item)=>
-                                    <a href={item.href} className={styles.footerItemText}>{item.text}</a>
+                                    <button onClick={()=> navigate(item.href)} className={styles.footerItemText}>{item.text}</button>
                                 )}
                             </div>
                             <div className={theme ? styles.footerItemContent : styles.lightfooterItemContent}>
                                 <div className={styles.footerItemTitle}>Blog</div>
                                 {arrBlog.map((item)=>
-                                    <a href={item.href} className={styles.footerItemText}>{item.text}</a>
+                                    <a href={item.href} target="_blank" rel="noopener noreferrer"className={styles.footerItemText}>{item.text}</a>
                                 )}
                             </div>
                             <div className={theme ? styles.footerItemContent : styles.lightfooterItemContent}>
                                 <div className={styles.footerItemTitle}>Sosyal Medya</div>
                                 {arrSocial.map((item)=>
-                                    <a href={item.href} className={styles.footerItemText}>{item.text}</a>
+                                    <a href={item.href} target="_blank" rel="noopener noreferrer" className={styles.footerItemText}>{item.text}</a>
                                 )}
                             </div>
                             <div className={theme ? styles.footerSocial : styles.lightfooterSocial}>
                             <div className={styles.footerSocialTitle}>Social</div>
                             <div className={styles.footerSocialCardDiv}>
                                 {arrIcon.map((item)=>
-                                    <div className={styles.socialCard}>
+                                    <a href={item.href} target="_blank" rel="noopener noreferrer" className={styles.socialCard}>
                                         <i className={`${item.icon} ${styles.icon}`}></i>
-                                    </div>
+                                    </a>
                                 )}
                             </div>
                         </div>

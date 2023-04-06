@@ -30,6 +30,11 @@
     margin-left: 5px;
     font-size: 20px;
     color: #e2e1e3;
+    transition: 0.4s;
+    &:hover{
+        color: #8C10B8;
+        transition: 0.4s;
+    }
 }
 
 .light{
@@ -224,6 +229,15 @@
     color: #E8E6E3;
     margin-left: 37.5px;
     margin-right: 37.5px;
+    transition: 0.4s;
+    &:hover{
+        color: #8C10B8;
+        transition: 0.4s;
+    }
+    &:active{
+        color: #373737;
+        
+    }
 }
 
 .lightheaderLinkItem{
@@ -235,6 +249,11 @@
     color: #373737;
     margin-left: 37.5px;
     margin-right: 37.5px;
+    transition: 0.4s;
+    &:hover{
+        color: #8C10B8;
+        transition: 0.4s;
+    }
 }
 
 .btnHeaderDiv{
@@ -1454,6 +1473,12 @@
         font-size: 14.9637px;
         line-height: 22px;
         color: #FFFFFF;
+        text-align: start;
+        transition: 0.4s;
+        &:hover{
+            color: #8C10B8;
+            transition: 0.4s;
+        }
     }
 }
 
@@ -1484,6 +1509,12 @@
         font-size: 14.9637px;
         line-height: 22px;
         color: #373737;
+        text-align: start;
+        transition: 0.4s;
+        &:hover{
+            transition: 0.4s;
+            color: #8C10B8;
+        }
     }
 }
 
@@ -1523,7 +1554,12 @@
             align-items: center;
             justify-content: center;
             margin-right: 10px;
-            
+            transition: 0.4s;
+            &:hover{
+                background-color: #8C10B8;
+                transition: 0.4s;
+            }
+
             @include respond('tablet'){
                 margin-right: 0px;
                 margin-bottom: 5px;
@@ -1576,6 +1612,11 @@
             align-items: center;
             justify-content: center;
             margin-right: 10px;
+            transition: 0.4s;
+            &:hover{
+                background-color: #8C10B8;
+                transition: 0.4s;
+            }
             
             @include respond('tablet'){
                 margin-right: 0px;

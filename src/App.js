@@ -6,6 +6,7 @@ import Login from './component/Login/Login';
 import SubPage from './component/SubPage/SubPage';
 import Register from './component/Register/Register';
 import Members from './component/Members/Members';
+import Meet from './component/Meeting/meeting';
 
 function App() {
   return (
@@ -18,6 +19,7 @@ function App() {
           <Route path="/login" element={<Login />}></Route>
           <Route path="/signup" element={<Register />}></Route>
           <Route path="/dashboard" element={<Dashboard />}></Route>
+          <Route path='/meet' element={<Meet />}></Route>
         </Routes>
       </BrowserRouter> 
     </>

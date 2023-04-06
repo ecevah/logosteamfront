@@ -8,6 +8,19 @@
     background: #8C10B8;
     border: 1px solid #303436;
     border-radius: 50px;
+    transition: 0.4s;
+    &:hover{
+        background-color: transparent;
+        border: 1px solid #8C10B8;
+        transition: 0.4s;
+        & .text{
+            color: #8C10B8;
+        }
+    }
+    &:active{
+        background: #8C10B8;
+        border: 1px solid #303436;
+    }
 }
 
 .PrimaryBtn .text{
@@ -28,6 +41,18 @@
     height: 48px;
     border: 1px solid #8C10B8;
     border-radius: 50px;
+    &:hover{
+        background-color: #8C10B8;
+        border: 1px solid #8C10B8;
+        transition: 0.4s;
+        & .text{
+            color: #E8E6E3;
+        }
+    }
+    &:active{
+        background: transparent;
+        border: 1px solid #303436;
+    }
 }
 
 .SecondBtn .text{
@@ -46,6 +71,10 @@
     font-size: 16px;
     line-height: 28px;
     color: #8C10B8;
+    transition: 0.4s;
+    &:hover{
+        color: #E8E6E3;
+    }
 }
 
 .high{

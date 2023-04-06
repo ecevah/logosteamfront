@@ -108,6 +108,7 @@
         margin-left: 3.5px;
         margin-right: 3.5px;
         margin-bottom: 25px;
+        color: #e8e8e8;
     }
 
 }
@@ -146,6 +147,11 @@
         margin-right: 3.5px;
         margin-bottom: 25px;
         color: #e8e8e8;
+        transition: 0.4s;
+        &:hover{
+            color: #8C10B8;
+            transition: 0.4s;
+        }
     }
 
 }
