@@ -172,7 +172,7 @@ function Homepage() {
         {
             photo: bora,
             name:'Bora Körpe',
-            tag:'Flutter Developer',
+            tag:'Mobile Developer',
             title:'İzmir Bakırçay Üniversitesi Bilgisayar Müh. - 3. Sınıf',
             linkedin:'https://tr.linkedin.com/in/bora-k%C3%B6rpe-4603121b5',
             instagram:'',

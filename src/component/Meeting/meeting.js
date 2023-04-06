@@ -5,11 +5,11 @@ export default function meeting(){
     let options =
 {
     // Pass your App ID here.
-    appId: 'a4b990b0c50c4d0684e8906a063bd087',
+    appId: '1ba5e29566184a42a7675087fbafcaf8',
     // Set the channel name.
-    channel: 'ahmet',
+    channel: 'wdj',
     // Pass your temp token here.
-    token: '007eJxTYDhzdMPXh088fh69ZbY4w3da1BLnNq1b8YraUxeu/bCYqXO+AkOiSZKlpUGSQbKpQbJJioGZhUmqhaWBWaKBmXFSioGFee0T3ZSGQEaGlZVirIwMEAjiszIkZuSmljAwAABB3CGc',
+    token: '007eJxTYPhqlDvjmIXECqFjy33MohjXXu06E5Gv08I9NSyDXc2ka4cCg2FSommqkaWpmZmhhUmiiVGiuZm5qYGFeVpSYlpyYpqFkI1+SkMgI8OnIw8ZGRkgEMRnZihPyWJgAACGGR0I',
     // Set the user ID.
     uid: 0,
 };
