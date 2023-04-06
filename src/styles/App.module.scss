@@ -41,6 +41,11 @@
     margin-left: 5px;
     font-size: 20px;
     color: #373737;
+    transition: 0.4s;
+    &:hover{
+        color: #8C10B8;
+        transition: 0.4s;
+    }
 }
 
 .openlight{
