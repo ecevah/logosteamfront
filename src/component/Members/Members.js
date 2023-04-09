@@ -220,14 +220,14 @@ function Homepage() {
         <section className={open ? theme ? styles.hamburgerBg : styles.lighthamburgerBg : theme ? styles.headers : styles.lightHeaders}>
         <div className={ theme ? open ? styles.headerFixed : null : open ? styles.lightheaderFixed : null } >
                 <section className={`${layout.container} ${styles.headersDiv}`}>
-                    <button onClick={()=> navigate("")}><img src={theme ? logosLogo : logosLogoLight} alt='logo' className={styles.logosImage}/></button>
+                    <button onClick={()=> navigate("/")}><img src={theme ? logosLogo : logosLogoLight} alt='logo' className={styles.logosImage}/></button>
                     <div className={styles.headerLink}>
                     {arr.map((item)=>
                         <button className={theme ? styles.headerLinkItem : styles.lightheaderLinkItem} onClick={()=> navigate(item.link)}>{item.text}</button>
                     )}
                     </div>
                     <div className={styles.btnHeaderDiv}>
-                        <button onClick={()=>navigate("/login")} className={styles.headerLinkItem}>Giriş Yap</button>
+                        <button onClick={()=>navigate("/login")} className={theme ? styles.headerLinkItem:sub.lightheaderLinkItem}>Giriş Yap</button>
                         <button onClick={()=>navigate("/signup")}><Button type='primary' text='Kayıt Ol'/></button>
                         {theme ? <button onClick={()=>setTheme(!theme)} className={styles.themeBtn}><i className={`ri-sun-line ${styles.dark}`}></i></button> : <button onClick={()=>setTheme(!theme)}><i className={`ri-moon-line ${styles.light}`}></i></button>}
                     </div>

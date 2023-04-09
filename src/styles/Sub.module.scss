@@ -184,3 +184,23 @@
     margin-top: 67px;
     margin-bottom: 20px;
 }
+
+.lightheaderLinkItem{
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 28px;
+    color: #373737;
+    margin-left: 37.5px;
+    margin-right: 37.5px;
+    transition: 0.4s;
+    &:hover{
+        color: #8C10B8;
+        transition: 0.4s;
+    }
+    &:active{
+        color: #373737;
+        
+    }
+}

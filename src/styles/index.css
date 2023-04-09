@@ -85,3 +85,19 @@ section{
   margin: 0px;
   padding: 0px;
 }
+
+#unroot{
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 56px;
+  line-height: 28px;
+  color: #E8E6E3;
+  width: 100vw;
+  height: 100vh;
+  background-color: #3C009E;
+}

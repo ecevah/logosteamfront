@@ -8,7 +8,7 @@ export default function NoMatch(props){
   return (
     <>
         <section className={styles.section404}>
-            <button onClick={()=> navigate("")}>
+            <button onClick={()=> navigate("/")}>
                 <img src={logosLogoLight} alt='Logo' height={200} width={500} className={styles.img}></img>
             </button>
             <div className={styles.title404}>404</div>
