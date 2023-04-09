@@ -11,7 +11,7 @@ import logosLogoLight from '../../img/logosLogoLight.svg'
 import logosLogo from '../../img/logosLogo.svg';
 import karalama from '../../img/karalama.svg';
 
-function Homepage() {
+function Homepage(props) {
     const [theme, setTheme] = useState(true);
     const [open, setOpen] = useState(false)
     const navigate = useNavigate();
@@ -42,7 +42,7 @@ function Homepage() {
         },
         {
             text:'Misyon&Vizyon',
-            href:'/'
+            href:'/misyon'
         },
         {
             text:'Ekip Üyelerimiz',
@@ -57,12 +57,14 @@ function Homepage() {
             href:'/kvkk'
         }
     ]
+
     const arrBlog = [
         {
             text:'Medium',
             href:''
         }
     ]
+
     const arrSocial = [
         {
             text:'Linkedin',
@@ -104,6 +106,28 @@ function Homepage() {
         }
     ]
 
+    const arrPage = [
+        {
+            ref:'about',
+            title:'about',
+            text:'asdnlaskdaslkdaksd'
+        },
+        {
+            ref:'howto',
+            title:'howto',
+            text:'asldsadmsaşdasidş'
+        },
+        {
+            ref:'misyon',
+            title:'misyon',
+            text:'asdlkasdjalsşdlaisd'
+        },
+        {
+            ref:'kvkk',
+            title:'kvkk',
+            text:''
+        }
+    ]
   return (
     <>
         <section className={open ? theme ? styles.hamburgerBg : styles.lighthamburgerBg : theme ? styles.headers : styles.lightHeaders}>
@@ -141,13 +165,22 @@ function Homepage() {
                     </div>
                 </div>
             </section>
-            <section className={`${sub.subSection} ${layout.container}`}>
-                <div className={sub.subTitle}>Lorem ipsum dolor sit amet</div>
-                <div className={sub.subStatic}>
-                    <img className={sub.subKaralama} src={karalama} alt='karalama' height={40} width={304}></img>
-                </div>
-                <p className={sub.subText}>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur bibendum vel orci in porttitor. Praesent et metus non arcu hendrerit blandit. Integer cursus dui sit amet tempor mollis. Orci varius natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Proin eleifend neque pulvinar, luctus ipsum id, ornare nunc. Aliquam blandit in risus in vehicula. Cras sed erat bibendum, pharetra felis at, vestibulum felis. Mauris feugiat scelerisque ante, id vulputate enim ullamcorper quis. Morbi ac faucibus felis. Duis vitae tellus semper, blandit libero et, faucibus ligula. Nulla et malesuada odio. Aliquam nec purus scelerisque augue mattis lobortis efficitur vel ex. Phasellus sit amet turpis nunc. Nullam pretium, ante non sollicitudin aliquet, mauris ligula pharetra justo, id tincidunt libero tortor sit amet metus. Nulla tristique est lacus, ut euismod elit consequat at. Vivamus pharetra a urna et venenatis. Nullam dolor arcu, interdum at malesuada eu, ornare id lectus. Pellentesque et ante imperdiet libero tempus molestie. Nulla consectetur commodo libero at volutpat. Mauris id dui at arcu sagittis ornare. Suspendisse pellentesque elit at dolor ultrices, sed eleifend justo tristique. Quisque ex est, rutrum non pellentesque sed, commodo ut lacus. Etiam nec pharetra purus. Curabitur ullamcorper lacus erat, nec iaculis neque varius vel.</p>
-            </section>
+            {arrPage.map((item)=>
+                {
+                    if(item.ref===props.type){
+                        return(
+                        <section className={`${sub.subSection} ${layout.container}`}>
+                            <div className={theme ? sub.subTitle : sub.lightsubTitle}>{item.title}</div>
+                            <div className={sub.subStatic}>
+                                <img className={sub.subKaralama} src={karalama} alt='karalama' height={40} width={304}></img>
+                            </div>
+                            <p className={theme ? sub.subText : sub.lightsubText}>{item.text}</p>
+                        </section>
+                        )
+                    }
+                    return null;
+                }
+            )}
         </section>
         <section className={theme ? styles.section : styles.lightsectionfooter}>
             <div className={layout.container}>

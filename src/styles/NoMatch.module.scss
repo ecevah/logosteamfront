@@ -1,0 +1,33 @@
+.section404{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.title404{
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 50px;
+    line-height: 144.52%;
+    text-align: center;
+    letter-spacing: 0.025em;
+    color: #373737;
+}
+
+.text404{
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 30px;
+    line-height: 144.52%;
+    text-align: center;
+    letter-spacing: 0.025em;
+    color: #373737;
+}
+
+.img{
+    margin-right: 50px;
+}

@@ -136,8 +136,8 @@ function removeVideoDiv(elementId)
 
   return (
     <>
-        <h2 class="left-align">Get started with video calling</h2>
-            <div class="row">
+        <h2 className="left-align">Get started with video calling</h2>
+            <div className="row">
                 <div>
                     <button type="button" id="join">Join</button>
                     <button type="button" id="leave">Leave</button>

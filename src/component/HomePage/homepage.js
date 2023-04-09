@@ -148,7 +148,7 @@ function Homepage() {
         },
         {
             text:'Misyon&Vizyon',
-            href:'/'
+            href:'/misyon'
         },
         {
             text:'Ekip Üyelerimiz',
