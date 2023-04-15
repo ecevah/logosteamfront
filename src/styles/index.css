@@ -141,3 +141,7 @@ section{
   line-height: 19px;
   color: #FFFFFF;
 }
+
+#check {
+  accent-color: #8C10B8;
+}

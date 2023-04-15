@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import styles from '../../styles/Login.module.scss';
 import logosLogo from '../../img/logosLogoLight.svg';
-import axios from '../../api/axios.js'
+import axios from 'axios'
 
 export default function Login() {
     const [users, setUsers] = useState();
