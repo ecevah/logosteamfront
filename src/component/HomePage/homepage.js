@@ -29,7 +29,10 @@ import phone from '../../img/phone.png';
 import bg from '../../img/lastBG.svg';
 
 function Homepage() {
-    const [theme, setTheme] = useState(true);
+    if(localStorage.getItem('theme')== null & localStorage.getItem('theme')===undefined){
+        localStorage.setItem('theme', true);
+    }
+    const [theme, setTheme] = useState(localStorage.getItem('theme')=== null ? localStorage.setItem('theme', true): localStorage.getItem('theme'));
     const [open, setOpen] = useState(false)
     const navigate = useNavigate();
 
@@ -210,12 +213,17 @@ function Homepage() {
         }
     ]
 
+    const themeChoose = () =>{
+        setTheme(!theme);
+        localStorage.setItem('theme', theme);
+    }
+
   return (
     <>
         <section className={open ? theme ? styles.hamburgerBg : styles.lighthamburgerBg : theme ? styles.headers : styles.lightHeaders}>
             <div className={ theme ? open ? styles.headerFixed : null : open ? styles.lightheaderFixed : null } >
                 <section className={`${layout.container} ${styles.headersDiv}`}>
-                    <button onClick={()=> navigate("/")}><img src={theme ? logosLogo : logosLogoLight} alt='logo' className={styles.logosImage}/></button>
+                    <button onClick={()=> navigate("/")}><img src={theme ? logosLogo : logosLogoLight} alt='logo' className={styles.logosImage} height={75} width={150}/></button>
                     <div className={styles.headerLink}>
                     {arr.map((item)=>
                         <button className={theme ? styles.headerLinkItem : styles.lightheaderLinkItem} onClick={()=> navigate(item.link)}>{item.text}</button>
@@ -224,10 +232,10 @@ function Homepage() {
                     <div className={styles.btnHeaderDiv}>
                         <button onClick={()=>navigate("/login")} className={styles.headerLinkItem}>Giriş Yap</button>
                         <button onClick={()=>navigate("/signup")}><Button type='primary' text='Kayıt Ol'/></button>
-                        {theme ? <button onClick={()=>setTheme(!theme)} className={styles.themeBtn}><i className={`ri-sun-line ${styles.dark}`}></i></button> : <button onClick={()=>setTheme(!theme)}><i className={`ri-moon-line ${styles.light}`}></i></button>}
+                        {theme ? <button onClick={()=>themeChoose()} className={styles.themeBtn}><i className={`ri-sun-line ${styles.dark}`}></i></button> : <button onClick={()=>themeChoose()}><i className={`ri-moon-line ${styles.light}`}></i></button>}
                     </div>
                     <div className={styles.mobileBtnDiv}>
-                        {theme ? <button onClick={()=>setTheme(!theme)} className={styles.themeBtn}><i className={`ri-sun-line ${styles.dark}`}></i></button> : <button onClick={()=>setTheme(!theme)}><i className={`ri-moon-line ${open ? styles.openlight : styles.light}`}></i></button>}
+                        {theme ? <button onClick={()=>themeChoose()} className={styles.themeBtn}><i className={`ri-sun-line ${styles.dark}`}></i></button> : <button onClick={()=>themeChoose()}><i className={`ri-moon-line ${open ? styles.openlight : styles.light}`}></i></button>}
                         <button className={styles.mobileBtn} onClick={()=>setOpen(!open)}>
                             {open ? <i className={`ri-close-line ${theme ? styles.hamburgerMenu : styles.lighthamburgerMenu}`}></i> : <i className={`ri-menu-line ${theme ? styles.hamburgerMenu : styles.lighthamburgerMenu}`}></i>}
                         </button>

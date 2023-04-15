@@ -110,6 +110,18 @@
         color: #373737;
     }
 
+    & .memberTag{
+        font-family: 'Inter';
+        font-style: normal;
+        font-weight: 700;
+        font-size: 15px;
+        line-height: 144.52%;
+        text-align: center;
+        letter-spacing: 0.025em;
+        color: #373737;
+        opacity: 65%;
+    }
+
     & .memberText{
         font-family: 'Poppins';
         font-style: normal;
@@ -128,6 +140,22 @@
         margin-right: 3.5px;
         margin-bottom: 25px;
         color: #e8e8e8;
+        &:hover{
+            color: #8C10B8;
+            transition: 0.4s;
+        }
+    }
+
+    .lighticon{
+        font-size: 26px;
+        margin-left: 3.5px;
+        margin-right: 3.5px;
+        margin-bottom: 25px;
+        color: #373737;
+        &:hover{
+            color: #8C10B8;
+            transition: 0.4s;
+        }
     }
 
 }
@@ -148,6 +176,18 @@
         color: #e8e8e8;
     }
 
+    & .memberTag{
+        font-family: 'Inter';
+        font-style: normal;
+        font-weight: 700;
+        font-size: 15px;
+        line-height: 144.52%;
+        text-align: center;
+        letter-spacing: 0.025em;
+        color: #e8e8e8;
+        opacity: 65%;
+    }
+
     & .memberText{
         font-family: 'Poppins';
         font-style: normal;
@@ -160,12 +200,25 @@
         margin-bottom: 25px;
     }
 
-    .icon{
+    & .icon{
         font-size: 26px;
         margin-left: 3.5px;
         margin-right: 3.5px;
         margin-bottom: 25px;
         color: #e8e8e8;
+        transition: 0.4s;
+        &:hover{
+            color: #8C10B8;
+            transition: 0.4s;
+        }
+    }
+
+    & .lighticon{
+        font-size: 26px;
+        margin-left: 3.5px;
+        margin-right: 3.5px;
+        margin-bottom: 25px;
+        color: #373737;
         transition: 0.4s;
         &:hover{
             color: #8C10B8;
@@ -202,5 +255,27 @@
     &:active{
         color: #373737;
         
+    }
+}
+
+@media screen and (min-width:1650px) {
+    .lightheaderLinkItem{
+        font-family: 'Inter';
+        font-style: normal;
+        font-weight: 400;
+        font-size: 16px;
+        line-height: 28px;
+        color: #e8e8e8;
+        margin-left: 37.5px;
+        margin-right: 37.5px;
+        transition: 0.4s;
+        &:hover{
+            color: #8C10B8;
+            transition: 0.4s;
+        }
+        &:active{
+            color: #373737;
+            
+        }
     }
 }

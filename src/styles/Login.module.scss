@@ -20,7 +20,7 @@
             width: 415px;
             background: #FFFFFF;
             box-shadow: 0px 0px 3px rgba(60, 72, 88, 0.15);
-            border-radius: 15px;
+            border-radius: 5px;
             display: flex;
             flex-direction: column;
             padding: 47px 24.5px;
@@ -78,6 +78,7 @@
                 border: 1px solid #E9ECEF;
                 border-radius: 6px;
                 height: 40px;
+                padding-left: 10px;
             }
 
             & .forgot{

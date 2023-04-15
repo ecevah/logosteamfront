@@ -22,10 +22,12 @@ import dincer from '../../img/dincer.png';
 import samed from '../../img/samed.png';
 
 function Homepage() {
-    const [theme, setTheme] = useState(true);
+    if(localStorage.getItem('theme')=== null & localStorage.getItem('theme')===undefined){
+        localStorage.setItem('theme', true);
+    }
+    const [theme, setTheme] = useState(localStorage.getItem('theme')=== null ? localStorage.setItem('theme', true): localStorage.getItem('theme'));
     const [open, setOpen] = useState(false);
     const navigate = useNavigate();
-
     const arr = [
         {
             text:'Nasıl Çalışır',
@@ -215,12 +217,17 @@ function Homepage() {
         }
     ]
 
+    const themeChoose = () =>{
+        setTheme(!theme);
+        localStorage.setItem('theme', theme);
+    }
+
   return (
     <>
         <section className={open ? theme ? styles.hamburgerBg : styles.lighthamburgerBg : theme ? styles.headers : styles.lightHeaders}>
         <div className={ theme ? open ? styles.headerFixed : null : open ? styles.lightheaderFixed : null } >
                 <section className={`${layout.container} ${styles.headersDiv}`}>
-                    <button onClick={()=> navigate("/")}><img src={theme ? logosLogo : logosLogoLight} alt='logo' className={styles.logosImage}/></button>
+                    <button onClick={()=> navigate("/")}><img src={theme ? logosLogo : logosLogoLight} alt='logo' className={styles.logosImage} height={75} width={150}/></button>
                     <div className={styles.headerLink}>
                     {arr.map((item)=>
                         <button className={theme ? styles.headerLinkItem : styles.lightheaderLinkItem} onClick={()=> navigate(item.link)}>{item.text}</button>
@@ -229,10 +236,10 @@ function Homepage() {
                     <div className={styles.btnHeaderDiv}>
                         <button onClick={()=>navigate("/login")} className={theme ? styles.headerLinkItem:sub.lightheaderLinkItem}>Giriş Yap</button>
                         <button onClick={()=>navigate("/signup")}><Button type='primary' text='Kayıt Ol'/></button>
-                        {theme ? <button onClick={()=>setTheme(!theme)} className={styles.themeBtn}><i className={`ri-sun-line ${styles.dark}`}></i></button> : <button onClick={()=>setTheme(!theme)}><i className={`ri-moon-line ${styles.light}`}></i></button>}
+                        {theme ? <button onClick={()=>themeChoose()} className={styles.themeBtn}><i className={`ri-sun-line ${styles.dark}`}></i></button> : <button onClick={()=>themeChoose()}><i className={`ri-moon-line ${open ? styles.openlight : styles.light}`}></i></button>}
                     </div>
                     <div className={styles.mobileBtnDiv}>
-                        {theme ? <button onClick={()=>setTheme(!theme)} className={styles.themeBtn}><i className={`ri-sun-line ${styles.dark}`}></i></button> : <button onClick={()=>setTheme(!theme)}><i className={`ri-moon-line ${open ? styles.openlight : styles.light}`}></i></button>}
+                        {theme ? <button onClick={()=>themeChoose()} className={styles.themeBtn}><i className={`ri-sun-line ${styles.dark}`}></i></button> : <button onClick={()=>themeChoose()}><i className={`ri-moon-line ${open ? styles.openlight : styles.light}`}></i></button>}
                         <button className={styles.mobileBtn} onClick={()=>setOpen(!open)}>
                             {open ? <i className={`ri-close-line ${theme ? styles.hamburgerMenu : styles.lighthamburgerMenu}`}></i> : <i className={`ri-menu-line ${theme ? styles.hamburgerMenu : styles.lighthamburgerMenu}`}></i>}
                         </button>
@@ -262,26 +269,26 @@ function Homepage() {
                         {arrMember.map((item)=>
                             <div className={theme ? `col ${sub.lightmember}` :`col ${sub.member}`}>
                                 <div>
-                                    <img src={item.photo} alt={item.name} className={sub.image}></img>
+                                    <img src={item.photo} alt={item.name} className={sub.image} height={200} width={200}></img>
                                 </div>
                                 <div className={sub.memberName}>{item.name}</div>
-                                <div className={sub.memberName}>{item.tag} </div>
+                                <div className={sub.memberTag}>{item.tag} </div>
                                 <div className={sub.memberText}>{item.title}</div>
                                 <div>
                                     <a className={item.linkedin===''? sub.none : sub.a} target="_blank" rel="noopener noreferrer" href={item.linkedin}>
-                                        <i className={`ri-linkedin-fill ${sub.icon}`}></i>
+                                        <i className={`ri-linkedin-fill ${theme ? sub.icon : sub.lighticon}`}></i>
                                     </a>
                                     <a className={item.instagram===''? sub.none : sub.a} target="_blank" rel="noopener noreferrer" href={item.instagram}>
-                                        <i className={`ri-instagram-line ${sub.icon}`}></i>
+                                        <i className={`ri-instagram-line ${theme ? sub.icon : sub.lighticon}`}></i>
                                     </a>
                                     <a className={item.github===''? sub.none : sub.a} target="_blank" rel="noopener noreferrer" href={item.github}>
-                                        <i className={`ri-github-fill ${sub.icon}`}></i>
+                                        <i className={`ri-github-fill ${theme ? sub.icon : sub.lighticon}`}></i>
                                     </a>
                                     <a className={item.twitter===''? sub.none : sub.a} target="_blank" rel="noopener noreferrer" href={item.twitter}>
-                                        <i className={`ri-twitter-fill ${sub.icon}`}></i>
+                                        <i className={`ri-twitter-fill ${theme ? sub.icon : sub.lighticon}`}></i>
                                     </a>
                                     <a className={item.behance===''? sub.none : sub.a} target="_blank" rel="noopener noreferrer" href={item.twitter}>
-                                        <i className={`ri-behance-fill ${sub.icon}`}></i>
+                                        <i className={`ri-behance-fill ${theme ? sub.icon : sub.lighticon}`}></i>
                                     </a>
                                 </div>
                             </div>

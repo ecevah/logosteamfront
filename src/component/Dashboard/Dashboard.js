@@ -7,7 +7,7 @@ import FeatherIcon from 'feather-icons-react';
 import styles from '../../styles/Dashboard.module.scss';
 import layout from '../../styles/Layout.module.scss';
 
-import logosLogo from '../../img/logosLogoDashboard.svg';
+import logosLogo from '../../img/logosLogoLight.svg';
 import account from '../../img/01.jpg.png';
 import kyk from '../../img/kykSiyah.svg';
 import mimar from '../../img/mimarSiyah.svg';
