@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import styles from '../../styles/Login.module.scss';
 import logosLogo from '../../img/logosLogoLight.svg';
 import FeatherIcon from 'feather-icons-react';
-import axios from 'axios';
+import axios from '../../api/axios';
 import {useNavigate} from 'react-router-dom';
 
 export default function Register() {
@@ -76,7 +76,7 @@ export default function Register() {
             email: mail
         }
         try{
-            await axios.post('http://localhost:3001/api/psyc/add',payload);
+            await axios.post('/api/psyc/add',payload);
             navigate("/login");
         } catch (err) {
             return err
@@ -101,9 +101,9 @@ export default function Register() {
             </div>
         </div>
         <div className={styles.inclusive}>
-            <div>
+            <button onClick={()=> navigate("/")}>
                 <img src={logosLogo} width={115} height={60} alt='logo'></img>
-            </div>
+            </button>
             <form onSubmit={(e)=>e.preventDefault()} className={check==='first' ? styles.contentSign : styles.none}>
                 <div className={styles.title}>Kayıt Ol</div>
                 <div className={styles.starContentHalf}>
@@ -131,15 +131,15 @@ export default function Register() {
                     <div className={styles.blackText}>Şifre</div>
                     <div className={styles.starText}>* </div>
                 </div>
+                <input type={show ? 'text':'password'} className={styles.input} style={{paddingRight: "40px"}} value={pass} onChange={(e)=> setPass(e.target.value)} required></input>
                 <div className={styles.relative}>
                     <button className={styles.absoluteShow} onClick={()=> setShow(!show)}>
                         <FeatherIcon icon={show ? 'eye-off' : 'eye'} color='#858585' size="20" stroke-width="2.5"/>
                     </button>
                 </div>
-                <input type={show ? 'text':'password'} className={styles.input} style={{paddingRight: "40px"}} value={pass} onChange={(e)=> setPass(e.target.value)} required></input>
                 <div className={styles.ifContent}>
                     <input type='checkbox' className={styles.check} id='check' required onChange={()=>setOnay(!onay)}></input>
-                    <a onClick={()=>setKosul(true)} className={styles.ifBtn}>Şartları ve koşulları</a>
+                    <div onClick={()=>setKosul(true)} className={styles.ifBtn}>Şartları ve koşulları</div>
                     <div className={styles.ifText}>kabul ediyorum.</div>
                 </div>
                 <button className={styles.button} onClick={async()=> await firstHandle()}>Kayıt Ol</button>
