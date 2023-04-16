@@ -8,7 +8,7 @@ import Button from '../Button/button';
 
 import logosLogoLight from '../../img/logosLogoLight.svg'
 import logosLogo from '../../img/logosLogo.svg';
-import first from '../../img/appFirst.png';
+import first from '../../img/appFirst.webp';
 import mimar from '../../img/mimarSinanLogo.svg';
 import muhendishane from '../../img/mühendishane.svg';
 import mimarLight from '../../img/mimarLight.svg';
@@ -21,7 +21,7 @@ import kasnak from '../../img/kasnak.svg';
 import doc from '../../img/doc.svg';
 import wifi from '../../img/wifi.svg';
 import karalama from '../../img/karalama.svg';
-import second from '../../img/second.png';
+import second from '../../img/second.webp';
 import third from '../../img/third.png';
 import secure from '../../img/secure.svg';
 import logoPhone from '../../img/logoPhone.png';
@@ -29,7 +29,7 @@ import phone from '../../img/phone.png';
 import bg from '../../img/lastBG.svg';
 
 function Homepage() {
-    if(localStorage.getItem('theme')== null & localStorage.getItem('theme')===undefined){
+    if(localStorage.getItem('theme')== null && localStorage.getItem('theme')===undefined && localStorage.getItem('')){
         localStorage.setItem('theme', true);
     }
     const [theme, setTheme] = useState(localStorage.getItem('theme')=== null ? localStorage.setItem('theme', true): localStorage.getItem('theme'));

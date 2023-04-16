@@ -20,9 +20,9 @@ export default function Login() {
 
         try {
             const response = await axios.post('/api/psyc/login',payload);
-            console.log(response);
+            console.log(response.data);
             if(response.data.status){
-                localStorage.getItem('token', response.data.token);
+                localStorage.setItem('token', response.data.token);
                 navigate("/dashboard");
             } 
             else{
@@ -51,7 +51,7 @@ export default function Login() {
                 <input type='email' className={styles.input} value={mail} onChange={(e)=> setMail(e.target.value)} required></input>
                 <div className={styles.starContent}>
                     <div className={styles.blackText}>Şifre</div>
-                    <div className={styles.starText}>* </div>
+                    <div className={styles.starText}>*</div>
                 </div>
                 <input type={show ? 'text':'password'} className={styles.input} style={{paddingRight: "40px"}} value={pass} onChange={(e)=> setPass(e.target.value)} required></input>
                 <div className={styles.relative}>

@@ -1,8 +1,11 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css"; 
 import "slick-carousel/slick/slick-theme.css";
 import FeatherIcon from 'feather-icons-react';
+
+
+import {useNavigate} from 'react-router-dom';
 
 import styles from '../../styles/Dashboard.module.scss';
 import layout from '../../styles/Layout.module.scss';
@@ -24,9 +27,27 @@ import profil from '../../img/profile.svg';
 import profilpurple from '../../img/profilepurple.svg';
 import randevu from '../../img/rendevu.svg';
 import randevupurple from '../../img/randevupurple.svg';
+ 
+import verify from '../../api/verify';
+import axios from '../../api/axios';
 
 export default function Dashboard(){
-    
+    const navigate = useNavigate();
+    const [post,setPost]=useState(null)
+
+    useEffect(()=>{
+        Auth();
+    },[])
+
+    const Auth = async () => {
+        const res = await verify(localStorage.getItem('token'));
+        if(res){
+            setPost(true);
+        }else{
+            navigate("/login")
+        }
+    }
+
     const [open, setOpen] = useState(false)
 
     const arrHeader = [
@@ -39,7 +60,7 @@ export default function Dashboard(){
         },
         {
             text:'Randevular',
-            href:'/randevu',
+            href:'/reservation',
             active: '',
             icon: randevu,
             purple: randevupurple
@@ -47,21 +68,21 @@ export default function Dashboard(){
         },
         {
             text:'Hasta Ödemeleri',
-            href:'',
+            href:'/pay',
             active: '',
             icon: odeme,
             purple: odemepurple
         },
         {
             text:'Mesajlar',
-            href:'',
+            href:'/mail',
             active: '',
             icon: mesaj,
             purple: mesajpurple
         },
         {
             text:'Profil Ayarları',
-            href:'',
+            href:'/setting',
             active: '',
             icon: profil,
             purple: profilpurple
@@ -160,6 +181,10 @@ export default function Dashboard(){
 
     return (
     <>
+        <div className={post ? styles.none : styles.isLoading}>
+            <img className={styles.isloadinglogo} src={logosLogo} alt='loadingImg' width={300} height={150}/>
+            <svg className={styles.isloadingImg} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="32" height="32"><path d="M18.364 5.63604L16.9497 7.05025C15.683 5.7835 13.933 5 12 5C8.13401 5 5 8.13401 5 12C5 15.866 8.13401 19 12 19C15.866 19 19 15.866 19 12H21C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C14.4853 3 16.7353 4.00736 18.364 5.63604Z" fill="rgba(140,16,184,1)"></path></svg>
+        </div>
         <section className={styles.headerSection}>
             <div className={`${styles.headerInclusive} ${layout.containerDashboard}`}>
                 <div>
@@ -194,8 +219,8 @@ export default function Dashboard(){
                                 <img className={styles.profilImg} src={account} alt='account'></img>
                             </div>
                             <div className={styles.profilContent}>
-                                <div className={styles.profilName}>Dr. Murat Yaşar</div>
-                                <div className={styles.profilTag}>Beyin Cerrahı</div>
+                                <div className={styles.profilName}>{`${localStorage.getItem('unvan')} ${localStorage.getItem('name')} ${localStorage.getItem('surname')}`}</div>
+                                <div className={styles.profilTag}>{`${localStorage.getItem('tag')}`}</div>
                             </div>
                         </div>
                     </div>
@@ -227,12 +252,12 @@ export default function Dashboard(){
                                     <img className={styles.profilImg} src={account} alt='account'></img>
                                 </div>
                                 <div className={styles.profilContent}>
-                                    <div className={styles.profilName}>Dr. Murat Yaşar</div>
-                                    <div className={styles.profilTag}>Beyin Cerrahı</div>
+                                    <div className={styles.profilName}>{`${localStorage.getItem('unvan')} ${localStorage.getItem('name')} ${localStorage.getItem('surname')}`}</div>
+                                    <div className={styles.profilTag}>{`${localStorage.getItem('tag')}`}</div>
                                 </div>
                             </div>
                         </div>
-                        <div className={styles.title}>{`Hoş Geldin ${'Dr. Murat'}`}</div>
+                        <div className={styles.title}>{`Hoş Geldin ${localStorage.getItem('unvan')} ${localStorage.getItem('name')} ${localStorage.getItem('surname')}`}</div>
                         <div className={styles.reservationInclusive}>
                             <div className={styles.reservationTitle}>
                                 <div className={styles.resTitle}>Son Randevular</div>

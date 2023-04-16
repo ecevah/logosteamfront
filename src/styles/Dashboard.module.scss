@@ -69,6 +69,8 @@
     align-items: center;
     margin-left: 25px;
     margin-right: 25px;
+    margin-top: 10px;
+    margin-bottom: 10px;
 }
 
 .title{
@@ -435,4 +437,40 @@
     .dropdawnClose{
         display: block;
     }
+}
+
+.none{
+    display: none;
+}
+
+.isLoading{
+    position: absolute;
+    width: 100vw;
+    height: 100vh;
+    z-index: 100;
+    background-color: #e9e9e9;
+    & .isloadingImg{
+        position: absolute;
+        top: calc(50% - 25px);
+        left: calc(50% - 25px);
+        z-index: 101;
+        animation: spin 4s linear infinite;
+        width: 75px;
+        height: 75px;
+    }
+    & .isloadinglogo{
+        position: absolute;
+        top: calc(44% - 50px);
+        left: calc(50% - 150px);
+        z-index: 101;
+    }
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }
