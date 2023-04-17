@@ -35,6 +35,8 @@ import axios from '../../api/axios';
 export default function Dashboard(){
     const navigate = useNavigate();
     const [post,setPost]=useState(null);
+    const [dataLast, setDataLast] = useState(null);
+    const [dataBack, setDataBack] = useState(null);
 
     const header = {
         'x-access-token' : `${localStorage.getItem('token')}`
@@ -47,10 +49,7 @@ export default function Dashboard(){
     const Auth = async () => {
         const res = await verify(localStorage.getItem('token'));
         if(res){
-            const reservation = await axios.post(`/api/reservation/reservation/lookup_doktor/${localStorage.getItem('id')}}`,{
-                'token':localStorage.getItem('token')
-            },header);
-            console.log(reservation)
+            const last = 
             setPost(true);
         }else{
             navigate("/login")

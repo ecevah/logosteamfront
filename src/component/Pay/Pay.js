@@ -56,7 +56,7 @@ export default function Dashboard(){
         {
             text:'Ön Panel',
             href:'',
-            active: 'active',
+            active: '',
             icon: onpanel,
             purple: onpanelpurple
         },

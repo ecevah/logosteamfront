@@ -8,6 +8,9 @@ import Register from './component/Register/Register';
 import Members from './component/Members/Members';
 import Meet from './component/Meeting/meeting';
 import NoMatch from './component/NoMatch/NoMatch';
+import Reservation from './component/Reservation/Reservation';
+import Comment from './component/Comment/Comment';
+import Pay from './component/Pay/Pay';
 
 function App() {
   return (
@@ -23,6 +26,9 @@ function App() {
           <Route path="login" element={<Login />}></Route>
           <Route path="signup" element={<Register />}></Route>
           <Route path="dashboard" element={<Dashboard />}></Route>
+          <Route path="comment" element={<Comment />}></Route>
+          <Route path="pay" element={<Pay />}></Route>
+          <Route path="reservation" element={<Reservation />}></Route>
           <Route path='meet' element={<Meet />}></Route>
           <Route path='*' element={<NoMatch/>}></Route>
         </Routes>
