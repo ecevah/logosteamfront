@@ -9,7 +9,7 @@ export default function meeting(){
     // Set the channel name.
     channel: 'wdj',
     // Pass your temp token here.
-    token: '007eJxTYPhqlDvjmIXECqFjy33MohjXXu06E5Gv08I9NSyDXc2ka4cCg2FSommqkaWpmZmhhUmiiVGiuZm5qYGFeVpSYlpyYpqFkI1+SkMgI8OnIw8ZGRkgEMRnZihPyWJgAACGGR0I',
+    token: '007eJxTYHhh3c/JUcd2O8IwYp/u9mO37BtX7rj0SPut9P7aRP6XG/0VGAyTEk1TjSxNzcwMLUwSTYwSzc3MTQ0szNOSEtOSE9MsygxtUhoCGRmCwvWZGRkgEMRnZihPyWJgAAAKSx39',
     // Set the user ID.
     uid: 0,
 };

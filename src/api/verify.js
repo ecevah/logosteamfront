@@ -12,6 +12,7 @@ const verify = async (token) => {
                 }
             })
             if(res.data.status){
+                localStorage.setItem('id', res.data.decoded.psychologist._id);
                 localStorage.setItem('name', res.data.decoded.psychologist.name);
                 localStorage.setItem('surname', res.data.decoded.psychologist.surName);
                 localStorage.setItem('unvan', res.data.decoded.psychologist.unvan);

@@ -145,3 +145,9 @@ section{
 #check {
   accent-color: #8C10B8;
 }
+
+@media screen and (max-width: 992px) {
+    #root{
+      zoom: 1.2;
+    }
+}

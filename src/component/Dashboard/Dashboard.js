@@ -31,9 +31,14 @@ import randevupurple from '../../img/randevupurple.svg';
 import verify from '../../api/verify';
 import axios from '../../api/axios';
 
+
 export default function Dashboard(){
     const navigate = useNavigate();
-    const [post,setPost]=useState(null)
+    const [post,setPost]=useState(null);
+
+    const header = {
+        'x-access-token' : `${localStorage.getItem('token')}`
+    }
 
     useEffect(()=>{
         Auth();
@@ -42,6 +47,10 @@ export default function Dashboard(){
     const Auth = async () => {
         const res = await verify(localStorage.getItem('token'));
         if(res){
+            const reservation = await axios.post(`/api/reservation/reservation/lookup_doktor/${localStorage.getItem('id')}}`,{
+                'token':localStorage.getItem('token')
+            },header);
+            console.log(reservation)
             setPost(true);
         }else{
             navigate("/login")
@@ -74,8 +83,8 @@ export default function Dashboard(){
             purple: odemepurple
         },
         {
-            text:'Mesajlar',
-            href:'/mail',
+            text:'Yorumlar',
+            href:'/comment',
             active: '',
             icon: mesaj,
             purple: mesajpurple
@@ -202,7 +211,7 @@ export default function Dashboard(){
                     {arrHeader.map((item) =>
                         <button className={styles.navbarbtn}>
                             <img src={item.active==='active' ? item.purple : item.icon} height={12} width={12} alt={item.text}/>
-                            <div href={item.href} className={`${styles.headerItem} ${styles[item.active]}`}>{item.text}</div>
+                            <a href={item.href} className={`${styles.headerItem} ${styles[item.active]}`}>{item.text}</a>
                         </button>
                         )}
                 </div>
@@ -228,7 +237,7 @@ export default function Dashboard(){
                         {arrHeader.map((item) =>
                             <button className={styles.navbarbtn}>
                                 <img src={item.active==='active' ? item.purple : item.icon} height={12} width={12} alt={item.text}/>
-                                <div href={item.href} className={`${styles.headerItem} ${styles[item.active]}`}>{item.text}</div>
+                                <a href={item.href} className={`${styles.headerItem} ${styles[item.active]}`}>{item.text}</a>
                             </button>
                         )}
                     </div>
