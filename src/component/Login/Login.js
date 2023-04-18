@@ -27,6 +27,7 @@ export default function Login() {
             } 
             else{
                 console.log('Başarısız');
+                alert('Hata oluştu');
             }
         }
         catch(err){
@@ -60,7 +61,7 @@ export default function Login() {
                     </button>
                 </div>
                 <button onClick={()=> navigate('/forgot')} className={styles.forgot}>Şifreni mi unuttun?</button>
-                <button onClick={() => handle()} className={styles.button}>Giriş Yap</button>
+                <button onClick={() => handle()} type='submit' className={styles.button}>Giriş Yap</button>
                 <div className={styles.signContent}>
                     <div className={styles.signText}>Hesabın yok mu?</div>
                     <button onClick={() => navigate("/signup")} className={styles.signPurple}>Kayıt Ol</button>

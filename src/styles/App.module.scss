@@ -23,17 +23,31 @@
 }
 
 .themeBtn{
-    padding-top: 3.7px;
+    position: relative;
 }
 
 .dark{
-    margin-left: 5px;
     font-size: 20px;
     color: #e2e1e3;
     transition: 0.4s;
+    margin-left: 5px;
     &:hover{
         color: #8C10B8;
         transition: 0.4s;
+    }
+    @include respond('desktop'){
+        position: absolute;
+        top: 10px;
+    }
+    @include respond('tablet'){
+        position: absolute;
+        top: 8px;
+        left: -10px;
+    }
+    @include respond('mobile'){
+        position: absolute;
+        top: 8px;
+        left: -10px;
     }
 }
 
@@ -45,6 +59,20 @@
     &:hover{
         color: #8C10B8;
         transition: 0.4s;
+    }
+    @include respond('desktop'){
+        position: absolute;
+        top: 10px;
+    }
+    @include respond('tablet'){
+        position: absolute;
+        top: 8px;
+        left: -10px;
+    }
+    @include respond('mobile'){
+        position: absolute;
+        top: 8px;
+        left: -10px;
     }
 }
 

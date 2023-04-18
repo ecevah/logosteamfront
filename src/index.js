@@ -14,11 +14,13 @@ window.onload = function(){
       clearInterval(interval)
       tabError();
     }
+    document.getElementById('isLoading').style.display = 'none';
   },1000);
 
   function tabError(){
     document.getElementById('root').style.display = 'none';
     document.getElementById('unroot').style.display = 'flex';
+    document.getElementById('isLoading').style.display = 'none';
   }
 }   
 

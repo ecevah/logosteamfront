@@ -232,7 +232,7 @@ function Homepage() {
                     <div className={styles.btnHeaderDiv}>
                         <button onClick={()=>navigate("/login")} className={styles.headerLinkItem}>Giriş Yap</button>
                         <button onClick={()=>navigate("/signup")}><Button type='primary' text='Kayıt Ol'/></button>
-                        {theme ? <button onClick={()=>themeChoose()} className={styles.themeBtn}><i className={`ri-sun-line ${styles.dark}`}></i></button> : <button onClick={()=>themeChoose()}><i className={`ri-moon-line ${styles.light}`}></i></button>}
+                        {theme ? <button onClick={()=>themeChoose()} className={styles.themeBtn}><i className={`ri-sun-line ${styles.dark}`}></i></button> : <button onClick={()=>themeChoose()} className={styles.themeBtn}><i className={`ri-moon-line ${styles.light}`}></i></button>}
                     </div>
                     <div className={styles.mobileBtnDiv}>
                         {theme ? <button onClick={()=>themeChoose()} className={styles.themeBtn}><i className={`ri-sun-line ${styles.dark}`}></i></button> : <button onClick={()=>themeChoose()}><i className={`ri-moon-line ${open ? styles.openlight : styles.light}`}></i></button>}

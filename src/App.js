@@ -11,6 +11,7 @@ import NoMatch from './component/NoMatch/NoMatch';
 import Reservation from './component/Reservation/Reservation';
 import Comment from './component/Comment/Comment';
 import Pay from './component/Pay/Pay';
+import Deneme from './component/deneme/deneme';
 
 function App() {
   return (
@@ -30,6 +31,7 @@ function App() {
           <Route path="pay" element={<Pay />}></Route>
           <Route path="reservation" element={<Reservation />}></Route>
           <Route path='meet' element={<Meet />}></Route>
+          <Route path='deneme' element={<Deneme />}></Route>
           <Route path='*' element={<NoMatch/>}></Route>
         </Routes>
       </BrowserRouter> 

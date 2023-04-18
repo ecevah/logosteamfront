@@ -94,7 +94,6 @@ export default function Register() {
                 <div className={styles.kosulInclusive}>
                     <div className={styles.kosulText}>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.</div>
                     <div className={styles.kosulBtnInclusive}>
-                        <button onClick={() => {setCheck(true); setKosul(false)}} className={styles.kosulbtn} style={{backgroundColor:'green'}}>Kabul Et</button>
                         <button onClick={()=> setKosul(false)} className={styles.kosulbtn} style={{backgroundColor:'red'}}>Geri Dön</button>
                     </div>
                 </div>
@@ -133,16 +132,16 @@ export default function Register() {
                 </div>
                 <input type={show ? 'text':'password'} className={styles.input} style={{paddingRight: "40px"}} value={pass} onChange={(e)=> setPass(e.target.value)} required></input>
                 <div className={styles.relative}>
-                    <button className={styles.absoluteShow} onClick={()=> setShow(!show)}>
+                    <button className={styles.absoluteShow} type="button" onClick={()=> setShow(!show)}>
                         <FeatherIcon icon={show ? 'eye-off' : 'eye'} color='#858585' size="20" stroke-width="2.5"/>
                     </button>
                 </div>
                 <div className={styles.ifContent}>
                     <input type='checkbox' className={styles.check} id='check' required onChange={()=>setOnay(!onay)}></input>
-                    <div onClick={()=>setKosul(true)} className={styles.ifBtn}>Şartları ve koşulları</div>
+                    <button onClick={()=>setKosul(true)} className={styles.ifBtn} type="button">Şartları ve koşulları</button>
                     <div className={styles.ifText}>kabul ediyorum.</div>
                 </div>
-                <button className={styles.button} onClick={async()=> await firstHandle()}>Kayıt Ol</button>
+                <button type='submit' className={styles.button} onClick={async()=> await firstHandle()}>Kayıt Ol</button>
                 <div className={styles.signContent}>
                     <div className={styles.signText}>Hesabın var mı?</div>
                     <button onClick={()=> navigate("/login")} className={styles.signPurple}>Giriş Yap</button>
@@ -175,35 +174,35 @@ export default function Register() {
                 </div>
                 <div className='row row-cols-2'>
                     <div className='col'>
-                        <input type='checkbox' style={{marginRight:'6px'}} onChange={()=> setTag1(!tag1)}></input>
+                        <input type='checkbox' style={{marginRight:'6px'}} id='check' className={styles.check} onChange={()=> setTag1(!tag1)}></input>
                         <label>Psikoloji</label>
                     </div>
                     <div className='col'>
-                        <input type='checkbox' style={{marginRight:'6px'}} onChange={()=> setTag2(!tag2)}></input>
+                        <input type='checkbox' style={{marginRight:'6px'}} id='check' className={styles.check} onChange={()=> setTag2(!tag2)}></input>
                         <label>Psikoloji</label>
                     </div>
                     <div className='col'>
-                        <input type='checkbox' style={{marginRight:'6px'}} onChange={()=> setTag3(!tag3)}></input>
+                        <input type='checkbox' style={{marginRight:'6px'}} id='check' className={styles.check} onChange={()=> setTag3(!tag3)}></input>
                         <label>Psikoloji</label>
                     </div>
                     <div className='col'>
-                        <input type='checkbox' style={{marginRight:'6px'}} onChange={()=> setTag4(!tag4)}></input>
+                        <input type='checkbox' style={{marginRight:'6px'}} id='check' className={styles.check} onChange={()=> setTag4(!tag4)}></input>
                         <label>Psikoloji</label>
                     </div>
                     <div className='col'>
-                        <input type='checkbox' style={{marginRight:'6px'}} onChange={()=> setTag5(!tag5)}></input>
+                        <input type='checkbox' style={{marginRight:'6px'}} id='check' className={styles.check} onChange={()=> setTag5(!tag5)}></input>
                         <label>Psikoloji</label>
                     </div>
                     <div className='col'>
-                        <input type='checkbox' style={{marginRight:'6px'}} onChange={()=> setTag6(!tag6)}></input>
+                        <input type='checkbox' style={{marginRight:'6px'}} id='check' className={styles.check} onChange={()=> setTag6(!tag6)}></input>
                         <label>Psikoloji</label>
                     </div>
                 </div>
                 <div className={styles.image}>
-                    <input type="file" name="myImage" accept="image/png, image/gif, image/jpeg" onChange={(e)=> setFile(e.target.files[0])} style={{marginTop:'30px', marginBottom:'30px'}}/>
+                    <input type="file" name="myImage" accept="image/png, image/gif, image/jpeg" onChange={(e)=> setFile(e.target.files[0])} style={{marginTop:'30px', marginBottom:'30px'}} required/>
                 </div>
-                <button className={styles.button} onClick={async()=> await secondHandle()}>Kayıt Ol</button>
-                <button className={styles.buttonArrow} onClick={async()=> await backHandle()}>Geri Dön</button>
+                <button className={styles.button} type='submit' onClick={async()=> await secondHandle()}>Kayıt Ol</button>
+                <button type="button" className={styles.buttonArrow} onClick={async()=> await backHandle()}>Geri Dön</button>
             </form>
         </div>
     </section>

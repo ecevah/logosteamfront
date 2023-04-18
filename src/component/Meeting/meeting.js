@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useEffect} from 'react'
 import AgoraRTC from "agora-rtc-sdk-ng"
 
 export default function meeting(){
@@ -88,6 +88,23 @@ agoraEngine.on("user-unpublished", user =>
     });
 window.onload = function ()
 {
+
+    const tabId = sessionStorage.tabId ? sessionStorage.tabId : sessionStorage.tabId = Math.random();
+    localStorage.tabId = tabId;
+
+    const interval = setInterval(function(){
+        if(tabId != localStorage.tabId){
+        clearInterval(interval)
+        tabError();
+        }
+        document.getElementById('isLoading').style.display = 'none';
+    },1000);
+
+    function tabError(){
+        document.getElementById('root').style.display = 'none';
+        document.getElementById('unroot').style.display = 'flex';
+        document.getElementById('isLoading').style.display = 'none';
+    }
     // Listen to the Join button click event.
     document.getElementById("join").onclick = async function ()
     {
@@ -121,6 +138,7 @@ window.onload = function ()
         window.location.reload();
     }
 }
+
 }
 startBasicCall();
 // Remove the video stream from the container.
