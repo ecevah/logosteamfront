@@ -38,6 +38,8 @@ details{
     line-height: 36px;
     color: #E8E6E3;
     transition: 0.5s;
+    height: 110px;
+    align-items: center;
     z-index: 3;
 }
   
@@ -61,6 +63,8 @@ details{
   
   details[open] div{
     padding: .5em 1em;
+    height: 170px;
+    transition: 0.2s;
   }
 
 ul.slick-dots li div{

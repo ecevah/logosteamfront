@@ -126,22 +126,22 @@ function Homepage() {
     ]  
     const arrFaq = [
         {
-            title1:'Lorem Impus',
-            text1: 'Lorem Impus',
-            title2: 'Lorem Impus',
-            text2: 'Lorem Impus'
+            title1:'Kayıt formunu doldurdum ancak geri dönüş alamadım. Ne yapabilirim?',
+            text1: 'Kayıt formunu doldurduktan sonra size en uygun psikolog ile eşleştirilmeniz için bir süreç başlatılır. Bu süreçte bir psikolog size atanacaktır ve atanma işlemi tamamlandığında size bilgi verilecektir. Ancak süreç hakkında bilgi almak isterseniz, contact@logos.com adresinden bize ulaşabilirsiniz.',
+            title2: 'Online terapi seanslarına katılmak için internet hızım ne kadar olmalı?',
+            text2: 'Online terapi seanslarına katılmak için minimum 512 Kbps hızında internet bağlantısı gereklidir. Ancak daha yüksek hızlar tercih edilir.'
         },
         {
-            title1:'Lorem Impus',
-            text1: 'Lorem Impus',
-            title2: 'Lorem Impus',
-            text2: 'Lorem Impus'
+            title1:'Online terapi seansları ne kadar sürüyor?',
+            text1: 'Online terapi seansları genellikle 50-60 dakika sürer. Ancak psikologunuzla belirlediğiniz süreye göre değişebilir.',
+            title2: 'Seans sırasında kullanabileceğimiz hangi iletişim yöntemleri var?',
+            text2: 'Online terapi seanslarında video görüşme, sesli görüşme veya metin mesajlaşma yöntemlerinden biri veya birkaçı kullanılabilir. Psikologunuzla önceden belirleyebilirsiniz.'
         },
         {
-            title1:'Lorem Impus',
-            text1: 'Lorem Impus',
-            title2: 'Lorem Impus',
-            text2: 'Lorem Impus'
+            title1:'Psikologumun beni anlamaması durumunda ne yapabilirim?',
+            text1: 'Eğer psikologunuz sizi anlamıyorsa, bunu açık bir şekilde dile getirmelisiniz. Birlikte farklı bir yaklaşım deneyebilir veya size daha iyi yardımcı olabilecek bir başka psikologla eşleştirilmenizi talep edebilirsiniz.',
+            title2: 'Online terapi seanslarında gizlilik nasıl sağlanıyor?',
+            text2: 'Logos, online terapi seanslarında gizliliğe büyük önem vermektedir. Tüm seanslar end-to-end şifreleme ile korunmaktadır ve Logos tarafından sağlanan platform dışında herhangi bir şekilde kaydedilmemektedir. Ayrıca psikologlarımız da gizliliği koruma konusunda yüksek hassasiyete sahiptirler.'
         }
     ]
     const arrlogos = [
