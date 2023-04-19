@@ -35,9 +35,25 @@ import axios from '../../api/axios';
 export default function Dashboard(){
     const navigate = useNavigate();
     const [post,setPost]=useState(null);
-    const [dataLast, setDataLast] = useState(null);
-    const [dataBack, setDataBack] = useState(null);
 
+    const arrClient = [
+        {
+            "status": true,
+            "total": 0,
+            "reservation": [
+                {
+                    "day": "",
+                    "client_id": {
+                        "name": "",
+                        "surName": "",
+                    }
+                }
+            ]
+        }
+    ]
+
+    const [before, setBefore] = useState(arrClient);
+    const [after, setAfter] = useState(arrClient);
     const header = {
         'x-access-token' : `${localStorage.getItem('token')}`
     }
@@ -47,14 +63,41 @@ export default function Dashboard(){
     },[])
 
     const Auth = async () => {
-        const res = await verify(localStorage.getItem('token'));
-        if(res){
-            const last = 
-            setPost(true);
-        }else{
-            navigate("/login")
+        const token = localStorage.getItem('token');
+        const id = localStorage.getItem('id');
+      
+        if (!token || !id) {
+          navigate('/login');
+          return;
         }
-    }
+      
+        try {
+          const res = await verify(token);
+          if (res) {
+            const [beforeRes, afterRes] = await Promise.all([
+              axios.get(`/api/reservation/before?psyc_id=${id}`, {
+                headers: {
+                  'x-access-token': token,
+                },
+              }),
+              axios.get(`/api/reservation/after?psyc_id=${id}`, {
+                headers: {
+                  'x-access-token': token,
+                },
+              }),
+            ]);
+            const beforeData = beforeRes.data;
+            const afterData = afterRes.data;
+            await setAfter(afterData);
+            await setBefore(beforeData);
+            setPost(true);
+          } else {
+            navigate('/login');
+          }
+        } catch (err) {
+          console.error(err);
+        }
+      };
 
     const [open, setOpen] = useState(false)
 
@@ -94,34 +137,6 @@ export default function Dashboard(){
             active: '',
             icon: profil,
             purple: profilpurple
-        }
-    ]
-
-    const arrClient = [
-        {
-            img: account,
-            title: 'Ahmet Sırnaç',
-            date: '27.05.2023'
-        },
-        {
-            img: account,
-            title: 'Ahmet Sırnaç',
-            date: '27.05.2023'
-        },
-        {
-            img: account,
-            title: 'Ahmet Sırnaç',
-            date: '27.05.2023'
-        },
-        {
-            img: account,
-            title: 'Ahmet Sırnaç',
-            date: '27.05.2023'
-        },
-        {
-            img: account,
-            title: 'Ahmet Sırnaç',
-            date: '27.05.2023'
         }
     ]
 
@@ -186,6 +201,12 @@ export default function Dashboard(){
             </div>
         )
     };
+
+    const parseDate = (date) => {
+        const newParse = date.split("-");
+        const newDate = newParse[2] + "." + newParse[1] + "." + newParse[0];
+        return newDate;
+    }
 
     return (
     <>
@@ -269,19 +290,20 @@ export default function Dashboard(){
                         <div className={styles.reservationInclusive}>
                             <div className={styles.reservationTitle}>
                                 <div className={styles.resTitle}>Son Randevular</div>
-                                <div className={styles.resNumber}>{`${'55'} Hasta`}</div>
+                                <div className={styles.resNumber}>{`${before.total} Hasta`}</div>
                             </div>
                             <div className="container">
                                 <div className="row row-cols-lg-3 row-cols-1">
-                                {arrClient.map((item)=>
+                                {before && before.reservation && before.reservation.map((item)=>
                                     <button className={`col ${styles.mobileRow}`}>
                                         <div className={styles.clientCard}>
                                             <div>
-                                                <img className={styles.clientImg} src={item.img} alt={item.title} width={45} height={45}></img>
+                                                <img className={styles.clientImg} src={account} alt={item.client_id.name} width={45} height={45}></img>
                                             </div>
                                             <div className={styles.clientContent}>
-                                                <div className={styles.clientTitle}>{item.title}</div>
-                                                <div className={styles.clientText}>{`Rezervasyon ${item.date}`}</div>
+                                                <div className={styles.clientTitle}>{item.client_id.name}</div>
+                                                <div className={styles.clientText}>{`Rezervasyon ${parseDate(item.day)}`}</div>
+                                                <div className={styles.clientText}>{item.time}</div>
                                             </div>
                                         </div>
                                         <div className={styles.mobileRowDiv}>
@@ -295,19 +317,20 @@ export default function Dashboard(){
                         <div className={styles.reservationInclusive}>
                             <div className={styles.reservationTitle}>
                                 <div className={styles.resTitle}>Bekleyen Randevular</div>
-                                <div className={styles.resNumber}>{`${'55'} Hasta`}</div>
+                                <div className={styles.resNumber}>{`${after.total} Hasta`}</div>
                             </div>
                             <div className="container">
                                 <div className="row row-cols-lg-3 row-cols-1">
-                                {arrClient.map((item)=>
+                                {after && after.reservation && after.reservation.map((item)=>
                                     <button className={`col ${styles.mobileRow}`}>
                                         <div className={styles.clientCard}>
                                             <div>
-                                                <img className={styles.clientImg} src={item.img} alt={item.title} width={45} height={45}></img>
+                                                <img className={styles.clientImg} src={account} alt={item.client_id.name} width={45} height={45}></img>
                                             </div>
                                             <div className={styles.clientContent}>
-                                                <div className={styles.clientTitle}>{item.title}</div>
-                                                <div className={styles.clientText}>{`Rezervasyon ${item.date}`}</div>
+                                                <div className={styles.clientTitle}>{`${item.client_id.name} ${item.client_id.surName}`}</div>
+                                                <div className={styles.clientText}>{`Rezervasyon ${parseDate(item.day)}`}</div>
+                                                <div className={styles.clientText}>{item.time}</div>
                                             </div>
                                         </div>
                                         <div className={styles.mobileRowDiv}>

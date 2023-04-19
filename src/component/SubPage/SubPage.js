@@ -112,14 +112,13 @@ function Homepage(props) {
     const arrPage = [
         {
             ref:'about',
-            title:'about',
-            text:'asdnlaskdaslkdaksd'
+            title:'Hakkımızda',
+            text: '2022 yılında İzmir de Mühendishane topluluğu destekleriyle kurulan logos takımı olarak hedefimiz farklı branşlarla teknolojiyi bir araya getirerek, yerli ve milli olarak etkin çözümler oluşturmaktır. Bu doğrultuda günümüzde ciddi boyutlara ulaşmış psikolojik hastalıklara yenilikçi çözümler ile hem mesleki hem de toplumsal farkındalığı arttırmayı hedefliyoruz.'
         },
         {
             ref:'howto',
-            title:'howto',
-            text:'asldsadmsaşdasidş'
-        },
+            title:'Nasıl Çalışır?',
+            text:`Merhaba! Online terapi uygulamamızı kullanmaya başlamak için aşağıdaki adımları izleyebilirsiniz:\nKayıt Olma: Kullanıcılar uygulamamızda kayıt olabilirler. Kayıt olmak için uygulamamızın ana sayfasındaki "Kayıt Ol" butonunu tıklayabilir ve gerekli bilgileri doldurabilirler. Kullanıcıların güvenliği için kişisel verilerini koruyacağımızı ve gizlilik politikalarımızı açıklayacağımız bir gizlilik sözleşmesi sunulur.\nGiriş Yapma: Kayıt işlemi tamamlandıktan sonra kullanıcılar, kullanıcı adı ve şifreleriyle giriş yapabilirler. Giriş yapmak için ana sayfadaki "Giriş Yap" butonunu tıklayabilirler.\nTerapi Randevusu Alma: Kullanıcılar, giriş yaptıktan sonra terapi randevusu alabilirler. Randevu almak için "Randevu Al" butonunu tıklayabilirler ve terapi türünü, terapisti ve uygun bir tarih ve saat seçebilirler. Randevu onaylandığında kullanıcıya bir bildirim gönderilir.\nGörüntülü ve Sesli Görüşmeye Katılma: Randevu zamanı geldiğinde kullanıcılar, uygulama üzerinden görüntülü ve sesli görüşmeye katılabilirler. Kullanıcılar, terapistle sesli ve görüntülü iletişim kurabilir ve terapi seansını başlatabilirler.\nKamera ile Yüzünün Tamamının Görünmesi: Kullanıcılar, terapi seansı sırasında yüzlerinin tamamını kameraya göstermelidir. Bu, terapistin kullanıcının ifadelerini ve duygularını tam olarak anlamasını sağlar ve etkili bir terapi deneyimi için önemlidir.\nVerilen Tavsiyelerin Görüntülenmesi ve Uygulanması: Terapi seansı sonrasında kullanıcılar, terapistin verdiği tavsiyeleri uygulaması gerekmektedir. Uygulama üzerinden terapistin verdiği tavsiyeler kullanıcıya görüntülenir ve kullanıcılar, tavsiyeleri not alabilir veya terapistle paylaşabilirler. Uygulama aynı zamanda kullanıcılara hatırlatmalar gönderebilir ve terapi sürecini takip etmelerine yardımcı olabilir.\nUnutmayın, online terapi uygulamamız kullanıcıların gizliliğini ve güvenliğini önemsemektedir. Tüm kullanıcı verileri gizli tutulacak ve yalnızca terapi süreci için kullanılacaktır.`        },
         {
             ref:'misyon',
             title:'misyon',

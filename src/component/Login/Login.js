@@ -56,11 +56,11 @@ export default function Login() {
                 </div>
                 <input type={show ? 'text':'password'} className={styles.input} style={{paddingRight: "40px"}} value={pass} onChange={(e)=> setPass(e.target.value)} required></input>
                 <div className={styles.relative}>
-                    <button className={styles.absoluteShow} onClick={()=> setShow(!show)}>
+                    <button type='button' className={styles.absoluteShow} onClick={()=> setShow(!show)}>
                         <FeatherIcon icon={show ? 'eye-off' : 'eye'} color='#858585' size="20" stroke-width="2.5"/>
                     </button>
                 </div>
-                <button onClick={()=> navigate('/forgot')} className={styles.forgot}>Şifreni mi unuttun?</button>
+                <div type='button' onClick={()=> navigate('/forgot')} className={styles.forgot}>Şifreni mi unuttun?</div>
                 <button onClick={() => handle()} type='submit' className={styles.button}>Giriş Yap</button>
                 <div className={styles.signContent}>
                     <div className={styles.signText}>Hesabın yok mu?</div>

@@ -24,32 +24,69 @@ import profil from '../../img/profile.svg';
 import profilpurple from '../../img/profilepurple.svg';
 import randevu from '../../img/rendevu.svg';
 import randevupurple from '../../img/randevupurple.svg';
- 
+
 import verify from '../../api/verify';
 import axios from '../../api/axios';
 
+const PAGE_SIZE = 10;
 
 export default function Dashboard(){
     const navigate = useNavigate();
     const [post,setPost]=useState(null);
+    const [counter, setCounter] = useState(0);
 
     const header = {
         'x-access-token' : `${localStorage.getItem('token')}`
     }
+
+    const arrClient =
+        {
+            "status": true,
+            "total": 0,
+            "reservation": [
+                {
+                    "day": "",
+                    "client_id": {
+                        "name": "",
+                        "surName": "",
+                    }
+                }
+            ]
+        }
+
+    const [arrRes, setArrRes] = useState(arrClient);
 
     useEffect(()=>{
         Auth();
     },[])
 
     const Auth = async () => {
-        const res = await verify(localStorage.getItem('token'));
-        if(res){
-            setPost(true);
-        }else{
-            navigate("/login")
+        const token = localStorage.getItem('token');
+        const id = localStorage.getItem('id');
+      
+        if (!token || !id) {
+          navigate('/login');
+          return;
         }
-    }
-
+      
+        try {
+            const res = await verify(token);
+            if (res) {
+              const resApi = await axios.get(`/api/reservation/find?psyc_id=${id}&limit=9`, {
+                  headers: {
+                    'x-access-token': token,
+                  },
+                });
+              await setArrRes(resApi.data);
+              console.log(arrRes)
+              setPost(true);
+            } else {
+              navigate('/login');
+            }
+          } catch (err) {
+            console.error(err);
+          }
+        }
     const [open, setOpen] = useState(false)
 
     const arrHeader = [
@@ -114,6 +151,54 @@ export default function Dashboard(){
         }
     ]
 
+    const parseDate = (date) => {
+        const newParse = date.split("-");
+        const newDate = newParse[2] + "." + newParse[1] + "." + newParse[0];
+        return newDate;
+    }
+
+    const dateCalc = (date) => {
+        const birth = new Date(date);
+        const now = Date.now();
+        const diff = now - birth.getTime();
+        const age = Math.floor(diff / (1000 * 60 * 60 * 24 * 365.25));
+        return age;
+    }
+
+    const timeChack = (itemTime) => {
+        const currentTime = new Date();
+        const itemHour = parseInt(itemTime.split('.')[0]);
+        const itemMinute = parseInt(itemTime.split('.')[1]);
+        const itemDateTime = new Date(currentTime.getFullYear(), currentTime.getMonth(), currentTime.getDate(), itemHour, itemMinute);
+        if (itemDateTime > currentTime) {
+            return true
+        } else {
+            return false
+        }
+    }
+
+    const handleData = async (page) => {
+        const resApi = await axios.get(`/api/reservation/find?psyc_id=${localStorage.getItem('id')}&limit=${(page*10)+9}&skip=${page*10}`, {
+            headers: {
+              'x-access-token': localStorage.getItem('token'),
+            },
+          });
+          console.log(resApi);
+        await setArrRes(resApi.data);
+        await setCounter(page);
+    }
+
+    const [currentPage, setCurrentPage] = useState(1);
+    const totalPages = Math.ceil(arrRes.reservation.length / PAGE_SIZE);
+  
+    const paginatedReservations = arrRes.reservation.slice(
+      (currentPage - 1) * PAGE_SIZE,
+      currentPage * PAGE_SIZE
+    );
+  
+    const handlePageClick = (pageNumber) => {
+        setCurrentPage(pageNumber);
+    };
     return (
     <>
         <div className={post ? styles.none : styles.isLoading}>
@@ -193,12 +278,98 @@ export default function Dashboard(){
                             </div>
                         </div>
                         <div className={styles.title}>{`Randevular`}</div>
-                        <div className={styles.sponsorContent}>
-                            {arrSponsor.map((item)=>
-                                <div>
-                                    <img src={item.img} alt={item.alt} width={45}/>
+                        <div className={styles.overflowdiv}>
+                        <div className={styles.reservationPageInclusive}>
+                            <div className={styles.reservationPageContent}>
+                                <div className={styles.reservationPageFirstColumn}>
+                                    <div className={styles.reservationPageColumn} style={{width:'52px'}}>#</div>
+                                    <div className={styles.reservationPageColumn} style={{marginLeft:'5px',width:'220px'}}>Ad</div>
                                 </div>
-                            )}
+                                <div className={styles.reservationPageColumn} style={{width:'55px'}}>Yaş</div>
+                                <div className={styles.reservationPageColumn} style={{width:'86px'}}>Cinsiyet</div>
+                                <div className={styles.reservationPageColumn} style={{width:'140px'}}>Tarih</div>
+                                <div className={styles.reservationPageColumn} style={{width:'64px'}}>Saat</div>
+                                <div className={styles.reservationPageColumn} style={{width:'106px'}}>Durum</div>
+                            </div>
+                            <div className={styles.reservationPageContent}>
+                                <div className={styles.reservationPageFirstColumn}>
+                                    <div className={styles.reservationPageColumn} style={{width:'52px'}}>1</div>
+                                    <div className={styles.reservationPageColumn} style={{marginLeft:'5px',width:'220px',justifyContent:'flex-start', paddingLeft:'20px'}}>
+                                        <div className={styles.clientCard}>
+                                            <div>
+                                                <img className={styles.clientImg} src={account} alt={'asdasd'} width={45} height={45}></img>
+                                            </div>
+                                            <div className={styles.clientContent}>
+                                                <div className={styles.clientTitle} style={{marginLeft: '7px'}}>{`${'asdas'} ${'asdsadsd'}`}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className={styles.reservationPageColumn} style={{width:'55px'}}>{'daasd'}</div>
+                                <div className={styles.reservationPageColumn} style={{width:'86px',textAlign:'center'}}>{'asdasd'}</div>
+                                <div className={styles.reservationPageColumn} style={{width:'140px'}}>{'asdasdasd'}</div>
+                                <div className={styles.reservationPageColumn} style={{width:'64px'}}>{'sadsda'}</div>
+                                <div className={styles.reservationPageColumn} style={{width:'106px'}}>
+                                        <button className={styles.reservationPageBtnLogIn}>
+                                            <FeatherIcon icon='log-in' color='#00B383' size="15" stroke-width="2.5"/>
+                                        </button>
+                                </div>
+                            </div>
+                            {arrRes && arrRes.reservation && arrRes.reservation.map((item, index) => (
+                            <div className={styles.reservationPageContent}>
+                            <div className={styles.reservationPageFirstColumn}>
+                                <div className={styles.reservationPageColumn} style={{width:'52px'}}>{index==0 ? index+2 : index+1}</div>
+                                <div className={styles.reservationPageColumn} style={{marginLeft:'5px',width:'220px',justifyContent:'flex-start', paddingLeft:'20px'}}>
+                                    <div className={styles.clientCard}>
+                                        <div>
+                                            <img className={styles.clientImg} src={account} alt={item.client_id.surName} width={45} height={45}></img>
+                                        </div>
+                                        <div className={styles.clientContent}>
+                                            <div className={styles.clientTitle} style={{marginLeft: '7px'}}>{`${item.client_id.name} ${item.client_id.surName}`}</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className={styles.reservationPageColumn} style={{width:'55px'}}>{dateCalc(item.client_id.dateOfBirth)}</div>
+                            <div className={styles.reservationPageColumn} style={{width:'86px',textAlign:'center'}}>{item.client_id.sex}</div>
+                            <div className={styles.reservationPageColumn} style={{width:'140px'}}>{parseDate(item.day)}</div>
+                            <div className={styles.reservationPageColumn} style={{width:'64px'}}>{item.time}</div>
+                            <div className={styles.reservationPageColumn} style={{width:'106px'}}>
+                                {
+                                    new Date(item.day)>Date.now() ?
+                                    <button className={styles.reservationPageBtn}>
+                                        <FeatherIcon icon='x' color='#F0735A' size="15" stroke-width="2.5"/>
+                                    </button>:
+                                    (
+                                        timeChack ? 
+                                            <button className={styles.reservationPageBtnCheck}>
+                                                <FeatherIcon icon='check' color='#3e221c4d' size="15" stroke-width="2.5"/>
+                                            </button>:
+                                            (item.day=== new Date().toISOString().split('T')[0] ? 
+                                            <button className={styles.reservationPageBtn}>
+                                                <FeatherIcon icon='x' color='#F0735A' size="15" stroke-width="2.5"/>
+                                            </button>
+                                            :<button className={styles.reservationPageBtnCheck}>
+                                                <FeatherIcon icon='check' color='#3e221c4d' size="15" stroke-width="2.5"/>
+                                            </button>)
+                                    )
+                                }
+                            </div>
+                        </div>
+                        ))}
+                        </div>
+                        </div>
+                        <div className={styles.paginationDiv}>
+                            <div className={styles.paginatinBarTitle}>{`${arrRes.total} hastadan ${(counter*10)+1}-${(counter*10)+10>arrRes.total?arrRes.total:(counter*10)+10} arası gösteriliyor`}</div>
+                            <nav aria-label="Page navigation example">
+                                <ul className="pagination">
+                                    <li onClick={()=> {setCounter(counter-1);handleData(counter)}} className="page-item"><a className="page-link">Previous</a></li>
+                                    {Array.from({length: Math.ceil(arrRes.total/10)}, (_, i) => (
+                                        <li onClick={()=> handleData(i)} className="page-item"><a className="page-link">{i+1}</a></li>
+                                    ))}
+                                    <li onClick={()=> {setCounter(counter+1);handleData(counter)}} className="page-item"><a className="page-link">Next</a></li>
+                                </ul>
+                            </nav>
                         </div>
                     </div>
                 </div>
