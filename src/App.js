@@ -12,6 +12,7 @@ import Reservation from './component/Reservation/Reservation';
 import Comment from './component/Comment/Comment';
 import Pay from './component/Pay/Pay';
 import Deneme from './component/deneme/deneme';
+import Settings from './component/Settings/Settings';
 
 function App() {
   return (
@@ -29,6 +30,7 @@ function App() {
           <Route path="dashboard" element={<Dashboard />}></Route>
           <Route path="comment" element={<Comment />}></Route>
           <Route path="pay" element={<Pay />}></Route>
+          <Route path="setting" element={<Settings />}></Route>
           <Route path="reservation" element={<Reservation />}></Route>
           <Route path='meet' element={<Meet />}></Route>
           <Route path='deneme' element={<Deneme />}></Route>

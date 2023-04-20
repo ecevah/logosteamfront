@@ -27,6 +27,8 @@ import profil from '../../img/profile.svg';
 import profilpurple from '../../img/profilepurple.svg';
 import randevu from '../../img/rendevu.svg';
 import randevupurple from '../../img/randevupurple.svg';
+import book from '../../img/book.svg';
+import bookPurple from '../../img/purpleBook.svg';
  
 import verify from '../../api/verify';
 import axios from '../../api/axios';
@@ -51,12 +53,25 @@ export default function Dashboard(){
             ]
         }
     ]
+    const arrComment = [
+        {
+            "status": true,
+            "total":0,
+            "commentObjects":[
+                {
+                    "client_id": {
+                        "name" : "",
+                        "surName": ""
+                    },
+                    "comments" : ""
+                 }
+            ]
+        }
+    ]
 
     const [before, setBefore] = useState(arrClient);
     const [after, setAfter] = useState(arrClient);
-    const header = {
-        'x-access-token' : `${localStorage.getItem('token')}`
-    }
+    const [comment, setComment] = useState(arrComment);
 
     useEffect(()=>{
         Auth();
@@ -74,7 +89,7 @@ export default function Dashboard(){
         try {
           const res = await verify(token);
           if (res) {
-            const [beforeRes, afterRes] = await Promise.all([
+            const [beforeRes, afterRes, commentRes] = await Promise.all([
               axios.get(`/api/reservation/before?psyc_id=${id}`, {
                 headers: {
                   'x-access-token': token,
@@ -85,11 +100,18 @@ export default function Dashboard(){
                   'x-access-token': token,
                 },
               }),
+              axios.get(`/api/comment/find?psyc_id=${id}`, {
+                headers: {
+                    'x-access-token': token
+                }
+              })
             ]);
             const beforeData = beforeRes.data;
             const afterData = afterRes.data;
+            const commentData = commentRes.data;
             await setAfter(afterData);
             await setBefore(beforeData);
+            await setComment(commentData);
             setPost(true);
           } else {
             navigate('/login');
@@ -104,7 +126,7 @@ export default function Dashboard(){
     const arrHeader = [
         {
             text:'Ön Panel',
-            href:'',
+            href:'/dashboard',
             active: 'active',
             icon: onpanel,
             purple: onpanelpurple
@@ -138,29 +160,6 @@ export default function Dashboard(){
             icon: profil,
             purple: profilpurple
         }
-    ]
-
-    const arrYorum = [
-        {
-            text: "Size tedavi sürecim boyunca sunduğunuz profesyonel ve kişisel yaklaşımınız için çok teşekkür ederim. Sizi tanımak ve çalışmak için bir şansım olduğu için çok mutluyum. Sadece birkaç seans sonra bile, kendimi daha iyi hissetmeye başladım ve bu tamamen sizin güven veren tutumunuz ve uzmanlığınız sayesinde oldu. Danışanlarınızla gerçekten empati kurabilen, ihtiyaçlarına saygı gösteren ve onlara samimi bir şekilde yardımcı olabilen çok az doktor var. Size tavsiye etmek için yeterli söz yok. Kendinize mümkün olan en iyi şekilde bakmak için her şeyi yapıyorsunuz ve beni ve diğer hastalarınızı da aynı şekilde tedavi ediyorsunuz.",
-            name: "Ayşe Candan"
-        },
-        {
-            text: "Size tedavi sürecim boyunca sunduğunuz profesyonel ve kişisel yaklaşımınız için çok teşekkür ederim. Sizi tanımak ve çalışmak için bir şansım olduğu için çok mutluyum. Sadece birkaç seans sonra bile, kendimi daha iyi hissetmeye başladım ve bu tamamen sizin güven veren tutumunuz ve uzmanlığınız sayesinde oldu. Danışanlarınızla gerçekten empati kurabilen, ihtiyaçlarına saygı gösteren ve onlara samimi bir şekilde yardımcı olabilen çok az doktor var. Size tavsiye etmek için yeterli söz yok. Kendinize mümkün olan en iyi şekilde bakmak için her şeyi yapıyorsunuz ve beni ve diğer hastalarınızı da aynı şekilde tedavi ediyorsunuz.",
-            name: "Candan"
-        },
-        {
-            text: "Size tedavi sürecim boyunca sunduğunuz profesyonel ve kişisel yaklaşımınız için çok teşekkür ederim. Sizi tanımak ve çalışmak için bir şansım olduğu için çok mutluyum. Sadece birkaç seans sonra bile, kendimi daha iyi hissetmeye başladım ve bu tamamen sizin güven veren tutumunuz ve uzmanlığınız sayesinde oldu. Danışanlarınızla gerçekten empati kurabilen, ihtiyaçlarına saygı gösteren ve onlara samimi bir şekilde yardımcı olabilen çok az doktor var. Size tavsiye etmek için yeterli söz yok. Kendinize mümkün olan en iyi şekilde bakmak için her şeyi yapıyorsunuz ve beni ve diğer hastalarınızı da aynı şekilde tedavi ediyorsunuz.",
-            name: "Ali"
-        },
-        {
-            text: "Size tedavi sürecim boyunca sunduğunuz profesyonel ve kişisel yaklaşımınız için çok teşekkür ederim. Sizi tanımak ve çalışmak için bir şansım olduğu için çok mutluyum. Sadece birkaç seans sonra bile, kendimi daha iyi hissetmeye başladım ve bu tamamen sizin güven veren tutumunuz ve uzmanlığınız sayesinde oldu. Danışanlarınızla gerçekten empati kurabilen, ihtiyaçlarına saygı gösteren ve onlara samimi bir şekilde yardımcı olabilen çok az doktor var. Size tavsiye etmek için yeterli söz yok. Kendinize mümkün olan en iyi şekilde bakmak için her şeyi yapıyorsunuz ve beni ve diğer hastalarınızı da aynı şekilde tedavi ediyorsunuz.",
-            name: "Veli"
-        },
-        {
-            text: "Size tedavi sürecim boyunca sunduğunuz profesyonel ve kişisel yaklaşımınız için çok teşekkür ederim. Sizi tanımak ve çalışmak için bir şansım olduğu için çok mutluyum. Sadece birkaç seans sonra bile, kendimi daha iyi hissetmeye başladım ve bu tamamen sizin güven veren tutumunuz ve uzmanlığınız sayesinde oldu. Danışanlarınızla gerçekten empati kurabilen, ihtiyaçlarına saygı gösteren ve onlara samimi bir şekilde yardımcı olabilen çok az doktor var. Size tavsiye etmek için yeterli söz yok. Kendinize mümkün olan en iyi şekilde bakmak için her şeyi yapıyorsunuz ve beni ve diğer hastalarınızı da aynı şekilde tedavi ediyorsunuz.",
-            name: "Deli"
-        },
     ]
 
     const arrSponsor = [
@@ -216,9 +215,9 @@ export default function Dashboard(){
         </div>
         <section className={styles.headerSection}>
             <div className={`${styles.headerInclusive} ${layout.containerDashboard}`}>
-                <div>
+                <button onClick={()=> navigate("/dashboard")}>
                     <img src={logosLogo} height={58} width={115} alt='logos'></img>
-                </div>
+                </button>
                 <div>
                     <button onClick={()=>setOpen(!open)}>
                         <FeatherIcon icon={open ? 'x' : 'menu'} color='#858585' size="20" stroke-width="2.5"/>
@@ -347,14 +346,14 @@ export default function Dashboard(){
                             </div>
                             <div>
                                 <Slider {...settings}>
-                                    {arrYorum.map((item) => 
+                                    {comment && comment.commentObjects && comment.commentObjects.map((item) => (
                                         <div>
                                             <div>
-                                                <div className={styles.carouselText}>{`“${item.text}”`}</div>
-                                                <div className={styles.carouselName}>{`- ${item.name}`}</div>
+                                                <div className={styles.carouselText}>{`“${item.comments}”`}</div>
+                                                <div className={styles.carouselName}>{`- ${item.client_id.name} ${item.client_id.surName}`}</div>
                                             </div>
                                         </div>
-                                    )}
+                                    ))}
                                 </Slider>
                             </div>
                         </div>

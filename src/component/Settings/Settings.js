@@ -1,7 +1,6 @@
 import React, {useState, useEffect} from 'react'
 import FeatherIcon from 'feather-icons-react';
 
-
 import {useNavigate} from 'react-router-dom';
 
 import styles from '../../styles/Dashboard.module.scss';
@@ -38,23 +37,20 @@ export default function Dashboard(){
     const arrClient =
         {
             "status": true,
+            "comments": "",
             "total": 0,
-            "reservation": [
-                {
-                    "day": "",
-                    "client_id": {
-                        "name": "",
-                        "surName": "",
-                    }
+            "client_id": {
+                "_id":"",
+                "name": "",
+                "surName": "",
                 }
-            ]
         }
 
     const [arrRes, setArrRes] = useState(arrClient);
 
     useEffect(()=>{
         Auth();
-    })
+    },[])
 
     const Auth = async () => {
         const token = localStorage.getItem('token');
@@ -68,13 +64,6 @@ export default function Dashboard(){
         try {
             const res = await verify(token);
             if (res) {
-              const resApi = await axios.get(`/api/reservation/find?psyc_id=${id}&limit=9`, {
-                  headers: {
-                    'x-access-token': token,
-                  },
-                });
-              await setArrRes(resApi.data);
-              console.log(arrRes)
               setPost(true);
             } else {
               navigate('/login');
@@ -104,7 +93,7 @@ export default function Dashboard(){
         {
             text:'Hasta Ödemeleri',
             href:'/pay',
-            active: 'active',
+            active: '',
             icon: odeme,
             purple: odemepurple
         },
@@ -118,7 +107,7 @@ export default function Dashboard(){
         {
             text:'Profil Ayarları',
             href:'/setting',
-            active: '',
+            active: 'active',
             icon: profil,
             purple: profilpurple
         }
@@ -146,43 +135,6 @@ export default function Dashboard(){
             alt: 'kyk'
         }
     ]
-
-    const parseDate = (date) => {
-        const newParse = date.split("-");
-        const newDate = newParse[2] + "." + newParse[1] + "." + newParse[0];
-        return newDate;
-    }
-
-    /*const dateCalc = (date) => {
-        const birth = new Date(date);
-        const now = Date.now();
-        const diff = now - birth.getTime();
-        const age = Math.floor(diff / (1000 * 60 * 60 * 24 * 365.25));
-        return age;
-    }
-
-    const timeChack = (itemTime) => {
-        const currentTime = new Date();
-        const itemHour = parseInt(itemTime.split('.')[0]);
-        const itemMinute = parseInt(itemTime.split('.')[1]);
-        const itemDateTime = new Date(currentTime.getFullYear(), currentTime.getMonth(), currentTime.getDate(), itemHour, itemMinute);
-        if (itemDateTime > currentTime) {
-            return true
-        } else {
-            return false
-        }
-    }*/
-
-    const handleData = async (page) => {
-        const resApi = await axios.get(`/api/reservation/find?psyc_id=${localStorage.getItem('id')}&limit=${(page*10)+9}&skip=${page*10}`, {
-            headers: {
-              'x-access-token': localStorage.getItem('token'),
-            },
-          });
-          console.log(resApi);
-        await setArrRes(resApi.data);
-        await setCounter(page);
-    }
     return (
     <>
         <div className={post ? styles.none : styles.isLoading}>
@@ -247,77 +199,42 @@ export default function Dashboard(){
                     </div>
                 </div>
             </div>
-            <div className={styles.section}>
-                <div className={`${styles.inclusive}`}>
-                    <div className={styles.contentInclusive}>
-                        <div className={styles.sideContent}>
-                            <div className={styles.profilCard}>
-                                <div>
-                                    <img className={styles.profilImg} src={account} alt='account'></img>
-                                </div>
-                                <div className={styles.profilContent}>
-                                    <div className={styles.profilName}>{`${localStorage.getItem('unvan')} ${localStorage.getItem('name')} ${localStorage.getItem('surname')}`}</div>
-                                    <div className={styles.profilTag}>{`${localStorage.getItem('tag')}`}</div>
-                                </div>
+            <section className={styles.settingSection}>
+                <div className={styles.settingInclusive}>
+                    <div className={styles.settingTitle}>Kişi Bilgileri</div>
+                    <div className={styles.settingImgInclusive}>
+                        <img src={logosLogo} height={58} width={115} alt='logos'></img>
+                        <div className={styles.settingImgTitleInclusive}>
+                            <div className={styles.settingImgContent}>
+                                <div className={styles.settingImgTitle}>Fotoğrafını Yükle</div>
+                                <div className={styles.settingImgText}>En iyi sonuçlar için en çok 256px*256px boyutunda görsel yükleyiniz.</div>
                             </div>
-                        </div>
-                        <div className={styles.title}>{`Hasta Ödemeleri`}</div>
-                        <div className={styles.overflowdiv}>
-                        <div className={styles.reservationPageInclusive}>
-                            <div className={styles.reservationPageContent}>
-                                <div className={styles.reservationPageFirstColumn}>
-                                    <div className={styles.reservationPageColumn} style={{width:'52px'}}>#</div>
-                                    <div className={styles.reservationPageColumn} style={{marginLeft:'5px',width:'220px'}}>Ad</div>
-                                </div>
-                                <div className={styles.reservationPageColumn} style={{width:'86px'}}>Ücret</div>
-                                <div className={styles.reservationPageColumn} style={{width:'140px'}}>Tarih</div>
-                                <div className={styles.reservationPageColumn} style={{width:'64px'}}>Saat</div>
-                                <div className={styles.reservationPageColumn} style={{width:'106px'}}>Durum</div>
-                                <div style={{width:'154px'}}></div>
+                            <div className={styles.settingImgButtonDiv}>
+                                <button className={styles.settingImgBtnP}>Yükle</button>
+                                <button className={styles.settingImgBtnL}>Kaldır</button>
                             </div>
-                            {arrRes && arrRes.reservation && arrRes.reservation.map((item, index) => (
-                            <div className={styles.reservationPageContent}>
-                            <div className={styles.reservationPageFirstColumn}>
-                                <div className={styles.reservationPageColumn} style={{width:'52px'}}>{index+1}</div>
-                                <div className={styles.reservationPageColumn} style={{marginLeft:'5px',width:'220px',justifyContent:'flex-start', paddingLeft:'20px'}}>
-                                    <div className={styles.clientCard}>
-                                        <div>
-                                            <img className={styles.clientImg} src={account} alt={item.client_id.surName} width={45} height={45}></img>
-                                        </div>
-                                        <div className={styles.clientContent}>
-                                            <div className={styles.clientTitle} style={{marginLeft: '7px'}}>{`${item.client_id.name} ${item.client_id.surName}`}</div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className={styles.reservationPageColumn} style={{width:'86px',textAlign:'center'}}>249.90₺</div>
-                            <div className={styles.reservationPageColumn} style={{width:'140px'}}>{parseDate(item.day)}</div>
-                            <div className={styles.reservationPageColumn} style={{width:'64px'}}>{item.time}</div>
-                            <div className={styles.reservationPageColumn} style={{width:'116px'}}>
-                                <div className={styles.reservationPayCheck}>Ödenmiş</div>
-                            </div>
-                            <div className={styles.reservationPageColumn} style={{width:'147px'}}>
-                                <button className={styles.reservationPageShow}>Faturayı Görüntüle</button>
-                            </div>
-                        </div>
-                        ))}
-                        </div>
-                        </div>
-                        <div className={styles.paginationDiv}>
-                            <div className={styles.paginatinBarTitle}>{`${arrRes.total} hastadan ${(counter*10)+1}-${(counter*10)+10>arrRes.total?arrRes.total:(counter*10)+10} arası gösteriliyor`}</div>
-                            <nav aria-label="Page navigation example">
-                                <ul className="pagination">
-                                    <li onClick={()=> {setCounter(counter-1);handleData(counter)}} className="page-item"><a className="page-link">Önceki</a></li>
-                                    {Array.from({length: Math.ceil(arrRes.total/10)}, (_, i) => (
-                                        <li onClick={()=> handleData(i)} className={i===counter ? `page-item active` : 'page-item'}><a className="page-link">{i+1}</a></li>
-                                    ))}
-                                    <li onClick={()=> {setCounter(counter+1);handleData(counter)}} className="page-item"><a className="page-link">Sonraki</a></li>
-                                </ul>
-                            </nav>
                         </div>
                     </div>
+                    <form>
+                        <div>
+                            <div>
+                                <label></label>
+                                <input></input>
+                                <label></label>
+                                <input></input>
+                            </div>
+                            <div>
+                                <label></label>
+                                <input></input>
+                                <label></label>
+                                <input></input>
+                            </div>
+                        </div>
+                        <button></button>
+                    </form>
                 </div>
-            </div>
+                <div></div>
+            </section>
         </section>
     </>
   )

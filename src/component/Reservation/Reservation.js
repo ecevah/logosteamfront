@@ -24,20 +24,15 @@ import profil from '../../img/profile.svg';
 import profilpurple from '../../img/profilepurple.svg';
 import randevu from '../../img/rendevu.svg';
 import randevupurple from '../../img/randevupurple.svg';
+import book from '../../img/book.svg';
 
 import verify from '../../api/verify';
 import axios from '../../api/axios';
-
-const PAGE_SIZE = 10;
 
 export default function Dashboard(){
     const navigate = useNavigate();
     const [post,setPost]=useState(null);
     const [counter, setCounter] = useState(0);
-
-    const header = {
-        'x-access-token' : `${localStorage.getItem('token')}`
-    }
 
     const arrClient =
         {
@@ -92,7 +87,7 @@ export default function Dashboard(){
     const arrHeader = [
         {
             text:'Ön Panel',
-            href:'',
+            href:'/dashboard',
             active: '',
             icon: onpanel,
             purple: onpanelpurple
@@ -188,17 +183,6 @@ export default function Dashboard(){
         await setCounter(page);
     }
 
-    const [currentPage, setCurrentPage] = useState(1);
-    const totalPages = Math.ceil(arrRes.reservation.length / PAGE_SIZE);
-  
-    const paginatedReservations = arrRes.reservation.slice(
-      (currentPage - 1) * PAGE_SIZE,
-      currentPage * PAGE_SIZE
-    );
-  
-    const handlePageClick = (pageNumber) => {
-        setCurrentPage(pageNumber);
-    };
     return (
     <>
         <div className={post ? styles.none : styles.isLoading}>
@@ -207,9 +191,9 @@ export default function Dashboard(){
         </div>
         <section className={styles.headerSection}>
             <div className={`${styles.headerInclusive} ${layout.containerDashboard}`}>
-                <div>
+                <button onClick={()=> navigate("/dashboard")}>
                     <img src={logosLogo} height={58} width={115} alt='logos'></img>
-                </div>
+                </button>
                 <div>
                     <button onClick={()=>setOpen(!open)}>
                         <FeatherIcon icon={open ? 'x' : 'menu'} color='#858585' size="20" stroke-width="2.5"/>
@@ -318,7 +302,7 @@ export default function Dashboard(){
                             {arrRes && arrRes.reservation && arrRes.reservation.map((item, index) => (
                             <div className={styles.reservationPageContent}>
                             <div className={styles.reservationPageFirstColumn}>
-                                <div className={styles.reservationPageColumn} style={{width:'52px'}}>{index==0 ? index+2 : index+1}</div>
+                                <div className={styles.reservationPageColumn} style={{width:'52px'}}>{index===0 ? index+2 : index+1}</div>
                                 <div className={styles.reservationPageColumn} style={{marginLeft:'5px',width:'220px',justifyContent:'flex-start', paddingLeft:'20px'}}>
                                     <div className={styles.clientCard}>
                                         <div>
@@ -363,11 +347,11 @@ export default function Dashboard(){
                             <div className={styles.paginatinBarTitle}>{`${arrRes.total} hastadan ${(counter*10)+1}-${(counter*10)+10>arrRes.total?arrRes.total:(counter*10)+10} arası gösteriliyor`}</div>
                             <nav aria-label="Page navigation example">
                                 <ul className="pagination">
-                                    <li onClick={()=> {setCounter(counter-1);handleData(counter)}} className="page-item"><a className="page-link">Previous</a></li>
+                                    <li onClick={()=> {setCounter(counter-1);handleData(counter)}} className="page-item"><a className="page-link">Önceki</a></li>
                                     {Array.from({length: Math.ceil(arrRes.total/10)}, (_, i) => (
-                                        <li onClick={()=> handleData(i)} className="page-item"><a className="page-link">{i+1}</a></li>
+                                        <li onClick={()=> handleData(i)} className={i===counter ? `page-item active` : 'page-item'}><a className="page-link">{i+1}</a></li>
                                     ))}
-                                    <li onClick={()=> {setCounter(counter+1);handleData(counter)}} className="page-item"><a className="page-link">Next</a></li>
+                                    <li onClick={()=> {setCounter(counter+1);handleData(counter)}} className="page-item"><a className="page-link">Sonraki</a></li>
                                 </ul>
                             </nav>
                         </div>

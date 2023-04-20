@@ -155,3 +155,44 @@ section{
       zoom: 1.2;
     }
 }
+
+.pagination .page-link{
+  color:#212529;
+  border-color: #DEE2E6;
+}
+
+.page-item.active a.page-link{
+  background: rgba(140, 16, 184, 0.1);
+  color: #8C10B8;
+}
+
+#join{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+}
+#leave{
+  position: absolute;
+  bottom: 50px;
+  left: 50%;
+  z-index: 10;
+  width: 123.21px;
+  height: 124.26px;
+  background: #FB0242;
+  backdrop-filter: blur(167.637px);
+  border-radius: 33.5274px;
+  padding: 26px;
+}
+
+#photo{
+  position: absolute;
+  top: 50px;
+  left: 5%;
+  z-index: 10;
+  width: 123.21px;
+  height: 124.26px;
+  background: #FB0242;
+  backdrop-filter: blur(167.637px);
+  border-radius: 33.5274px;
+  padding: 26px;
+}
