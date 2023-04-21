@@ -27,8 +27,6 @@ import profil from '../../img/profile.svg';
 import profilpurple from '../../img/profilepurple.svg';
 import randevu from '../../img/rendevu.svg';
 import randevupurple from '../../img/randevupurple.svg';
-import book from '../../img/book.svg';
-import bookPurple from '../../img/purpleBook.svg';
  
 import verify from '../../api/verify';
 import axios from '../../api/axios';
@@ -239,7 +237,7 @@ export default function Dashboard(){
                     <div className={styles.sideContent}>
                         <div className={styles.profilCard}>
                             <div>
-                                <img className={styles.profilImg} src={account} alt='account'></img>
+                                <img className={styles.profilImg} src={`http://20.251.25.72:3001/uploads/${localStorage.getItem('img')}`} alt='account' width={80} height={80}></img>
                             </div>
                             <div className={styles.profilContent}>
                                 <div className={styles.profilName}>{`${localStorage.getItem('unvan')} ${localStorage.getItem('name')} ${localStorage.getItem('surname')}`}</div>
@@ -288,23 +286,23 @@ export default function Dashboard(){
                             </div>
                             <div className="container">
                                 <div className="row row-cols-lg-3 row-cols-1">
-                                {before && before.reservation && before.reservation.map((item)=>
-                                    <button className={`col ${styles.mobileRow}`}>
-                                        <div className={styles.clientCard}>
-                                            <div>
-                                                <img className={styles.clientImg} src={account} alt={item.client_id.name} width={45} height={45}></img>
+                                    {before && before.reservation && before.reservation.map((item)=>
+                                        <button className={`col ${styles.mobileRow}`}>
+                                            <div className={styles.clientCard}>
+                                                <div>
+                                                    <img className={styles.clientImg} src={account} alt={item.client_id.name} width={45} height={45}></img>
+                                                </div>
+                                                <div className={styles.clientContent}>
+                                                    <div className={styles.clientTitle}>{item.client_id.name}</div>
+                                                    <div className={styles.clientText}>{`Rezervasyon ${parseDate(item.day)}`}</div>
+                                                    <div className={styles.clientText}>{item.time}</div>
+                                                </div>
                                             </div>
-                                            <div className={styles.clientContent}>
-                                                <div className={styles.clientTitle}>{item.client_id.name}</div>
-                                                <div className={styles.clientText}>{`Rezervasyon ${parseDate(item.day)}`}</div>
-                                                <div className={styles.clientText}>{item.time}</div>
+                                            <div className={styles.mobileRowDiv}>
+                                                <FeatherIcon icon='chevron-right' color='#858585' size="15" stroke-width="2.5"/>
                                             </div>
-                                        </div>
-                                        <div className={styles.mobileRowDiv}>
-                                            <FeatherIcon icon='chevron-right' color='#858585' size="15" stroke-width="2.5"/>
-                                        </div>
-                                    </button>
-                                )}
+                                        </button>
+                                    )}
                                 </div>
                             </div>
                         </div>

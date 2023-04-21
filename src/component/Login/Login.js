@@ -4,6 +4,8 @@ import logosLogo from '../../img/logosLogoLight.svg';
 import FeatherIcon from 'feather-icons-react';
 import axios from '../../api/axios';
 import {useNavigate} from 'react-router-dom';
+import Swal from 'sweetalert2'
+
 
 export default function Login() {
     const navigate = useNavigate();
@@ -24,18 +26,31 @@ export default function Login() {
             if(response.data.status){
                 localStorage.setItem('id',response.data.psychologist._id);
                 localStorage.setItem('token', response.data.token);
-                console.log('patladı')
+                await Swal.fire({
+                    icon: 'success',
+                    title: 'Giriş Başarılı',
+                    text: 'Dashboarda Yönlendiriliyorsun',
+                    confirmButtonColor: '#8C10B8',
+                    confirmButtonText: 'Tamam'
+                })
                 navigate("/dashboard");
-                console.log('patlamadı')
             } 
             else{
                 console.log('Başarısız');
-                alert('Hata oluştu');
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Oops...',
+                    text: 'Mail ya da Şifre Hatalı',
+                    footer: '<a href="/signup">Hesabınız Yok Mu?</a>'
+                })
             }
         }
         catch(err){
-            alert('Hata oluştu');
-            navigate("/login");
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Bir Şeyler Yanlış Gitti',
+              })
         }
         
     }

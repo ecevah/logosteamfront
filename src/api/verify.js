@@ -17,6 +17,7 @@ const verify = async (token) => {
                 localStorage.setItem('surname', res.data.decoded.psychologist.surName);
                 localStorage.setItem('unvan', res.data.decoded.psychologist.unvan);
                 localStorage.setItem('tag', res.data.decoded.psychologist.tag[0]);
+                localStorage.setItem('img', res.data.decoded.psychologist.image);
                 return true;
             }else{
                 return false;

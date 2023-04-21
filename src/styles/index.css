@@ -196,3 +196,14 @@ section{
   border-radius: 33.5274px;
   padding: 26px;
 }
+
+.payTotalText{
+  font-family: "Inter";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 13.7581px;
+  line-height: 21px;
+  display: flex;
+  align-items: center;
+  color: #212529
+}

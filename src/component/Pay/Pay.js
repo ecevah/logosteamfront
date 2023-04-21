@@ -267,8 +267,6 @@ export default function Dashboard(){
                                 <div className={styles.reservationPageColumn} style={{width:'86px'}}>Ücret</div>
                                 <div className={styles.reservationPageColumn} style={{width:'140px'}}>Tarih</div>
                                 <div className={styles.reservationPageColumn} style={{width:'64px'}}>Saat</div>
-                                <div className={styles.reservationPageColumn} style={{width:'106px'}}>Durum</div>
-                                <div style={{width:'154px'}}></div>
                             </div>
                             {arrRes && arrRes.reservation && arrRes.reservation.map((item, index) => (
                             <div className={styles.reservationPageContent}>
@@ -288,14 +286,15 @@ export default function Dashboard(){
                             <div className={styles.reservationPageColumn} style={{width:'86px',textAlign:'center'}}>249.90₺</div>
                             <div className={styles.reservationPageColumn} style={{width:'140px'}}>{parseDate(item.day)}</div>
                             <div className={styles.reservationPageColumn} style={{width:'64px'}}>{item.time}</div>
-                            <div className={styles.reservationPageColumn} style={{width:'116px'}}>
-                                <div className={styles.reservationPayCheck}>Ödenmiş</div>
-                            </div>
-                            <div className={styles.reservationPageColumn} style={{width:'147px'}}>
-                                <button className={styles.reservationPageShow}>Faturayı Görüntüle</button>
-                            </div>
                         </div>
                         ))}
+                        <div className={styles.payTotalIncslusive} style={{display:'flex',justifyContent:'flex-end', width:'100%', marginTop:'20px'}}>
+                            <div className={styles.payTotalContent}>
+                                <div className='payTotalText' >{`Toplam Tutar: ${(arrRes.total*249.90).toFixed(2)}TL`}</div>
+                                <div className='payTotalText'>{`Komisyon Tutarı (%12): ${((arrRes.total*249.90)*0.12).toFixed(2)}TL`}</div>
+                                <div className='payTotalText'>{`Net Tutar: ${((arrRes.total*249.90)*0.88).toFixed(2)}TL`}</div>
+                            </div>
+                        </div>
                         </div>
                         </div>
                         <div className={styles.paginationDiv}>

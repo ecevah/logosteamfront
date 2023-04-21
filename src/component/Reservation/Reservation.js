@@ -24,7 +24,6 @@ import profil from '../../img/profile.svg';
 import profilpurple from '../../img/profilepurple.svg';
 import randevu from '../../img/rendevu.svg';
 import randevupurple from '../../img/randevupurple.svg';
-import book from '../../img/book.svg';
 
 import verify from '../../api/verify';
 import axios from '../../api/axios';
@@ -157,13 +156,19 @@ export default function Dashboard(){
 
     const timeChack = (itemTime) => {
         const currentTime = new Date();
-        const itemHour = parseInt(itemTime.split('.')[0]);
+        currentTime.setTime(currentTime.getTime() + 3 * 60 * 60 * 1000);
+        let itemHourAfter = parseInt(itemTime.split('.')[0]);
+        itemHourAfter===23?itemHourAfter=0:itemHourAfter=itemHourAfter+1;
+        const itemHourBefore = (parseInt(itemTime.split('.')[0]));
         const itemMinute = parseInt(itemTime.split('.')[1]);
-        const itemDateTime = new Date(currentTime.getFullYear(), currentTime.getMonth(), currentTime.getDate(), itemHour, itemMinute);
-        if (itemDateTime > currentTime) {
-            return true
-        } else {
-            return false
+        const itemDateTimeAfter = new Date(currentTime.getFullYear(), currentTime.getMonth(), currentTime.getDate(), itemHourAfter, itemMinute);
+        const itemDateTime = new Date(currentTime.getFullYear(), currentTime.getMonth(), currentTime.getDate(), itemHourBefore, itemMinute);
+        if (itemDateTimeAfter >= currentTime && currentTime >= itemDateTime) {
+            return 'active'
+        }else if(currentTime>itemDateTime) {
+            return 'after'
+        }else{
+            return 'before'
         }
     }
 
@@ -320,17 +325,25 @@ export default function Dashboard(){
                                         <FeatherIcon icon='x' color='#F0735A' size="15" stroke-width="2.5"/>
                                     </button>:
                                     (
-                                        timeChack ? 
+                                        item.day=== new Date().toISOString().split('T')[0] ? 
+                                            (timeChack==='active'?
+                                                <button className={styles.reservationPageBtnLogIn}>
+                                                    <FeatherIcon icon='log-in' color='#00B383' size="15" stroke-width="2.5"/>
+                                                    1
+                                                </button>: (timeChack==='before'?
+                                                       <button className={styles.reservationPageBtn}>
+                                                            <FeatherIcon icon='x' color='#F0735A' size="15" stroke-width="2.5"/>
+                                                        </button>:
+                                                        <button className={styles.reservationPageBtnCheck}>
+                                                            <FeatherIcon icon='check' color='#3e221c4d' size="15" stroke-width="2.5"/>
+                                                            3
+                                                        </button>
+                                                )
+                                            ):
                                             <button className={styles.reservationPageBtnCheck}>
                                                 <FeatherIcon icon='check' color='#3e221c4d' size="15" stroke-width="2.5"/>
-                                            </button>:
-                                            (item.day=== new Date().toISOString().split('T')[0] ? 
-                                            <button className={styles.reservationPageBtn}>
-                                                <FeatherIcon icon='x' color='#F0735A' size="15" stroke-width="2.5"/>
+                                                4
                                             </button>
-                                            :<button className={styles.reservationPageBtnCheck}>
-                                                <FeatherIcon icon='check' color='#3e221c4d' size="15" stroke-width="2.5"/>
-                                            </button>)
                                     )
                                 }
                             </div>

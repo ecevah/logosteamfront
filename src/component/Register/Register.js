@@ -4,6 +4,7 @@ import logosLogo from '../../img/logosLogoLight.svg';
 import FeatherIcon from 'feather-icons-react';
 import axios from '../../api/axios';
 import {useNavigate} from 'react-router-dom';
+import Swal from 'sweetalert2'
 
 export default function Register() {
     const navigate = useNavigate();
@@ -30,27 +31,27 @@ export default function Register() {
     
     const arrTag = [
         {
-            tag: '1',
+            tag: 'Obsesif-Kompulsif Bozukluk',
             test: tag1
         },
         {
-            tag: '2',
+            tag: 'Tramva Sonrası Stres Bozukluğu',
             test: tag2
         },
         {
-            tag: '3',
+            tag: 'Bipolar Bozukluk',
             test: tag3
         },
         {
-            tag: '4',
+            tag: 'Ergen Psikoloji',
             test: tag4
         },
         {
-            tag: '5',
+            tag: 'Sosyal Fobi',
             test: tag5
         },
         {
-            tag: '6',
+            tag: 'Depresyon',
             test: tag6
         }
     ]
@@ -65,20 +66,51 @@ export default function Register() {
         arrTag.map((item)=>
             item.test === true ? arr.push(item.tag) : null
         );
-        const payload = {
-            name: name,
-            surname: surname,
-            pass: pass,
-            tag: arr,
-            unvan: unvan,
-            tecrübe: tecrübe,
-            image: file,
-            email: mail
-        }
+        const formData = new FormData();
+        formData.append('name', name);
+        formData.append('surname', surname);
+        formData.append('pass', pass);
+        formData.append('tag', arr);
+        formData.append('unvan', unvan);
+        formData.append('tecrübe', tecrübe);
+        formData.append('image', file);
+        formData.append('email', mail);
         try{
-            await axios.post('/api/psyc/add',payload);
-            navigate("/login");
+
+            const response = await axios.post('/api/psyc/add', formData, {
+                headers: {
+                  'Content-Type': 'multipart/form-data',
+                  'x-access-token' : localStorage.getItem('token')
+                }
+              });
+            if(response.data.status){
+                await Swal.fire({
+                    icon: 'success',
+                    title: 'Başarılı',
+                    text: 'Login Ekranına Yönlendiriliyorsun',
+                    confirmButtonColor: '#8C10B8',
+                    confirmButtonText: 'Tamam'
+            })
+                navigate("/login");
+            } 
+            else{
+                console.log('Başarısız');
+                Swal.fire({
+                    icon: 'warning',
+                    title: 'Oops...',
+                    text: 'Boşlukları Doğru Doldurduğundan Emin Ol!',
+                    confirmButtonColor: '#8C10B8',
+                    confirmButtonText: 'Tamam'
+                })
+            }
         } catch (err) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Bir Şeyler Yanlış Gitti',
+                confirmButtonColor: '#8C10B8',
+                confirmButtonText: 'Tamam'
+            })
             return err
         }
     }
@@ -173,29 +205,29 @@ export default function Register() {
                     <div className={styles.starText}>*</div>
                 </div>
                 <div className='row row-cols-2'>
-                    <div className='col'>
+                    <div className='col d-flex align-items-center'>
                         <input type='checkbox' style={{marginRight:'6px'}} id='check' className={styles.check} onChange={()=> setTag1(!tag1)}></input>
-                        <label>Psikoloji</label>
+                        <label style={{width:'150px'}}>Obsesif- Kompulsif Bozukluk</label>
                     </div>
-                    <div className='col'>
+                    <div className='col d-flex align-items-center'>
                         <input type='checkbox' style={{marginRight:'6px'}} id='check' className={styles.check} onChange={()=> setTag2(!tag2)}></input>
-                        <label>Psikoloji</label>
+                        <label style={{width:'150px'}}>Tramva Sonrası Stres Bozukluğu</label>
                     </div>
-                    <div className='col'>
+                    <div className='col d-flex align-items-center'>
                         <input type='checkbox' style={{marginRight:'6px'}} id='check' className={styles.check} onChange={()=> setTag3(!tag3)}></input>
-                        <label>Psikoloji</label>
+                        <label>Bipolar Bozukluk</label>
                     </div>
-                    <div className='col'>
+                    <div className='col d-flex align-items-center'>
                         <input type='checkbox' style={{marginRight:'6px'}} id='check' className={styles.check} onChange={()=> setTag4(!tag4)}></input>
-                        <label>Psikoloji</label>
+                        <label>Ergen Psikoloji</label>
                     </div>
-                    <div className='col'>
+                    <div className='col d-flex align-items-center'>
                         <input type='checkbox' style={{marginRight:'6px'}} id='check' className={styles.check} onChange={()=> setTag5(!tag5)}></input>
-                        <label>Psikoloji</label>
+                        <label>Sosyal Fobi</label>
                     </div>
-                    <div className='col'>
+                    <div className='col d-flex align-items-center'>
                         <input type='checkbox' style={{marginRight:'6px'}} id='check' className={styles.check} onChange={()=> setTag6(!tag6)}></input>
-                        <label>Psikoloji</label>
+                        <label>Depresyon</label>
                     </div>
                 </div>
                 <div className={styles.image}>
