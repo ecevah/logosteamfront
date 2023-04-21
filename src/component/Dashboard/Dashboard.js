@@ -81,11 +81,6 @@ export default function Dashboard(){
         const token = localStorage.getItem('token');
         const id = localStorage.getItem('id');
       
-        if (!token || !id) {
-          navigate('/login');
-          return;
-        }
-      
         try {
           const res = await verify(token);
           if (res) {

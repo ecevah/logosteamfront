@@ -18,11 +18,6 @@ export default function Meeting(){
         const token = localStorage.getItem('token');
         const id = localStorage.getItem('id');
       
-        if (!token || !id) {
-          navigate('/login');
-          return;
-        }
-      
         try {
             const res = await verify(token);
             if (res) {
@@ -43,7 +38,7 @@ export default function Meeting(){
     // Set the channel name.
     channel: 'wdj',
     // Pass your temp token here.
-    token: '007eJxTYPj+9r7p/rCCMvaKjH4zs95Y4cQfj/IvRLwLP/HUay13ApcCg2FSommqkaWpmZmhhUmiiVGiuZm5qYGFeVpSYlpyYppFtIpjSkMgI0PpqROMjAwQCOIzM5SnZDEwAABGgh8n',
+    token: '007eJxTYGCZ9/onT5tfU03t/d+nLrc3Z/dOXv47wPyizBI1pSnnxDYoMBgmJZqmGlmampkZWpgkmhglmpuZmxpYmKclJaYlJ6ZZSLU6pTQEMjKkyyxgYIRCEJ+ZoTwli4EBAIvDH3g=',
     // Set the user ID.
     uid: 0,
 };
@@ -130,10 +125,10 @@ window.onload = function ()
     const tabId = sessionStorage.tabId ? sessionStorage.tabId : sessionStorage.tabId = Math.random();
     localStorage.tabId = tabId;
 
-    const interval = setInterval(function(){
+    const interval = setInterval(async function(){
         if(tabId != localStorage.tabId){
         clearInterval(interval)
-        tabError();
+        await tabError();
         }
         document.getElementById('isLoading').style.display = 'none';
     },1000);
@@ -178,19 +173,18 @@ window.onload = function ()
         // Refresh the page for reuse
         window.location.reload();
     }
-    document.getElementById('photo').onclick = async function (){
-      const element = document.getElementById(1);
-      html2canvas(element)
-        .then((canvas) => {
-          const img = canvas.toDataURL('image/png');
-          console.log(img)
-        })
-        .catch((error) => {
-          console.error('Oops, bir şeyler ters gitti!', error);
-        });
-    };
-}
-
+  }
+  document.getElementById('photo').onclick = async function (){
+    const element = document.getElementById(1);
+    html2canvas(element)
+      .then((canvas) => {
+        const img = canvas.toDataURL('image/png');
+        console.log(img)
+      })
+      .catch((error) => {
+        console.error('Oops, bir şeyler ters gitti!', error);
+      });
+  };
 }
 startBasicCall();
 // Remove the video stream from the container.

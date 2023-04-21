@@ -22,8 +22,11 @@ export default function Login() {
             const response = await axios.post('/api/psyc/login',payload);
             console.log(response.data);
             if(response.data.status){
+                localStorage.setItem('id',response.data.psychologist._id);
                 localStorage.setItem('token', response.data.token);
+                console.log('patladı')
                 navigate("/dashboard");
+                console.log('patlamadı')
             } 
             else{
                 console.log('Başarısız');

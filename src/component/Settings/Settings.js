@@ -23,30 +23,22 @@ import profil from '../../img/profile.svg';
 import profilpurple from '../../img/profilepurple.svg';
 import randevu from '../../img/rendevu.svg';
 import randevupurple from '../../img/randevupurple.svg';
-import book from '../../img/book.svg';
-import bookPurple from '../../img/purpleBook.svg';
 
 import verify from '../../api/verify';
 import axios from '../../api/axios';
 
 export default function Dashboard(){
     const navigate = useNavigate();
-    const [post,setPost]=useState(null);
-    const [counter, setCounter] = useState(0);
+    const [post,setPost] = useState(null);
 
-    const arrClient =
-        {
-            "status": true,
-            "comments": "",
-            "total": 0,
-            "client_id": {
-                "_id":"",
-                "name": "",
-                "surName": "",
-                }
-        }
-
-    const [arrRes, setArrRes] = useState(arrClient);
+    const [name,setName] = useState('');
+    const [surName, setSurName] = useState('');
+    const [mail,setMail] = useState('');
+    const [mail2, setMail2] = useState('');
+    const [passOld,setPassOld] = useState('');
+    const [pass,setPass] = useState('');
+    const [pass2,setPass2] = useState('');
+    const [file, setFile] = useState({});
 
     useEffect(()=>{
         Auth();
@@ -55,12 +47,6 @@ export default function Dashboard(){
     const Auth = async () => {
         const token = localStorage.getItem('token');
         const id = localStorage.getItem('id');
-      
-        if (!token || !id) {
-          navigate('/login');
-          return;
-        }
-      
         try {
             const res = await verify(token);
             if (res) {
@@ -135,6 +121,55 @@ export default function Dashboard(){
             alt: 'kyk'
         }
     ]
+
+    const handleUpdate = async () => {
+        const payload = {
+            email: mail,
+            pass: pass
+        }
+
+        try {
+            const response = await axios.put('/api/psyc/update',payload);
+            console.log(response.data);
+            if(response.data.status){
+                localStorage.setItem('token', response.data.token);
+                navigate("/dashboard");
+            } 
+            else{
+                console.log('Başarısız');
+                alert('Hata oluştu');
+            }
+        }
+        catch(err){
+            alert('Hata oluştu');
+            navigate("/login");
+        }
+    }
+
+    const handlePassUpdate = async () => {
+        const payload = {
+            email: mail,
+            pass: pass
+        }
+
+        try {
+            const response = await axios.put('/api/psyc/login',payload);
+            console.log(response.data);
+            if(response.data.status){
+                localStorage.setItem('token', response.data.token);
+                navigate("/dashboard");
+            } 
+            else{
+                console.log('Başarısız');
+                alert('Hata oluştu');
+            }
+        }
+        catch(err){
+            alert('Hata oluştu');
+            navigate("/login");
+        }
+    }
+
     return (
     <>
         <div className={post ? styles.none : styles.isLoading}>
@@ -163,6 +198,7 @@ export default function Dashboard(){
                         )}
                 </div>
         </section>
+        <section style={{display:'flex',justifyContent:'center'}}>
         <section className={styles.sectionInclusive}>
             <div className={styles.navbar}>
                 <div className={styles.navbarContent}>
@@ -203,37 +239,71 @@ export default function Dashboard(){
                 <div className={styles.settingInclusive}>
                     <div className={styles.settingTitle}>Kişi Bilgileri</div>
                     <div className={styles.settingImgInclusive}>
-                        <img src={logosLogo} height={58} width={115} alt='logos'></img>
+                        <div>
+                            <img src={account} height={80} width={80} alt='logos'></img>
+                        </div>
                         <div className={styles.settingImgTitleInclusive}>
                             <div className={styles.settingImgContent}>
                                 <div className={styles.settingImgTitle}>Fotoğrafını Yükle</div>
                                 <div className={styles.settingImgText}>En iyi sonuçlar için en çok 256px*256px boyutunda görsel yükleyiniz.</div>
                             </div>
                             <div className={styles.settingImgButtonDiv}>
-                                <button className={styles.settingImgBtnP}>Yükle</button>
-                                <button className={styles.settingImgBtnL}>Kaldır</button>
+                                <input className={styles.settingImgBtnP} type="file" name="myImage" accept="image/png, image/gif, image/jpeg" onChange={(e)=> setFile(e.target.files[0])} required/>
+                                <button onClick={()=> setFile({})} className={styles.settingImgBtnL}>Kaldır</button>
                             </div>
                         </div>
                     </div>
                     <form>
-                        <div>
-                            <div>
-                                <label></label>
-                                <input></input>
-                                <label></label>
-                                <input></input>
+                        <div className='row rows-col-2'>
+                            <div className='col'>
+                                <div className='row'>
+                                    <label className={styles.settingLabel}>Ad</label>
+                                    <input type='text' className={styles.settingInput} value={name} onChange={(e)=> setName(e.target.value)} placeholder='Adınızı giriniz' required></input>
+                                </div>
+                                <div className='row'>
+                                    <label className={styles.settingLabel}>Soyad</label>
+                                    <input type='text' className={styles.settingInput} value={surName} onChange={(e)=> setSurName(e.target.value)} placeholder='Soyadınızı giriniz' required></input>
+                                </div>
                             </div>
-                            <div>
-                                <label></label>
-                                <input></input>
-                                <label></label>
-                                <input></input>
+                            <div className='col'>
+                                <div className='row'>
+                                    <label className={styles.settingLabel}>Mail Adresi</label>
+                                    <input type='text' className={styles.settingInput} value={mail} onChange={(e)=> setMail(e.target.value)} placeholder='Mail adresinizi giriniz' required></input>
+                                </div>
+                                <div className='row'>
+                                    <label className={styles.settingLabel}>Mail Adresini Tekrar Gir</label>
+                                    <input type='text' className={styles.settingInput} value={mail2} onChange={(e)=> setMail2(e.target.value)} placeholder='Mail adresinizi giriniz' required></input>
+                                </div>
                             </div>
                         </div>
-                        <button></button>
+                        <div style={{paddingRight:'60px'}}>
+                            <button type='submit' className={styles.settingBtnContent} onClick={()=>handleUpdate()}> Değişiklikleri Kaydet</button>
+                        </div>
                     </form>
                 </div>
-                <div></div>
+                <div className={styles.settingPassInclusive}>
+                    <div className={styles.settingTitle}>
+                        Şifre Değiştir
+                    </div>
+                    <form style={{display:'flex', flexDirection:'column'}}>
+                        <div className={styles.passContent} style={{marginTop:'20px'}}>
+                            <label className={styles.settingLabel}>Eski şifrenizi giriniz:</label>
+                            <input type='password' className={styles.settingInput} value={passOld} onChange={(e)=> setPassOld(e.target.value)} placeholder='Eski şifrenizi giriniz' required></input>
+                        </div>
+                        <div className={styles.passContent}>
+                            <label className={styles.settingLabel}>Yeni Şifre:</label>
+                            <input type='password' className={styles.settingInput} value={pass} onChange={(e)=> setPass(e.target.value)} placeholder='Yeni şifre giriniz' required></input>
+                        </div>
+                        <div className={styles.passContent}>
+                            <label className={styles.settingLabel}>Şifreyi Tekrar Gir:</label>
+                            <input type='password' className={styles.settingInput} value={pass2} onChange={(e)=> setPass2(e.target.value)} placeholder='Yeni şifre tekrar giriniz' required></input>
+                        </div>
+                        <div className={styles.passContent} style={{marginTop:'15px'}}>
+                            <button type='submit' className={styles.settingBtnContent} onClick={()=>handlePassUpdate()}>Şifreyi Kaydet</button>
+                        </div>
+                    </form>
+                </div>
+            </section>
             </section>
         </section>
     </>

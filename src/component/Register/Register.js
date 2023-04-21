@@ -72,7 +72,7 @@ export default function Register() {
             tag: arr,
             unvan: unvan,
             tecrübe: tecrübe,
-            file: file,
+            image: file,
             email: mail
         }
         try{

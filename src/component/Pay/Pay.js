@@ -54,16 +54,11 @@ export default function Dashboard(){
 
     useEffect(()=>{
         Auth();
-    })
+    },[])
 
     const Auth = async () => {
         const token = localStorage.getItem('token');
         const id = localStorage.getItem('id');
-      
-        if (!token || !id) {
-          navigate('/login');
-          return;
-        }
       
         try {
             const res = await verify(token);

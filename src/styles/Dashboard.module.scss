@@ -677,3 +677,207 @@
     line-height: 21px;
     color: #8C10B8;
 }
+
+.settingSection{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    padding-top: 14%;
+    margin-left: 100px;
+    & .settingTitle{
+        border-bottom: 2px solid #E9ECEF;
+        width: calc(100% - 60px);
+        font-family: 'Inter';
+        font-style: normal;
+        font-weight: 600;
+        font-size: 18px;
+        line-height: 27px;
+        color: #212529;
+        padding-left: 24px;
+        padding-bottom: 32px;
+    }
+    & .settingInclusive{
+        display: flex;
+        flex-direction: column;
+        
+        & .settingImgInclusive{
+            display: flex;
+            flex-direction: row;
+            padding-left: 31px;
+            padding-right: 31px;
+            margin-top: 35px;
+            & .settingImgTitleInclusive{
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                & .settingImgContent{
+                    display: flex;
+                    flex-direction: column;
+                    margin-left: 24px;
+                    & .settingImgTitle{
+                        font-family: 'Inter';
+                        font-style: normal;
+                        font-weight: 600;
+                        font-size: 18px;
+                        line-height: 27px;
+                        color: #212529;
+                    }
+                    & .settingImgText{
+                        font-family: 'Inter';
+                        font-style: normal;
+                        font-weight: 400;
+                        font-size: 15px;
+                        line-height: 24px;
+                        color: #8492A6;
+                        width: 270px;
+                    }
+                }
+                & .settingImgButtonDiv{
+                    display: flex;
+                    flex-direction: row;
+                    & .settingImgBtnP{
+                        background: #8C10B8;
+                        border-radius: 5px;
+                        font-family: 'Inter';
+                        font-style: normal;
+                        font-weight: 400;
+                        font-size: 15px;
+                        line-height: 22px;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        text-align: center;
+                        letter-spacing: 0.5px;
+                        color: #FFFFFF;
+                        width: 86.9px;
+                        height: 44.9px;
+                    }
+                    & .settingImgBtnL{
+                        background: rgba(140, 16, 184, 0.1);
+                        border-radius: 5px;
+                        width: 86.9px;
+                        height: 44.9px;
+                        font-family: 'Inter';
+                        font-style: normal;
+                        font-weight: 400;
+                        font-size: 15px;
+                        line-height: 22px;
+                        display: flex;
+                        justify-content: center;
+                        align-items: center;
+                        text-align: center;
+                        letter-spacing: 0.5px;
+                        color: #8C10B8;
+                        margin-left: 15px;
+                    }
+                }
+            }
+            
+        }
+    }
+}
+
+.settingInput{
+    width: 313px;
+    height: 42.25px;
+    background: #FFFFFF;
+    border: 1.10452px solid #E9ECEF;
+    border-radius: 6.62714px;
+    margin-bottom: 24px;
+}
+
+.settingLabel{
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 15px;
+    line-height: 22px;
+    color: #212529;
+    margin-bottom: 10px;
+}
+
+.settingImgBtnP::-webkit-file-upload-button {
+    visibility: hidden;
+  }
+  .settingImgBtnP::before {
+    content: 'Yükle';
+    background: #8C10B8;
+    border-radius: 5px;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 15px;
+    line-height: 22px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    letter-spacing: 0.5px;
+    color: #FFFFFF;
+    width: 86.9px;
+    height: 44.9px;
+  }
+  .settingImgBtnP:hover::before {
+    border-color: black;
+  }
+  .settingImgBtnP:active::before {
+    background: #8C10B8;
+  }
+
+  .settingBtnContent{
+    background: rgba(140, 16, 184, 0.1);
+    border-radius: 100px;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 13px;
+    line-height: 22px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    letter-spacing: 0.5px;
+    color: #8C10B8;
+    width: 100%;
+    height: 45px;
+  }
+
+.passContent{
+    display: flex;
+    flex-direction: column;
+    & .settingLabel{
+        font-family: 'Inter';
+        font-style: normal;
+        font-weight: 500;
+        font-size: 15px;
+        line-height: 22px;
+        color: #212529;
+    }
+    & .settingInput{
+        height: 42.25px;
+        background: #FFFFFF;
+        border: 1.10452px solid #E9ECEF;
+        border-radius: 6.62714px;
+        padding-left: 8px;
+        width: 100%;
+        min-width: 400px;
+    }
+    & .settingBtnContent{
+        height: 44.9px;
+        background: rgba(140, 16, 184, 0.1);
+        border-radius: 100px;
+        width: 100%;
+    }
+}
+
+@media screen and (max-width: 1519px)  {
+    .settingSection{
+        display: flex;
+        flex-direction: column !important;
+    }
+    .settingPassInclusive{
+        & .settingTitle{
+            margin-top: 60px;
+        }
+    }
+}
