@@ -4,59 +4,59 @@
     min-height: 600px;
     height: calc(100vh - 810px);
     margin-top: 190px;
+}
 
-    & .subTitle{
-        font-family: 'Inter';
-        font-style: normal;
-        font-weight: 600;
-        font-size: 60px;
-        line-height: 74px;
-        color: #e8e8e8;
-        text-align: center;
-    }
+.subTitle{
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 60px;
+    line-height: 74px;
+    color: #e8e8e8;
+    text-align: center;
+}
 
-    & .lightsubTitle{
-        font-family: 'Inter';
-        font-style: normal;
-        font-weight: 600;
-        font-size: 60px;
-        line-height: 74px;
-        color: #373737;
-        text-align: center;
-    }
+.lightsubTitle{
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 60px;
+    line-height: 74px;
+    color: #373737;
+    text-align: center;
+}
 
-    & .subStatic{
-        position: relative;
+.subStatic{
+    position: relative;
 
-        & .subKaralama{
-            position: absolute;
-            left: 30%;
-            @media screen and (min-width:1279px) {
-                left: 37%;
-            }
-            
+    & .subKaralama{
+        position: absolute;
+        left: 30%;
+        @media screen and (min-width:1279px) {
+            left: 37%;
         }
+        
     }
+}
 
-    & .lightsubText{
-        font-family: 'Inter';
-        font-style: normal;
-        font-weight: 400;
-        font-size: 20px;
-        line-height: 28px;
-        color: #373737;
-        margin-top: 97px;
-    }
+.lightsubText{
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 28px;
+    color: #373737;
+    margin-top: 97px;
+}
 
-    & .subText{
-        font-family: 'Inter';
-        font-style: normal;
-        font-weight: 400;
-        font-size: 20px;
-        line-height: 28px;
-        color: #e8e8e8;
-        margin-top: 97px;
-    }
+.subText{
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 28px;
+    color: #e8e8e8;
+    margin-top: 97px;
 }
 
 .memberTitle{

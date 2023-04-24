@@ -437,7 +437,7 @@
 }
 @media screen and (max-width: 1919px) {
     .reservationPageInclusive{
-        width: 1200px !important;
+        width: 100% !important;
     }
     .overflowdiv{
         overflow: scroll;
@@ -449,7 +449,7 @@
 }
 @media screen and (max-width: 1519px) {
     .reservationPageInclusive{
-        width: 1100px !important;
+        width: 100% !important;
     }
     .overflowdiv{
         overflow: scroll;
@@ -535,9 +535,6 @@
     .dropdawnClose{
         display: none;
     }
-    .reservationInclusive{
-        width: 926px !important;
-    }
 }
 
 @media screen and (max-width: 1519px) {
@@ -546,6 +543,7 @@
     }
     .inclusive{
         flex-direction: column !important;
+        align-items: center;
     }
     .profilCard{
         margin-left: auto;
@@ -608,6 +606,9 @@
         align-items: center;
         justify-content: center;
         margin-top: 33px;
+    }
+    .inclusive{
+        width: 100% !important;
     }
     .hamburgerMenu{
         display: flex !important;
@@ -684,6 +685,7 @@
     justify-content: center;
     padding-top: 14%;
     margin-left: 100px;
+    margin-right: 50px;
     & .settingTitle{
         border-bottom: 2px solid #E9ECEF;
         width: calc(100% - 60px);
@@ -880,4 +882,40 @@
             margin-top: 60px;
         }
     }
+}
+
+.activeIcon{
+    width: 20px;
+    height: 20px;
+    border-radius: 100%;
+    border: 3px solid rgba(68, 250, 129, 0.5);;
+    background-color: #53C797;;
+    margin-right: 10px;
+}
+
+.unActiveIcon{
+    width: 20px;
+    height: 20px;
+    border-radius: 100%;
+    border: 3px solid rgb(48, 48, 48,0.5);
+    background-color: rgb(56, 56, 56,0.6);
+    margin-right: 10px;
+}
+
+.activeButton{
+    height: 48px;
+    width: 160px;
+    border: 1px solid #8C10B8;
+    border-radius: 50px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 0px 10px;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 15px;
+    line-height: 27px;
+    color: #8C10B8;
 }

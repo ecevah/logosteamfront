@@ -22,18 +22,32 @@ export default function Login() {
 
         try {
             const response = await axios.post('/api/psyc/login',payload);
-            console.log(response.data);
             if(response.data.status){
-                localStorage.setItem('id',response.data.psychologist._id);
-                localStorage.setItem('token', response.data.token);
-                await Swal.fire({
-                    icon: 'success',
-                    title: 'Giriş Başarılı',
-                    text: 'Dashboarda Yönlendiriliyorsun',
-                    confirmButtonColor: '#8C10B8',
-                    confirmButtonText: 'Tamam'
-                })
-                navigate("/dashboard");
+                if(response.data.active){
+                    localStorage.setItem('id',response.data.psychologist._id);
+                    localStorage.setItem('token', response.data.token);
+                    localStorage.setItem('active', response.data.psychologist.active);
+                    try{
+                        await axios.put(`/api/psyc/active/update?id=${response.data.psychologist._id}&token=${response.data.token}&active=true`);
+                    }catch{}
+                    await Swal.fire({
+                        icon: 'success',
+                        title: 'Giriş Başarılı',
+                        text: 'Dashboarda Yönlendiriliyorsun',
+                        confirmButtonColor: '#8C10B8',
+                        confirmButtonText: 'Tamam'
+                    })
+                    navigate("/dashboard");
+                }else{
+                    await Swal.fire({
+                        icon: 'info',
+                        title: 'Giriş Başarısız',
+                        text: 'Hesabınız Aktifleştiğinde Ekibimiz Tarafından Bilgilendirileceksiniz',
+                        confirmButtonColor: '#8C10B8',
+                        confirmButtonText: 'Tamam'
+                    })
+                }
+                
             } 
             else{
                 console.log('Başarısız');

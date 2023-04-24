@@ -34,6 +34,7 @@ export default function Dashboard(){
     const navigate = useNavigate();
     const [post,setPost]=useState(null);
     const [counter, setCounter] = useState(0);
+    const [activee, setActivee] =useState(localStorage.getItem('active'));
 
     const arrClient =
         {
@@ -179,6 +180,17 @@ export default function Dashboard(){
         await setCounter(page);
     }
 
+    const handleActiveBtn = async () => {
+        try{
+            const res = await axios.put(`/api/psyc/active/update?id=${localStorage.getItem('id')}&token=${localStorage.getItem('token')}&active=spes`);
+            localStorage.setItem('active',res.data.psychologist.active);
+            setActivee(!activee);
+        }
+        catch{
+
+        }
+    }
+
     console.log(arrRes)
     return (
     <>
@@ -258,7 +270,15 @@ export default function Dashboard(){
                                 </div>
                             </div>
                         </div>
-                        <div className={styles.title}>{`Yorumlar`}</div>
+                        <div style={{display:'flex',flexDirection:'row', justifyContent:'space-between', width:'100%'}}>
+                            <div className={styles.title}>{`Yorumlar`}</div>
+                            <div style={{display:'flex', flexDirection:'row', justifyContent:'flex-end',  alignItems:'center',}}>
+                                <div className={activee ? styles.activeIcon : styles.unActiveIcon}></div>
+                                <div>
+                                    <button className={styles.activeButton} onClick={()=>handleActiveBtn()}>Durum Değiştir</button>
+                                </div>
+                            </div>
+                        </div>
                         <div className={styles.overflowdiv}>
                         <div className={styles.reservationPageInclusive}>
                             <div className={styles.reservationPageContent}>

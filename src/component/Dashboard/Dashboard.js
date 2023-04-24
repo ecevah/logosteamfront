@@ -35,6 +35,7 @@ import axios from '../../api/axios';
 export default function Dashboard(){
     const navigate = useNavigate();
     const [post,setPost]=useState(null);
+    const [activee, setActivee] =useState(localStorage.getItem('active'));
 
     const arrClient = [
         {
@@ -93,7 +94,7 @@ export default function Dashboard(){
                   'x-access-token': token,
                 },
               }),
-              axios.get(`/api/comment/find?psyc_id=${id}`, {
+              axios.get(`/api/comment/find?psyc_id=${id}&limit=7`, {
                 headers: {
                     'x-access-token': token
                 }
@@ -200,6 +201,17 @@ export default function Dashboard(){
         return newDate;
     }
 
+    const handleActiveBtn = async () => {
+        try{
+            const res = await axios.put(`/api/psyc/active/update?id=${localStorage.getItem('id')}&token=${localStorage.getItem('token')}&active=spes`);
+            localStorage.setItem('active',res.data.psychologist.active);
+            setActivee(!activee);
+        }
+        catch{
+
+        }
+    }
+
     return (
     <>
         <div className={post ? styles.none : styles.isLoading}>
@@ -237,7 +249,7 @@ export default function Dashboard(){
                     <div className={styles.sideContent}>
                         <div className={styles.profilCard}>
                             <div>
-                                <img className={styles.profilImg} src={`http://20.251.25.72:3001/uploads/${localStorage.getItem('img')}`} alt='account' width={80} height={80}></img>
+                                <img className={styles.profilImg} src={`http://34.65.228.18/uploads/${localStorage.getItem('img')}`} alt='account' width={80} height={80}></img>
                             </div>
                             <div className={styles.profilContent}>
                                 <div className={styles.profilName}>{`${localStorage.getItem('unvan')} ${localStorage.getItem('name')} ${localStorage.getItem('surname')}`}</div>
@@ -278,7 +290,15 @@ export default function Dashboard(){
                                 </div>
                             </div>
                         </div>
-                        <div className={styles.title}>{`Hoş Geldin ${localStorage.getItem('unvan')} ${localStorage.getItem('name')} ${localStorage.getItem('surname')}`}</div>
+                        <div style={{display:'flex',flexDirection:'row', justifyContent:'space-between', width:'100%'}}>
+                            <div className={styles.title}>{`Hoş Geldin ${localStorage.getItem('unvan')} ${localStorage.getItem('name')} ${localStorage.getItem('surname')}`}</div>
+                            <div style={{display:'flex', flexDirection:'row', justifyContent:'flex-end',  alignItems:'center',}}>
+                                <div className={activee ? styles.activeIcon : styles.unActiveIcon}></div>
+                                <div>
+                                    <button className={styles.activeButton} onClick={()=>setActivee(!activee)}>Durum Değiştir</button>
+                                </div>
+                            </div>
+                        </div>
                         <div className={styles.reservationInclusive}>
                             <div className={styles.reservationTitle}>
                                 <div className={styles.resTitle}>Son Randevular</div>

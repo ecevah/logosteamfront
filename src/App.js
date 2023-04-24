@@ -13,6 +13,7 @@ import Comment from './component/Comment/Comment';
 import Pay from './component/Pay/Pay';
 import Deneme from './component/deneme/deneme';
 import Settings from './component/Settings/Settings';
+import Forgot from './component/Forgot/Forgot';
 
 function App() {
   return (
@@ -25,11 +26,13 @@ function App() {
           <Route path='howto' element={<SubPage type="howto"/>}></Route>
           <Route path='misyon' element={<SubPage type="misyon"/>}></Route>
           <Route path='kvkk' element={<SubPage type="kvkk"/>}></Route>
+          <Route path='contact' element={<SubPage type="contact"/>}></Route>
           <Route path="login" element={<Login />}></Route>
           <Route path="signup" element={<Register />}></Route>
           <Route path="dashboard" element={<Dashboard />}></Route>
           <Route path="comment" element={<Comment />}></Route>
           <Route path="pay" element={<Pay />}></Route>
+          <Route path="forgot" element={<Forgot />}></Route>
           <Route path="setting" element={<Settings />}></Route>
           <Route path="reservation" element={<Reservation />}></Route>
           <Route path='meet' element={<Meet />}></Route>

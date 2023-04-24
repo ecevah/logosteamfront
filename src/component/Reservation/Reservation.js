@@ -27,11 +27,14 @@ import randevupurple from '../../img/randevupurple.svg';
 
 import verify from '../../api/verify';
 import axios from '../../api/axios';
+import Swal from 'sweetalert2'
 
 export default function Dashboard(){
     const navigate = useNavigate();
     const [post,setPost]=useState(null);
     const [counter, setCounter] = useState(0);
+    const dateNow = new Date();
+    const [activee, setActivee] =useState(localStorage.getItem('active'));
 
     const arrClient =
         {
@@ -74,6 +77,7 @@ export default function Dashboard(){
             }
           } catch (err) {
             console.error(err);
+            navigate('/login');
           }
         }
     const [open, setOpen] = useState(false)
@@ -154,6 +158,26 @@ export default function Dashboard(){
         return age;
     }
 
+    const nowDate = () =>{
+        const now = new Date();
+        const day = now.getDate();
+        const month = now.getMonth() + 1; // JavaScript'te aylar 0-11 arasında indexlenir, bu yüzden +1 ekliyoruz.
+        const year = now.getFullYear();
+
+        const dateStr = `${day}.${month}.${year}`;
+        return dateStr;
+    }
+
+    const nowTime = () => {
+        const now = new Date();
+        now.setHours(now.getHours() + 1);
+        const hour = now.getHours();
+        const minute = now.getMinutes();
+
+        const timeStr = `${hour}.${minute}`;
+        return timeStr;
+    }
+
     const timeChack = (itemTime) => {
         const currentTime = new Date();
         currentTime.setTime(currentTime.getTime() + 3 * 60 * 60 * 1000);
@@ -178,9 +202,74 @@ export default function Dashboard(){
               'x-access-token': localStorage.getItem('token'),
             },
           });
-          console.log(resApi);
         await setArrRes(resApi.data);
         await setCounter(page);
+    }
+
+    const handleTalk = async (id) => {
+        const resApi = await axios.get(`/api/talk/find?reservation_id=${localStorage.getItem('id')}`, {
+            headers: {
+              'x-access-token': localStorage.getItem('token'),
+            },
+        });
+        await Swal.fire({
+            title: 'Görüşme Verileri',
+            html: `<div>Konuşma Metni: ${resApi.data.Talk}</div><div>En Çok Okunan Duygu Durumu: ${resApi.data.emo}</div><div>Konuşma süresi: ${resApi.data.meetTime}</div>`,
+            confirmButtonColor: '#8C10B8',
+            confirmButtonText: 'Tamam'
+        })
+    }
+
+    const handleLogin = async () =>{
+        try{
+            await axios.put(`/api/psyc/active/update?id=${localStorage.getItem('id')}&token=${localStorage.getItem('token')}&active=false`);
+            navigate('/meet');
+        }
+        catch{
+            navigate('/meet');
+        }
+    }
+
+    const handleDelete = async (id) => {
+        await Swal.fire({
+            title: 'Emin Misin?',
+            text: "Bunu geri alamazsın!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#8C10B8',
+            cancelButtonColor: '#422f2f80',
+            confirmButtonText: 'Evet, Bunu Sil.'
+          }).then((result) => {
+            if (result.isConfirmed) {
+                const res = axios.delete(`/api/reservation/delete/${id}`, {
+                    headers: {
+                        'x-access-token': localStorage.getItem('token')
+                    }
+                })
+              Swal.fire({
+                icon: 'success',
+                title: 'Silindi!',
+                text: 'Reservasyon Silindi!',
+                confirmButtonColor: '#8C10B8',
+                confirmButtonText: 'Tamam'
+            }).then((result)=> {
+                if(result.isConfirmed){
+                    window.location.reload();
+                }
+            })
+        }
+        })
+    }
+
+    const handleActiveBtn = async () => {
+        try{
+            const res = await axios.put(`/api/psyc/active/update?id=${localStorage.getItem('id')}&token=${localStorage.getItem('token')}&active=spes`);
+            localStorage.setItem('active',res.data.psychologist.active);
+            setActivee(!activee);
+        }
+        catch{
+
+        }
     }
 
     return (
@@ -261,7 +350,15 @@ export default function Dashboard(){
                                 </div>
                             </div>
                         </div>
-                        <div className={styles.title}>{`Randevular`}</div>
+                        <div style={{display:'flex',flexDirection:'row', justifyContent:'space-between', width:'100%'}}>
+                            <div className={styles.title}>{`Reservasyonlar`}</div>
+                            <div style={{display:'flex', flexDirection:'row', justifyContent:'flex-end',  alignItems:'center',}}>
+                                <div className={activee ? styles.activeIcon : styles.unActiveIcon}></div>
+                                <div>
+                                    <button className={styles.activeButton} onClick={()=>handleActiveBtn()}>Durum Değiştir</button>
+                                </div>
+                            </div>
+                        </div>
                         <div className={styles.overflowdiv}>
                         <div className={styles.reservationPageInclusive}>
                             <div className={styles.reservationPageContent}>
@@ -281,20 +378,20 @@ export default function Dashboard(){
                                     <div className={styles.reservationPageColumn} style={{marginLeft:'5px',width:'220px',justifyContent:'flex-start', paddingLeft:'20px'}}>
                                         <div className={styles.clientCard}>
                                             <div>
-                                                <img className={styles.clientImg} src={account} alt={'asdasd'} width={45} height={45}></img>
+                                                <img className={styles.clientImg} src={account} alt='Ahmet' width={45} height={45}></img>
                                             </div>
                                             <div className={styles.clientContent}>
-                                                <div className={styles.clientTitle} style={{marginLeft: '7px'}}>{`${'asdas'} ${'asdsadsd'}`}</div>
+                                                <div className={styles.clientTitle} style={{marginLeft: '7px'}}>{`${'Ahmet'} ${'Ecevit'}`}</div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
-                                <div className={styles.reservationPageColumn} style={{width:'55px'}}>{'daasd'}</div>
-                                <div className={styles.reservationPageColumn} style={{width:'86px',textAlign:'center'}}>{'asdasd'}</div>
-                                <div className={styles.reservationPageColumn} style={{width:'140px'}}>{'asdasdasd'}</div>
-                                <div className={styles.reservationPageColumn} style={{width:'64px'}}>{'sadsda'}</div>
+                                <div className={styles.reservationPageColumn} style={{width:'55px'}}>{'22'}</div>
+                                <div className={styles.reservationPageColumn} style={{width:'86px',textAlign:'center'}}>{'Erkek'}</div>
+                                <div className={styles.reservationPageColumn} style={{width:'140px'}}>{nowDate()}</div>
+                                <div className={styles.reservationPageColumn} style={{width:'64px'}}>{nowTime()}</div>
                                 <div className={styles.reservationPageColumn} style={{width:'106px'}}>
-                                        <button className={styles.reservationPageBtnLogIn}>
+                                        <button className={styles.reservationPageBtnLogIn} onClick={()=> handleLogin()}>
                                             <FeatherIcon icon='log-in' color='#00B383' size="15" stroke-width="2.5"/>
                                         </button>
                                 </div>
@@ -321,28 +418,25 @@ export default function Dashboard(){
                             <div className={styles.reservationPageColumn} style={{width:'106px'}}>
                                 {
                                     new Date(item.day)>Date.now() ?
-                                    <button className={styles.reservationPageBtn}>
+                                    <button className={styles.reservationPageBtn} onClick={()=> handleDelete(item._id)}>
                                         <FeatherIcon icon='x' color='#F0735A' size="15" stroke-width="2.5"/>
                                     </button>:
                                     (
                                         item.day=== new Date().toISOString().split('T')[0] ? 
                                             (timeChack==='active'?
-                                                <button className={styles.reservationPageBtnLogIn}>
+                                                <button className={styles.reservationPageBtnLogIn} onClick={()=> navigate('/meet')}>
                                                     <FeatherIcon icon='log-in' color='#00B383' size="15" stroke-width="2.5"/>
-                                                    1
                                                 </button>: (timeChack==='before'?
-                                                       <button className={styles.reservationPageBtn}>
+                                                       <button className={styles.reservationPageBtn} onClick={()=> handleDelete(item._id)}>
                                                             <FeatherIcon icon='x' color='#F0735A' size="15" stroke-width="2.5"/>
                                                         </button>:
-                                                        <button className={styles.reservationPageBtnCheck}>
+                                                        <button className={styles.reservationPageBtnCheck} onClick={()=> handleTalk(item._id)}>
                                                             <FeatherIcon icon='check' color='#3e221c4d' size="15" stroke-width="2.5"/>
-                                                            3
                                                         </button>
                                                 )
                                             ):
-                                            <button className={styles.reservationPageBtnCheck}>
+                                            <button className={styles.reservationPageBtnCheck} onClick={()=> handleTalk(item._id)}>
                                                 <FeatherIcon icon='check' color='#3e221c4d' size="15" stroke-width="2.5"/>
-                                                4
                                             </button>
                                     )
                                 }

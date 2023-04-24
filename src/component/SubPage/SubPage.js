@@ -128,7 +128,11 @@ function Homepage(props) {
             ref:'kvkk',
             title:'kvkk',
             text:''
-        }
+        },
+        {
+            ref:'contact',
+            title:'İletişim',
+            text:`Merhaba! Online terapi uygulamamızı kullanmaya başlamak için aşağıdaki adımları izleyebilirsiniz:\nKayıt Olma: Kullanıcılar uygulamamızda kayıt olabilirler. Kayıt olmak için uygulamamızın ana sayfasındaki "Kayıt Ol" butonunu tıklayabilir ve gerekli bilgileri doldurabilirler. Kullanıcıların güvenliği için kişisel verilerini koruyacağımızı ve gizlilik politikalarımızı açıklayacağımız bir gizlilik sözleşmesi sunulur.\nGiriş Yapma: Kayıt işlemi tamamlandıktan sonra kullanıcılar, kullanıcı adı ve şifreleriyle giriş yapabilirler. Giriş yapmak için ana sayfadaki "Giriş Yap" butonunu tıklayabilirler.\nTerapi Randevusu Alma: Kullanıcılar, giriş yaptıktan sonra terapi randevusu alabilirler. Randevu almak için "Randevu Al" butonunu tıklayabilirler ve terapi türünü, terapisti ve uygun bir tarih ve saat seçebilirler. Randevu onaylandığında kullanıcıya bir bildirim gönderilir.\nGörüntülü ve Sesli Görüşmeye Katılma: Randevu zamanı geldiğinde kullanıcılar, uygulama üzerinden görüntülü ve sesli görüşmeye katılabilirler. Kullanıcılar, terapistle sesli ve görüntülü iletişim kurabilir ve terapi seansını başlatabilirler.\nKamera ile Yüzünün Tamamının Görünmesi: Kullanıcılar, terapi seansı sırasında yüzlerinin tamamını kameraya göstermelidir. Bu, terapistin kullanıcının ifadelerini ve duygularını tam olarak anlamasını sağlar ve etkili bir terapi deneyimi için önemlidir.\nVerilen Tavsiyelerin Görüntülenmesi ve Uygulanması: Terapi seansı sonrasında kullanıcılar, terapistin verdiği tavsiyeleri uygulaması gerekmektedir. Uygulama üzerinden terapistin verdiği tavsiyeler kullanıcıya görüntülenir ve kullanıcılar, tavsiyeleri not alabilir veya terapistle paylaşabilirler. Uygulama aynı zamanda kullanıcılara hatırlatmalar gönderebilir ve terapi sürecini takip etmelerine yardımcı olabilir.\nUnutmayın, online terapi uygulamamız kullanıcıların gizliliğini ve güvenliğini önemsemektedir. Tüm kullanıcı verileri gizli tutulacak ve yalnızca terapi süreci için kullanılacaktır.`        },
     ]
 
     const themeChoose = () =>{
@@ -176,15 +180,55 @@ function Homepage(props) {
             {arrPage.map((item)=>
                 {
                     if(item.ref===props.type){
-                        return(
-                        <section className={`${sub.subSection} ${layout.container}`}>
-                            <div className={theme ? sub.subTitle : sub.lightsubTitle}>{item.title}</div>
-                            <div className={sub.subStatic}>
-                                <img className={sub.subKaralama} src={karalama} alt='karalama' height={40} width={304}></img>
-                            </div>
-                            <p className={theme ? sub.subText : sub.lightsubText}>{item.text}</p>
-                        </section>
-                        )
+                        if(item.ref==='contact'){
+                            return(
+                            <section className={`${layout.container}`} style={{paddingTop:'100px',paddingBottom:'100px'}}>
+                                    <div className={theme ? sub.subTitle : sub.lightsubTitle}>{item.title}</div>
+                                    <div className={sub.subStatic}>
+                                        <img className={sub.subKaralama} src={karalama} alt='karalama' height={40} width={304}></img>
+                                    </div>
+                                    <div style={{display:'flex',flexDirection:'row',alignItems:'center',width:'100%',justifyContent:'space-around',marginTop:'100px',}}>
+                                        <div>
+                                            <div className={theme ? sub.subText : sub.lightsubText} style={{fontWeight:'600',marginTop:'0px'}}>İletşim:</div>
+                                            <div className={theme ? sub.subText : sub.lightsubText} style={{marginTop:'5px'}}>logosteamcolab@gmail.com</div>
+                                        </div>
+                                        <div style={{width:'30%'}}>
+                                        <form onSubmit={(e)=>e.preventDefault()}>
+                                            <div className="col">
+                                                <label for="exampleFormControlInput1" className="form-label" style={theme?{color:'#FFFFFF'}:{color:'#858585'}}>Ad Soyad</label>
+                                                <input type="text" className="form-control" id="exampleFormControlInput1" placeholder="name@example.com"/>
+                                            </div>
+                                            <div className="col">
+                                                <label for="exampleFormControlInput1" className="form-label" style={theme?{color:'#FFFFFF',marginTop:'10px'}:{color:'#858585',marginTop:'10px'}}>Email address</label>
+                                                <input type="email" className="form-control" id="exampleFormControlInput1" placeholder="name@example.com"/>
+                                            </div>
+                                            <div className="col">
+                                                <label for="exampleFormControlInput1" className="form-label" style={theme?{color:'#FFFFFF',marginTop:'10px'}:{color:'#858585',marginTop:'10px'}}>Telefon Numarası</label>
+                                                <input type="tel" pattern="0[1-9][0-9]{8}" className="form-control" id="exampleFormControlInput1" placeholder="0(555)555 55 55"/>
+                                            </div>
+                                            <div className="col" >
+                                                <label for="exampleFormControlTextarea1" className="form-label" style={theme?{color:'#FFFFFF',marginTop:'10px'}:{color:'#858585',marginTop:'10px'}}>Mesajınız</label>
+                                                <textarea className="form-control" id="exampleFormControlTextarea1" rows="8" ></textarea>
+                                            </div>
+                                            <div>
+                                                <button style={{}}>Gönder</button>
+                                            </div>
+                                        </form>
+                                        </div>
+                                    </div>
+                                </section>
+                            )
+                        }else{
+                            return(
+                                <section className={`${sub.subSection} ${layout.container}`}>
+                                    <div className={theme ? sub.subTitle : sub.lightsubTitle}>{item.title}</div>
+                                    <div className={sub.subStatic}>
+                                        <img className={sub.subKaralama} src={karalama} alt='karalama' height={40} width={304}></img>
+                                    </div>
+                                    <p className={theme ? sub.subText : sub.lightsubText}>{item.text}</p>
+                                </section>
+                                )
+                        }
                     }
                     return null;
                 }

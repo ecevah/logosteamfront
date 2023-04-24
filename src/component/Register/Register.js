@@ -11,7 +11,6 @@ export default function Register() {
 
     const [show, setShow] = useState(false);
     const [check, setCheck] = useState('first');
-    const [kosul, setKosul] = useState(false);
 
     const [name, setName] = useState('');
     const [surname, setSurname] = useState('');
@@ -63,6 +62,7 @@ export default function Register() {
 
     const secondHandle = async () => {
         const arr = [];
+        document.getElementById('isLoadingx').style.display = 'block';
         arrTag.map((item)=>
             item.test === true ? arr.push(item.tag) : null
         );
@@ -76,7 +76,6 @@ export default function Register() {
         formData.append('image', file);
         formData.append('email', mail);
         try{
-
             const response = await axios.post('/api/psyc/add', formData, {
                 headers: {
                   'Content-Type': 'multipart/form-data',
@@ -84,17 +83,18 @@ export default function Register() {
                 }
               });
             if(response.data.status){
+                document.getElementById('isLoadingx').style.display = 'none';
                 await Swal.fire({
                     icon: 'success',
-                    title: 'Başarılı',
-                    text: 'Login Ekranına Yönlendiriliyorsun',
+                    title: 'Kayıt Başarılı',
+                    text: 'Hesabınız aktifleştiğinde ekibimiz tarafından bilgilendirileceksiniz.',
                     confirmButtonColor: '#8C10B8',
                     confirmButtonText: 'Tamam'
             })
-                navigate("/login");
             } 
             else{
                 console.log('Başarısız');
+                document.getElementById('isLoadingx').style.display = 'none';
                 Swal.fire({
                     icon: 'warning',
                     title: 'Oops...',
@@ -111,7 +111,8 @@ export default function Register() {
                 confirmButtonColor: '#8C10B8',
                 confirmButtonText: 'Tamam'
             })
-            return err
+            document.getElementById('isLoadingx').style.display = 'none';
+            return err  
         }
     }
 
@@ -119,18 +120,23 @@ export default function Register() {
         setCheck('first');
     }
 
+    const popup = () =>{
+        Swal.fire({
+            title: 'Şartlar ve Koşullar',
+            text: 'ŞArtlar ve koşullar',
+            confirmButtonColor: '#8C10B8',
+            confirmButtonText: 'Tamam'
+        })
+    }
+
   return (
+    <>
+    <div className='isLoadingx' id="isLoadingx">
+      <img className='isloadinglogo' src="./logosLogoLight.svg" alt='loadingImg' width='300' height='150'/>
+      <svg className='isloadingImg' xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="32" height="32"><path d="M18.364 5.63604L16.9497 7.05025C15.683 5.7835 13.933 5 12 5C8.13401 5 5 8.13401 5 12C5 15.866 8.13401 19 12 19C15.866 19 19 15.866 19 12H21C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C14.4853 3 16.7353 4.00736 18.364 5.63604Z" fill="rgba(140,16,184,1)"></path></svg>
+    </div>
+
     <section className={styles.section}>
-        <div className={kosul ? styles.kosul : styles.none}>
-            <div className={styles.kosulContent}>
-                <div className={styles.kosulInclusive}>
-                    <div className={styles.kosulText}>Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat. Lorem ipsum dolor sit amet, consectetuer adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet dolore magna aliquam erat volutpat.</div>
-                    <div className={styles.kosulBtnInclusive}>
-                        <button onClick={()=> setKosul(false)} className={styles.kosulbtn} style={{backgroundColor:'red'}}>Geri Dön</button>
-                    </div>
-                </div>
-            </div>
-        </div>
         <div className={styles.inclusive}>
             <button onClick={()=> navigate("/")}>
                 <img src={logosLogo} width={115} height={60} alt='logo'></img>
@@ -170,7 +176,7 @@ export default function Register() {
                 </div>
                 <div className={styles.ifContent}>
                     <input type='checkbox' className={styles.check} id='check' required onChange={()=>setOnay(!onay)}></input>
-                    <button onClick={()=>setKosul(true)} className={styles.ifBtn} type="button">Şartları ve koşulları</button>
+                    <button onClick={()=>popup()} className={styles.ifBtn} type="button">Şartları ve koşulları</button>
                     <div className={styles.ifText}>kabul ediyorum.</div>
                 </div>
                 <button type='submit' className={styles.button} onClick={async()=> await firstHandle()}>Kayıt Ol</button>
@@ -238,5 +244,6 @@ export default function Register() {
             </form>
         </div>
     </section>
+    </>
   )
 }
