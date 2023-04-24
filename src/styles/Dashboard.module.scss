@@ -234,8 +234,9 @@
                 box-sizing: border-box;
                 border: 1px solid #E9ECEF;
                 filter: drop-shadow(0px 0px 3px rgba(60, 72, 88, 0.15));
-                border-radius: 22.5px;
+                border-radius: 22.5px !important;
                 margin-right: 16px;
+                overflow: hidden;
             }
         
             & .clientContent{
@@ -920,4 +921,55 @@
     font-size: 15px;
     line-height: 27px;
     color: #8C10B8;
+}
+
+.settingDeleteTitle{
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 27px;
+    color: #F0735A;
+    width: 100%;
+    border-bottom: 3.2px solid #E9ECEF;
+    padding-bottom: 30px;
+    text-align: center;
+    margin-top: 110px;
+}
+
+.settingDeleteText{
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 15px;
+    line-height: 22px;
+    color: #212529;
+    text-align: center;
+    margin-top: 23px;
+    margin-bottom: 27px;
+}
+
+.settingDeleteBtn{
+    width: 169px;
+    height: 44.9px;
+    background: #F0735A;
+    border: 3px solid #F0735A;
+    border-radius: 100px;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 15px;
+    line-height: 22px;
+    letter-spacing: 0.5px;
+    color: #FFFFFF;
+    text-align: center;
+}
+
+.clientImg{
+    box-sizing: border-box;
+    border: 1px solid #E9ECEF;
+    filter: drop-shadow(0px 0px 3px rgba(60, 72, 88, 0.15));
+    border-radius: 22.5px !important;
+    margin-right: 16px;
+    overflow: hidden;
 }

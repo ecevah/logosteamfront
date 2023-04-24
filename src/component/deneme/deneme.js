@@ -31,7 +31,7 @@ export default function Meeting(){
     try {
       const canvas = await html2canvas(element);
       const img = canvas.toDataURL('image/png');
-      const response = await axios.post("http://127.0.0.1:5001/image/predict", {
+      const response = await axios.post("https://www.teamlogos.tech/image/predict", {
         "image": img
       });
       console.log(response.data.result);
@@ -296,7 +296,7 @@ window.onload = function ()
     html2canvas(element)
       .then((canvas) => {
         const img = canvas.toDataURL('image/png');
-        axios.post("http://127.0.0.1:5001/image/predict", 
+        axios.post("https://ai.teamlogos.tech/image/predict", 
         {
           "image":img
         })

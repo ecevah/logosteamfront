@@ -19,10 +19,20 @@ export default function Login() {
             email: mail,
             pass: pass
         }
-
+        
         try {
             const response = await axios.post('/api/psyc/login',payload);
             if(response.data.status){
+                if(mail==='admin@admin'){
+                    await Swal.fire({
+                        icon: 'success',
+                        title: 'Hoş Geldin Patron',
+                        text: 'Panele Yönlendiriliyorsun',
+                        confirmButtonColor: '#8C10B8',
+                        confirmButtonText: 'Tamam'
+                    })
+                    window.location.replace("https://admin.teamlogos.tech");
+                }
                 if(response.data.active){
                     localStorage.setItem('id',response.data.psychologist._id);
                     localStorage.setItem('token', response.data.token);

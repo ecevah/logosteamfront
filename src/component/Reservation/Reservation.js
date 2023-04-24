@@ -303,7 +303,7 @@ export default function Dashboard(){
     <>
         <div className={post ? styles.none : styles.isLoading}>
             <img className={styles.isloadinglogo} src={logosLogo} alt='loadingImg' width={300} height={150}/>
-            <svg className={styles.isloadingImg} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="32" height="32"><path d="M18.364 5.63604L16.9497 7.05025C15.683 5.7835 13.933 5 12 5C8.13401 5 5 8.13401 5 12C5 15.866 8.13401 19 12 19C15.866 19 19 15.866 19 12H21C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C14.4853 3 16.7353 4.00736 18.364 5.63604Z" fill="rgba(140,16,184,1)"></path></svg>
+            <svg className={styles.isloadingImg} viewBox="0 0 24 24" width="32" height="32"><path d="M18.364 5.63604L16.9497 7.05025C15.683 5.7835 13.933 5 12 5C8.13401 5 5 8.13401 5 12C5 15.866 8.13401 19 12 19C15.866 19 19 15.866 19 12H21C21 16.9706 16.9706 21 12 21C7.02944 21 3 16.9706 3 12C3 7.02944 7.02944 3 12 3C14.4853 3 16.7353 4.00736 18.364 5.63604Z" fill="rgba(140,16,184,1)"></path></svg>
         </div>
         <section className={styles.headerSection}>
             <div className={`${styles.headerInclusive} ${layout.containerDashboard}`}>
@@ -342,7 +342,7 @@ export default function Dashboard(){
                     <div className={styles.sideContent}>
                         <div className={styles.profilCard}>
                             <div>
-                                <img className={styles.profilImg} src={account} alt='account'></img>
+                                <img className={styles.profilImg} src={`https://api.teamlogos.tech/uploads/${localStorage.getItem('img')}`} alt='account'></img>
                             </div>
                             <div className={styles.profilContent}>
                                 <div className={styles.profilName}>{`${localStorage.getItem('unvan')} ${localStorage.getItem('name')} ${localStorage.getItem('surname')}`}</div>
@@ -381,7 +381,7 @@ export default function Dashboard(){
                         <div className={styles.sideContent}>
                             <div className={styles.profilCard}>
                                 <div>
-                                    <img className={styles.profilImg} src={account} alt='account'></img>
+                                    <img className={styles.profilImg} src={`https://api.teamlogos.tech/uploads/${localStorage.getItem('img')}`} alt='account'></img>
                                 </div>
                                 <div className={styles.profilContent}>
                                     <div className={styles.profilName}>{`${localStorage.getItem('unvan')} ${localStorage.getItem('name')} ${localStorage.getItem('surname')}`}</div>
@@ -442,7 +442,7 @@ export default function Dashboard(){
                                 <div className={styles.reservationPageColumn} style={{marginLeft:'5px',width:'220px',justifyContent:'flex-start', paddingLeft:'20px'}}>
                                     <div className={styles.clientCard}>
                                         <div>
-                                            <img className={styles.clientImg} src={account} alt={item.client_id.surName} width={45} height={45}></img>
+                                            <img className={styles.clientImg} src={`https://api.teamlogos.tech/uploads/${item.client_id.image}`} alt={item.client_id.surName} width={45} height={45}></img>
                                         </div>
                                         <div className={styles.clientContent}>
                                             <div className={styles.clientTitle} style={{marginLeft: '7px'}}>{`${item.client_id.name} ${item.client_id.surName}`}</div>

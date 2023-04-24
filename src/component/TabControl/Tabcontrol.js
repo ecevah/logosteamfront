@@ -17,7 +17,7 @@ export default function Tabcontrol(){
             <img src={x} height="125" width="160" alt="logo" style="margin-bottom: 25px;"/>
             <div id="title">Bu penceredeki oturumunuz son buldu.</div>
             <div id="text">Başka bir pencereden açılmış.</div>
-            <a href="http://34.65.228.18/" id="btn">ANA SAYFAYA DÖN</a>
+            <a href="https://www.teamlogos.tech/" id="btn">ANA SAYFAYA DÖN</a>
         </section>
         </div>
     </>
