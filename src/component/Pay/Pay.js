@@ -10,7 +10,7 @@ import layout from '../../styles/Layout.module.scss';
 import logosLogo from '../../img/logosLogoLight.svg';
 import account from '../../img/01.jpg.png';
 import kyk from '../../img/kykSiyah.svg';
-import mimar from '../../img/mimarSiyah.svg';
+import mimar from '../../img/mimarSiyah.png';
 import mühendishane from '../../img/mühendishaneSiyah.svg';
 import teknofest from '../../img/teknofestSiyah.svg';
 import teknoloji from '../../img/teknolojiSiyah.svg';
@@ -24,11 +24,12 @@ import profil from '../../img/profile.svg';
 import profilpurple from '../../img/profilepurple.svg';
 import randevu from '../../img/rendevu.svg';
 import randevupurple from '../../img/randevupurple.svg';
-import book from '../../img/book.svg';
-import bookPurple from '../../img/purpleBook.svg';
+import logout from '../../img/logOut.svg';
+import logoutPurple from '../../img/logOutPurple.svg';
 
 import verify from '../../api/verify';
 import axios from '../../api/axios';
+import Swal from 'sweetalert2';
 
 export default function Dashboard(){
     const navigate = useNavigate();
@@ -117,6 +118,13 @@ export default function Dashboard(){
             active: '',
             icon: profil,
             purple: profilpurple
+        },
+        {
+            text:'Çıkış Yap',
+            href:'/',
+            active: '',
+            icon: logout,
+            purple: logoutPurple
         }
     ]
 
@@ -191,6 +199,24 @@ export default function Dashboard(){
         }
     }
 
+    const logOut= async() =>{
+        await Swal.fire({
+            icon: 'success',
+            title: 'Çıkış Yapıldı',
+            text: 'Logos Ekibi Mutlu Günler Diler',
+            confirmButtonColor: '#8C10B8',
+            confirmButtonText: 'Tamam'
+        })
+        localStorage.setItem('token','');
+        localStorage.setItem('id', '');
+        localStorage.setItem('name', '');
+        localStorage.setItem('surname', '');
+        localStorage.setItem('unvan', '');
+        localStorage.setItem('tag', '');
+        localStorage.setItem('img', '');     
+        navigate('/');
+    }
+
     return (
     <>
         <div className={post ? styles.none : styles.isLoading}>
@@ -212,10 +238,16 @@ export default function Dashboard(){
         <section className={open ? styles.dropdawnOpen : styles.dropdawnClose}>
                 <div className={`${styles.dropdawnList}`}>
                     {arrHeader.map((item) =>
-                        <button className={styles.navbarbtn}>
-                            <img src={item.active==='active' ? item.purple : item.icon} height={12} width={12} alt={item.text}/>
-                            <a href={item.href} className={`${styles.headerItem} ${styles[item.active]}`}>{item.text}</a>
-                        </button>
+                            (item.text==='Çıkış Yap' ? 
+                            <button className={styles.navbarbtn} onClick={()=>logOut()}>
+                                <img src={item.icon} height={12} width={12} alt={item.text}/>
+                                <a className={`${styles.headerItem} ${styles[item.active]}`}>{item.text}</a>
+                            </button>
+                            :<button className={styles.navbarbtn}>
+                                <img src={item.active==='active' ? item.purple : item.icon} height={12} width={12} alt={item.text}/>
+                                <a href={item.href} className={`${styles.headerItem} ${styles[item.active]}`}>{item.text}</a>
+                            </button>
+                            )
                         )}
                 </div>
         </section>
@@ -238,10 +270,16 @@ export default function Dashboard(){
                     </div>
                     <div className={styles.headerItemDiv}>
                         {arrHeader.map((item) =>
-                            <button className={styles.navbarbtn}>
+                            (item.text==='Çıkış Yap' ? 
+                            <button className={styles.navbarbtn} onClick={()=>logOut()}>
+                                <img src={item.icon} height={12} width={12} alt={item.text}/>
+                                <a className={`${styles.headerItem} ${styles[item.active]}`}>{item.text}</a>
+                            </button>
+                            :<button className={styles.navbarbtn}>
                                 <img src={item.active==='active' ? item.purple : item.icon} height={12} width={12} alt={item.text}/>
                                 <a href={item.href} className={`${styles.headerItem} ${styles[item.active]}`}>{item.text}</a>
                             </button>
+                            )
                         )}
                     </div>
                 </div>
@@ -304,16 +342,16 @@ export default function Dashboard(){
                                     </div>
                                 </div>
                             </div>
-                            <div className={styles.reservationPageColumn} style={{width:'86px',textAlign:'center'}}>249.90₺</div>
+                            <div className={styles.reservationPageColumn} style={{width:'86px',textAlign:'center'}}>499.90₺</div>
                             <div className={styles.reservationPageColumn} style={{width:'140px'}}>{parseDate(item.day)}</div>
                             <div className={styles.reservationPageColumn} style={{width:'64px'}}>{item.time}</div>
                         </div>
                         ))}
                         <div className={styles.payTotalIncslusive} style={{display:'flex',justifyContent:'flex-end', width:'100%', marginTop:'20px'}}>
                             <div className={styles.payTotalContent}>
-                                <div className='payTotalText' >{`Toplam Tutar: ${(arrRes.total*249.90).toFixed(2)}TL`}</div>
-                                <div className='payTotalText'>{`Komisyon Tutarı (%12): ${((arrRes.total*249.90)*0.12).toFixed(2)}TL`}</div>
-                                <div className='payTotalText'>{`Net Tutar: ${((arrRes.total*249.90)*0.88).toFixed(2)}TL`}</div>
+                                <div className='payTotalText' >{`Toplam Tutar: ${(arrRes.total*499.90).toFixed(2)}TL`}</div>
+                                <div className='payTotalText'>{`Komisyon Tutarı (%9): ${((arrRes.total*499.90)*0.09).toFixed(2)}TL`}</div>
+                                <div className='payTotalText'>{`Net Tutar: ${((arrRes.total*499.90)*0.91).toFixed(2)}TL`}</div>
                             </div>
                         </div>
                         </div>

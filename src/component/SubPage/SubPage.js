@@ -10,12 +10,13 @@ import Button from '../Button/button';
 import logosLogoLight from '../../img/logosLogoLight.svg'
 import logosLogo from '../../img/logosLogo.svg';
 import karalama from '../../img/karalama.svg';
+import Swal from 'sweetalert2';
 
 function Homepage(props) {
-    if(localStorage.getItem('theme')=== null & localStorage.getItem('theme')===undefined){
+    if(localStorage.getItem('theme')== null || localStorage.getItem('theme')===undefined || localStorage.getItem('theme')===''){
         localStorage.setItem('theme', true);
     }
-    const [theme, setTheme] = useState(localStorage.getItem('theme')=== null ? localStorage.setItem('theme', true): localStorage.getItem('theme'));
+    const [theme, setTheme] = useState(localStorage.getItem('theme'));
     const [open, setOpen] = useState(false);
     const navigate = useNavigate();
 
@@ -140,6 +141,16 @@ function Homepage(props) {
         localStorage.setItem('theme', theme);
     }
 
+    const handleForm = () => {
+        Swal.fire({
+            icon: 'success',
+            title: 'Başarıyla Gönderildi',
+            text: 'En yakın zamanda dönüş yapılacaktır.',
+            confirmButtonColor: '#8C10B8',
+            confirmButtonText: 'Tamam'
+        })
+    }
+
   return (
     <>
         <section className={open ? theme ? styles.hamburgerBg : styles.lighthamburgerBg : theme ? styles.headers : styles.lightHeaders}>
@@ -154,10 +165,10 @@ function Homepage(props) {
                     <div className={styles.btnHeaderDiv}>
                         <button onClick={()=>navigate("/login")} className={styles.headerLinkItem}>Giriş Yap</button>
                         <button onClick={()=>navigate("/signup")}><Button type='primary' text='Kayıt Ol'/></button>
-                        {theme ? <button onClick={()=>themeChoose()} className={styles.themeBtn}><i className={`ri-sun-line ${styles.dark}`}></i></button> : <button onClick={()=>themeChoose()}><i className={`ri-moon-line ${open ? styles.openlight : styles.light}`}></i></button>}
+                        {theme ? <button onClick={()=>themeChoose()} className={styles.themeBtn}><i className={`ri-sun-line ${styles.dark}`}></i></button> : <button onClick={()=>themeChoose()} className={styles.themeBtn}><i className={`ri-moon-line ${open ? styles.openlight : styles.light}`}></i></button>}
                     </div>
                     <div className={styles.mobileBtnDiv}>
-                        {theme ? <button onClick={()=>themeChoose()} className={styles.themeBtn}><i className={`ri-sun-line ${styles.dark}`}></i></button> : <button onClick={()=>themeChoose()}><i className={`ri-moon-line ${open ? styles.openlight : styles.light}`}></i></button>}
+                        {theme ? <button onClick={()=>themeChoose()} className={styles.themeBtn}><i className={`ri-sun-line ${styles.dark}`}></i></button> : <button onClick={()=>themeChoose()} className={styles.themeBtn}><i className={`ri-moon-line ${open ? styles.openlight : styles.light}`}></i></button>}
                         <button className={styles.mobileBtn} onClick={()=>setOpen(!open)}>
                             {open ? <i className={`ri-close-line ${theme ? styles.hamburgerMenu : styles.lighthamburgerMenu}`}></i> : <i className={`ri-menu-line ${theme ? styles.hamburgerMenu : styles.lighthamburgerMenu}`}></i>}
                         </button>
@@ -210,8 +221,8 @@ function Homepage(props) {
                                                 <label for="exampleFormControlTextarea1" className="form-label" style={theme?{color:'#FFFFFF',marginTop:'10px'}:{color:'#858585',marginTop:'10px'}}>Mesajınız</label>
                                                 <textarea className="form-control" id="exampleFormControlTextarea1" rows="8" ></textarea>
                                             </div>
-                                            <div>
-                                                <button style={{}}>Gönder</button>
+                                            <div style={{display:'flex',alignItems:'center',justifyContent:'center',marginTop:'30px'}}>
+                                                <button onClick={()=> handleForm()}><Button type='primary' text='Gönder'/></button>
                                             </div>
                                         </form>
                                         </div>

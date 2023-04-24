@@ -22,10 +22,10 @@ import dincer from '../../img/dincer.png';
 import samed from '../../img/samed.png';
 
 function Homepage() {
-    if(localStorage.getItem('theme')=== null & localStorage.getItem('theme')===undefined){
+    if(localStorage.getItem('theme')== null || localStorage.getItem('theme')===undefined || localStorage.getItem('theme')===''){
         localStorage.setItem('theme', true);
     }
-    const [theme, setTheme] = useState(localStorage.getItem('theme')=== null ? localStorage.setItem('theme', true): localStorage.getItem('theme'));
+    const [theme, setTheme] = useState(localStorage.getItem('theme'));  
     const [open, setOpen] = useState(false);
     const navigate = useNavigate();
     const arr = [
@@ -117,17 +117,6 @@ function Homepage() {
     ]
     const arrMember = [
         {
-            photo:okan,
-            name:'Okan Bursa',
-            tag:'Danışman',
-            title:'İzmir Bakırçay Üniversitesi Bilgisayar Müh. Bölüm Başkan Yardımcısı',
-            linkedin:'https://www.linkedin.com/in/okan-bursa-phd-99841b8',
-            instagram:'',
-            github:'',
-            twitter:'',
-            behance:''
-        },
-        {
             photo:kerem,
             name:'Nihat Kerem Bora',
             tag:'Ekip Kaptanı',
@@ -214,12 +203,23 @@ function Homepage() {
             github:'https://github.com/samedkarakus',
             twitter:'https://twitter.com/samed_karakus0',
             behance:'https://www.behance.net/samedkarakus'
+        },
+        {
+            photo:okan,
+            name:'Okan Bursa',
+            tag:'Danışman',
+            title:'İzmir Bakırçay Üniversitesi Bilgisayar Müh. Bölüm Başkan Yardımcısı',
+            linkedin:'https://www.linkedin.com/in/okan-bursa-phd-99841b8',
+            instagram:'',
+            github:'',
+            twitter:'',
+            behance:''
         }
     ]
 
-    const themeChoose = () =>{
-        setTheme(!theme);
-        localStorage.setItem('theme', theme);
+    const themeChoose = async () =>{
+        await localStorage.setItem('theme', !theme);
+        await setTheme(!theme);
     }
 
   return (
@@ -236,10 +236,10 @@ function Homepage() {
                     <div className={styles.btnHeaderDiv}>
                         <button onClick={()=>navigate("/login")} className={theme ? styles.headerLinkItem:sub.lightheaderLinkItem}>Giriş Yap</button>
                         <button onClick={()=>navigate("/signup")}><Button type='primary' text='Kayıt Ol'/></button>
-                        {theme ? <button onClick={()=>themeChoose()} className={styles.themeBtn}><i className={`ri-sun-line ${styles.dark}`}></i></button> : <button onClick={()=>themeChoose()}><i className={`ri-moon-line ${open ? styles.openlight : styles.light}`}></i></button>}
+                        {theme ? <button onClick={()=>themeChoose()} className={styles.themeBtn}><i className={`ri-sun-line ${styles.dark}`}></i></button> : <button onClick={()=>themeChoose()} className={styles.themeBtn}><i className={`ri-moon-line ${open ? styles.openlight : styles.light}`}></i></button>}
                     </div>
                     <div className={styles.mobileBtnDiv}>
-                        {theme ? <button onClick={()=>themeChoose()} className={styles.themeBtn}><i className={`ri-sun-line ${styles.dark}`}></i></button> : <button onClick={()=>themeChoose()}><i className={`ri-moon-line ${open ? styles.openlight : styles.light}`}></i></button>}
+                        {theme ? <button onClick={()=>themeChoose()} className={styles.themeBtn}><i className={`ri-sun-line ${styles.dark}`}></i></button> : <button onClick={()=>themeChoose()} className={styles.themeBtn}><i className={`ri-moon-line ${open ? styles.openlight : styles.light}`}></i></button>}
                         <button className={styles.mobileBtn} onClick={()=>setOpen(!open)}>
                             {open ? <i className={`ri-close-line ${theme ? styles.hamburgerMenu : styles.lighthamburgerMenu}`}></i> : <i className={`ri-menu-line ${theme ? styles.hamburgerMenu : styles.lighthamburgerMenu}`}></i>}
                         </button>

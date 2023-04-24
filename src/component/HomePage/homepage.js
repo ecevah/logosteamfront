@@ -9,9 +9,9 @@ import Button from '../Button/button';
 import logosLogoLight from '../../img/logosLogoLight.svg'
 import logosLogo from '../../img/logosLogo.svg';
 import first from '../../img/appFirst.webp';
-import mimar from '../../img/mimarSinanLogo.svg';
+import mimar from '../../img/mimarSinanLogo.png';
 import muhendishane from '../../img/mühendishane.svg';
-import mimarLight from '../../img/mimarLight.svg';
+import mimarLight from '../../img/mimarLight.png';
 import muhendishaneLight from '../../img/muhendishaneLight.svg';
 import teknofest from '../../img/teknofestLogo.svg';
 import teknoloji from '../../img/teknolojiTakım.svg';
@@ -29,10 +29,10 @@ import phone from '../../img/phone.png';
 import bg from '../../img/lastBG.svg';
 
 function Homepage() {
-    if(localStorage.getItem('theme')== null && localStorage.getItem('theme')===undefined && localStorage.getItem('')){
+    if(localStorage.getItem('theme')== null || localStorage.getItem('theme')===undefined || localStorage.getItem('theme')===''){
         localStorage.setItem('theme', true);
     }
-    const [theme, setTheme] = useState(localStorage.getItem('theme')=== null ? localStorage.setItem('theme', true): localStorage.getItem('theme'));
+    const [theme, setTheme] = useState(localStorage.getItem('theme'));
     const [open, setOpen] = useState(false)
     const navigate = useNavigate();
 
@@ -235,7 +235,7 @@ function Homepage() {
                         {theme ? <button onClick={()=>themeChoose()} className={styles.themeBtn}><i className={`ri-sun-line ${styles.dark}`}></i></button> : <button onClick={()=>themeChoose()} className={styles.themeBtn}><i className={`ri-moon-line ${styles.light}`}></i></button>}
                     </div>
                     <div className={styles.mobileBtnDiv}>
-                        {theme ? <button onClick={()=>themeChoose()} className={styles.themeBtn}><i className={`ri-sun-line ${styles.dark}`}></i></button> : <button onClick={()=>themeChoose()}><i className={`ri-moon-line ${open ? styles.openlight : styles.light}`}></i></button>}
+                        {theme ? <button onClick={()=>themeChoose()} className={styles.themeBtn}><i className={`ri-sun-line ${styles.dark}`}></i></button> : <button onClick={()=>themeChoose()} className={styles.themeBtn}><i className={`ri-moon-line ${open ? styles.openlight : styles.light}`}></i></button>}
                         <button className={styles.mobileBtn} onClick={()=>setOpen(!open)}>
                             {open ? <i className={`ri-close-line ${theme ? styles.hamburgerMenu : styles.lighthamburgerMenu}`}></i> : <i className={`ri-menu-line ${theme ? styles.hamburgerMenu : styles.lighthamburgerMenu}`}></i>}
                         </button>
@@ -275,7 +275,10 @@ function Homepage() {
                         <div className={styles.sponsorImg}>
                             {arrSponsor.map((item)=>
                                 <div>
-                                    <img src={theme ? item.item : item.light} alt={item.alt} height='83px'></img>
+                                    {item.alt==='mimar'? 
+                                        <img src={theme ? item.item : item.light} alt={item.alt} height={100} width={100}></img>:
+                                        <img src={theme ? item.item : item.light} alt={item.alt} height={83}></img>
+                                }
                                 </div>
                             )}
                         </div>
@@ -308,7 +311,7 @@ function Homepage() {
                     <button onClick={()=> navigate("/howto")}><Button type='second' text='Detaylı bilgi al' theme={theme ? null:'light'} width='high'/></button>
                 </div>
                 <div>
-                    <img src={second} alt='second' />
+                    <img src={second} alt='second' style={{marginTop:'20px'}}/>
                 </div>
             </div>
         </section>
