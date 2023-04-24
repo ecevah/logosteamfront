@@ -89,8 +89,9 @@ export default function Register() {
                     title: 'Kayıt Başarılı',
                     text: 'Hesabınız aktifleştiğinde ekibimiz tarafından bilgilendirileceksiniz.',
                     confirmButtonColor: '#8C10B8',
-                    confirmButtonText: 'Tamam'
-            })
+                    confirmButtonText: 'Tamam',
+                })
+                navigate('/');
             } 
             else{
                 console.log('Başarısız');

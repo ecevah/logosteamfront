@@ -139,8 +139,10 @@ if (mediaType === "audio")
     channelParameters.remoteAudioTrack = user.audioTrack;
     // Play the remote audio track. No need to pass any DOM element.
     channelParameters.remoteAudioTrack.play();
+
+
 }
-// Listen for the "user-unpublished" event.
+
 agoraEngine.on("user-unpublished", user =>
 {
     console.log(user.uid+ "has left the channel");
@@ -301,7 +303,28 @@ window.onload = function ()
         }
       })
     }
+
+    document.getElementById('mic').onclick = () => {
+      agoraEngine.startRecord({
+        // Kaydedilecek dosya biçimi ve adı.
+        format: "mp3",
+        // Kaydedilecek dosyanın adı.
+        name: "agora-recording",
+      }).then(() => {
+        console.log("Recording started");
+      }).catch((err) => {
+        console.log("Recording failed", err);
+      });
+    }
   }
+
+  document.getElementById('cam').onclick = () => {
+    agoraEngine.stopRecord().then(() => {
+      console.log("Recording stopped");
+    }).catch((err) => {
+      console.log("Stopping recording failed", err);
+    });
+}
   /*document.getElementById('photo').onclick = async function (){
     const element = document.getElementById(1);
     html2canvas(element)

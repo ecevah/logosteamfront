@@ -249,7 +249,7 @@ export default function Dashboard(){
                     <div className={styles.sideContent}>
                         <div className={styles.profilCard}>
                             <div>
-                                <img className={styles.profilImg} src={`http://34.65.228.18/uploads/${localStorage.getItem('img')}`} alt='account' width={80} height={80}></img>
+                                <img className={styles.profilImg} src={`http://34.65.228.18:3000/uploads/${localStorage.getItem('img')}`} alt='account' width={80} height={80}></img>
                             </div>
                             <div className={styles.profilContent}>
                                 <div className={styles.profilName}>{`${localStorage.getItem('unvan')} ${localStorage.getItem('name')} ${localStorage.getItem('surname')}`}</div>
