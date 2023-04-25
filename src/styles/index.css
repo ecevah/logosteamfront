@@ -3,6 +3,8 @@
 font-family: 'Poppins', sans-serif;*/
 @import url("./Layout.module.scss");
 @import url("./prelight.css");
+@import url('https://fonts.googleapis.com/css2?family=Source+Sans+Pro:wght@300;400;600&display=swap');
+
 
 body {
     padding: 0px !important;
@@ -242,4 +244,31 @@ section{
   background: rgba(19, 21, 23, 0.63);
   border-radius: 71.5251px;
   padding: 26px;
+}
+
+#talk{
+  position: absolute;
+  width: 25vw;
+  right: 0px;
+  height: 100vh;
+  background-color: #FB0242;
+}
+
+#textProcess{
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16.94px;
+  line-height: 100%;
+  text-align: right;
+  color: #403D56;
+  width: 100px;
+  padding-right: 10px;
+}
+
+#process{
+  background: #533AED;
+  border-radius: 48.4px;
+  z-index: 100;
+  height: 16px;
 }

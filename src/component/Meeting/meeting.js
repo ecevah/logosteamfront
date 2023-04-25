@@ -6,6 +6,14 @@ import html2canvas from 'html2canvas';
 import FeatherIcon from 'feather-icons-react';
 
 import logosLogo from '../../img/logosLogoLight.svg';
+import anger from '../../img/anger.png';
+import happy from '../../img/happy.png';
+import sad from '../../img/sad.png';
+import disgusd from '../../img/disgusd.png';
+import fear from '../../img/fear.png';
+import suprised from '../../img/suprised.png';
+import naturel from '../../img/naturel.png';
+import user from '../../img/user.svg';
 
 import verify from '../../api/verify';
 import axios from 'axios';
@@ -15,6 +23,14 @@ export default function Meeting(){
   const [post,setPost]=useState(null);
   const [mic, setMic] = useState(true);
   const [cam, setCam] = useState(true);
+  const [emoImg, setEmoImg] = useState(null);
+  const [angerCount, setAngerCount] = useState(0);
+  const [happyCount, setHappyCount] = useState(0);
+  const [sadCount, setSadCount] = useState(0);
+  const [disgustCount, setDisgustCount] = useState(0);
+  const [fearCount, setFearCount] = useState(0);
+  const [suprisedCount, setSuprisedCount] = useState(0);
+  const [naturalCount, setNaturelCount] = useState(0);
 
   const navigate = useNavigate();
   useEffect(() => {
@@ -34,7 +50,8 @@ export default function Meeting(){
       const response = await axios.post("https://ai.teamlogos.tech/image/predict", {
         "image": img
       });
-      console.log(response.data.result);
+      console.log(response);
+      await handleEmo(response.data.result);
     } catch (error) {
       console.error(error);
     }
@@ -172,6 +189,7 @@ window.onload = function ()
         document.getElementById('leave').style.display = 'none';
         document.getElementById('mic').style.display = 'none';
         document.getElementById('cam').style.display = 'none';
+        document.getElementById('talk').style.display = 'none';
         // Destroy the local audio and video tracks.
         channelParameters.localAudioTrack.close();
         channelParameters.localVideoTrack.close();
@@ -194,6 +212,7 @@ window.onload = function ()
         document.getElementById('leave').style.display = 'block';
         document.getElementById('mic').style.display = 'block';
         document.getElementById('cam').style.display = 'block';
+        document.getElementById('talk').style.display = 'block';
         // Join a channel.
         await agoraEngine.join(options.appId, options.channel, options.token, options.uid);
         // Create a local audio track from the audio sampled by a microphone.
@@ -249,6 +268,7 @@ window.onload = function ()
             document.getElementById('leave').style.display = 'none';
             document.getElementById('mic').style.display = 'none';
             document.getElementById('cam').style.display = 'none';
+            document.getElementById('talk').style.display = 'none';
             // Destroy the local audio and video tracks.
             channelParameters.localAudioTrack.close();
             channelParameters.localVideoTrack.close();
@@ -270,6 +290,7 @@ window.onload = function ()
             document.getElementById('leave').style.display = 'none';
             document.getElementById('mic').style.display = 'none';
             document.getElementById('cam').style.display = 'none';
+            document.getElementById('talk').style.display = 'none';
             // Destroy the local audio and video tracks.
             channelParameters.localAudioTrack.close();
             channelParameters.localVideoTrack.close();
@@ -289,6 +310,7 @@ window.onload = function ()
           document.getElementById('leave').style.display = 'none';
           document.getElementById('mic').style.display = 'none';
           document.getElementById('cam').style.display = 'none';
+          document.getElementById('talk').style.display = 'none';
           // Destroy the local audio and video tracks.
           channelParameters.localAudioTrack.close();
           channelParameters.localVideoTrack.close();
@@ -363,6 +385,60 @@ let audioStream = null;
 const handleMic = async () => {
   setMic(!mic);
 }
+const  handleEmo = async(emo) =>{
+  switch(emo){
+      case 'anger':
+        await setAngerCount(angerCount+1);
+        await setEmoImg(anger);
+        break;
+      case 'happy':
+        await setEmoImg(happy);
+        await setHappyCount(happyCount+1)
+        break;
+      case 'sad':
+        await setSadCount(sadCount+1)
+        await setEmoImg(sad);
+        break;  
+      case 'disgust':
+        await setDisgustCount(disgustCount+1);
+        await setEmoImg(disgusd);
+        break;
+      case 'fear':
+        await setFearCount(fearCount+1);
+        await setEmoImg(fear);
+      break;
+      case 'suprise':
+        await setSuprisedCount(suprisedCount+1);
+        await setEmoImg(suprised);
+        break;
+      case 'neutral':
+        await setNaturelCount(naturalCount+1);
+        await setEmoImg(naturel);
+        break;  
+      default:
+        Swal.fire({
+          position: 'top-start',
+          icon: 'error',
+          text: 'Yüz tanımlanamıyor!!',
+          showConfirmButton: false,
+          timer: 2500,
+          backdrop: false,
+          width: 300
+        })
+        break;
+  }
+} 
+
+const handleEmoCalc = (number) => {
+  const total = happyCount+ angerCount+ sadCount+ disgustCount+ fearCount+ suprisedCount + naturalCount;
+  const res = (number/total)*100;
+  if(!res){
+    return 0
+  }else{
+  return res
+  }
+}
+
   return (
     <>
         <div className="row">
@@ -374,9 +450,20 @@ const handleMic = async () => {
                 <button type="button" id="mic" style={{display:'none'}} onClick={()=>handleMic()}><FeatherIcon icon={mic?'mic':'mic-off'} color='#FFFFFF' size="45" style={{marginLeft:'auto',marginRight:'auto'}} stroke-width="2.5"/></button>
                 <button type="button" id="cam" style={{display:'none'}} onClick={()=>setCam(!cam)}><FeatherIcon icon={cam?'video':'video-off'} color='#FFFFFF' size="45" style={{marginLeft:'auto',marginRight:'auto'}} stroke-width="2.5"/></button>
                 <div id='talk' style={{display:'none'}}>
-                    <div>Konuşşma metni: adasdsasadsad</div>
-                    <div>Duygu durumu</div>
-                    <div>Kullanılan Kelimeler</div>
+                    <div style={{display:'flex',flexDirection:'column', alignItems:'center',padding:'50px 76px 80px 76px'}}>
+                      <button onClick={()=> handleEmo('happy')}>asdassad</button>
+                      <img src={!emoImg? user : emoImg} alt='Duygu Durumu' width={200} height={200}></img>
+                      <div style={{display:'flex',flexDirection:'column'}}>
+                        <div style={{width:'400px',display:'flex',flexDirection:'row', alignItems:'center'}}>
+                          <div id='textProcess' style={{color: '#403D56',marginBottom:'0px'}}>Mutlu</div>
+                          <div style={{display:'flex',flexDirection:'row'}}>
+                            <div id='process' style={{width:`${2.5*handleEmoCalc(happyCount)}px`}}></div>
+                            <div id='textProcess' style={{color: '#403D56',marginBottom:'0px', width:'65px'}}>{`% ${handleEmoCalc(happyCount)}`}</div>
+                          </div>
+                        </div>
+                      </div>
+                      <div>3</div>
+                    </div>
                 </div>
             </div>
         </div>

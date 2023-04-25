@@ -216,17 +216,8 @@ export default function Dashboard(){
     }
 
     const handleTalk = async (id) => {
-        const resApi = await axios.get(`/api/talk/find?reservation_id=${localStorage.getItem('id')}`, {
-            headers: {
-              'x-access-token': localStorage.getItem('token'),
-            },
-        });
-        await Swal.fire({
-            title: 'Görüşme Verileri',
-            html: `<div>Konuşma Metni: ${resApi.data.Talk}</div><div>En Çok Okunan Duygu Durumu: ${resApi.data.emo}</div><div>Konuşma süresi: ${resApi.data.meetTime}</div>`,
-            confirmButtonColor: '#8C10B8',
-            confirmButtonText: 'Tamam'
-        })
+        await localStorage.setItem('reservation_id',id);
+        navigate('/talk');
     }
 
     const handleLogin = async () =>{

@@ -14,6 +14,7 @@ import Pay from './component/Pay/Pay';
 import Deneme from './component/deneme/deneme';
 import Settings from './component/Settings/Settings';
 import Forgot from './component/Forgot/Forgot';
+import Talk from './component/Talk/Talk';
 
 function App() {
   return (
@@ -37,6 +38,7 @@ function App() {
           <Route path="reservation" element={<Reservation />}></Route>
           <Route path='meet' element={<Meet />}></Route>
           <Route path='deneme' element={<Deneme />}></Route>
+          <Route path='talk' element={<Talk />}></Route>
           <Route path='*' element={<NoMatch/>}></Route>
         </Routes>
       </BrowserRouter> 

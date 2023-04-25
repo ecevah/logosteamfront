@@ -238,7 +238,7 @@ export default function Register() {
                     </div>
                 </div>
                 <div className={styles.image}>
-                    <input type="file" name="myImage" accept="image/png, image/gif, image/jpeg" onChange={(e)=> setFile(e.target.files[0])} style={{marginTop:'30px', marginBottom:'30px'}} required/>
+                    <input type="file" name="myImage" accept="image/png, image/gif, image/jpeg" onChange={(e)=> setFile(e.target.files[0])} style={{marginTop:'30px', marginBottom:'30px'}}/>
                 </div>
                 <button className={styles.button} type='submit' onClick={async()=> await secondHandle()}>Kayıt Ol</button>
                 <button type="button" className={styles.buttonArrow} onClick={async()=> await backHandle()}>Geri Dön</button>

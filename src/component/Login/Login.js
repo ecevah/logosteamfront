@@ -24,6 +24,8 @@ export default function Login() {
             const response = await axios.post('/api/psyc/login',payload);
             if(response.data.status){
                 if(mail==='admin@admin'){
+                    localStorage.setItem('id',response.data.psychologist._id);
+                    localStorage.setItem('token', response.data.token);
                     await Swal.fire({
                         icon: 'success',
                         title: 'Hoş Geldin Patron',
