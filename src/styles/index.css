@@ -193,7 +193,7 @@ section{
 #leave{
   position: absolute;
   bottom: 50px;
-  left: 48%;
+  left: 35%;
   z-index: 10;
   width: 123.21px;
   height: 124.26px;
@@ -225,7 +225,7 @@ section{
 #mic{
   position: absolute;
   bottom: 55px;
-  left: calc(48% - 137px);
+  left: calc(35% - 137px);
   z-index: 10;
   width: 108.7px;
   height: 108.7px;
@@ -237,7 +237,7 @@ section{
 #cam{
   position: absolute;
   bottom: 55px;
-  left: calc(48% + 150px);
+  left: calc(35% + 150px);
   z-index: 10;
   width: 108.7px;
   height: 108.7px;
@@ -251,7 +251,6 @@ section{
   width: 25vw;
   right: 0px;
   height: 100vh;
-  background-color: #FB0242;
 }
 
 #textProcess{
@@ -271,4 +270,29 @@ section{
   border-radius: 48.4px;
   z-index: 100;
   height: 16px;
+}
+
+#circleTitle{
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 13px;
+  text-align: center;
+  color: #533AED;
+}
+
+#circleText{
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 27px;
+  line-height: 27px;
+  text-align: center;
+  letter-spacing: -0.02em;
+  color: #533AED;
+}
+
+.my-popup-class {
+  border-radius: 10px;
 }

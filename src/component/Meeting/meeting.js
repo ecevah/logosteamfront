@@ -4,6 +4,8 @@ import {useNavigate} from 'react-router-dom';
 import phone from '../../img/phoneIcon.svg';
 import html2canvas from 'html2canvas';
 import FeatherIcon from 'feather-icons-react';
+import { CircularProgressbar, CircularProgressbarWithChildren} from 'react-circular-progressbar';
+import 'react-circular-progressbar/dist/styles.css';
 
 import logosLogo from '../../img/logosLogoLight.svg';
 import anger from '../../img/anger.png';
@@ -31,6 +33,7 @@ export default function Meeting(){
   const [fearCount, setFearCount] = useState(0);
   const [suprisedCount, setSuprisedCount] = useState(0);
   const [naturalCount, setNaturelCount] = useState(0);
+  const [root, setRoot] = useState(null);
 
   const navigate = useNavigate();
   useEffect(() => {
@@ -46,12 +49,15 @@ export default function Meeting(){
     const element = document.getElementById(1);
     try {
       const canvas = await html2canvas(element);
-      const img = canvas.toDataURL('image/png');
-      const response = await axios.post("https://ai.teamlogos.tech/image/predict", {
-        "image": img
-      });
-      console.log(response);
-      await handleEmo(response.data.result);
+      canvas.toBlob(async (blob) => {
+        const formData = new FormData();
+        formData.append('file', blob, 'image.png');
+        const response = await axios.post("https://ai.teamlogos.tech/upload", formData, {
+          headers: { 'Content-Type': 'multipart/form-data' }
+        });
+        console.log(response);
+        await handleEmo(response.data.result);
+      }, 'image/png');
     } catch (error) {
       console.error(error);
     }
@@ -121,7 +127,7 @@ localPlayerContainer.style.borderRadius = '10px';
 localPlayerContainer.style.overflow = 'hidden';
 // Set the remote video container size.
 remotePlayerContainer.style.width = "75vw";
-remotePlayerContainer.style.height = "101vh";
+remotePlayerContainer.style.height = "100vh";
 remotePlayerContainer.style.position = 'absolute';
 remotePlayerContainer.style.margin = '0px';
 remotePlayerContainer.style.left= '0px';
@@ -131,7 +137,6 @@ agoraEngine.on("user-published", async (user, mediaType) =>
 { 
 // Subscribe to the remote user when the SDK triggers the "user-published" event.
 await agoraEngine.subscribe(user, mediaType);
-console.log("subscribe success");
 // Subscribe and play the remote video in the container If the remote user publishes a video track.
 if (mediaType === "video")
 {
@@ -162,7 +167,7 @@ if (mediaType === "audio")
 
 agoraEngine.on("user-unpublished", user =>
 {
-    console.log(user.uid+ "has left the channel");
+
 });
     });
 window.onload = function ()
@@ -197,7 +202,6 @@ window.onload = function ()
         removeVideoDiv(remotePlayerContainer.id);
         removeVideoDiv(localPlayerContainer.id);
         // Leave the channel
-        console.log("You left the channel");
         window.close();
         if (!window.closed) {
           window.location.reload();
@@ -225,7 +229,6 @@ window.onload = function ()
         await agoraEngine.publish([channelParameters.localAudioTrack, channelParameters.localVideoTrack]);
         // Play the local video track.
         channelParameters.localVideoTrack.play(localPlayerContainer);
-        console.log("publish success!");
     }
     // Listen to the Leave button click event.
     document.getElementById('leave').onclick = async function ()
@@ -298,7 +301,6 @@ window.onload = function ()
             removeVideoDiv(remotePlayerContainer.id);
             removeVideoDiv(localPlayerContainer.id);
             // Leave the channel
-            console.log("You left the channel");
             localStorage.setItem('meet','Yapıldı')
             // Refresh the page for reuse
             window.location.reload();
@@ -318,7 +320,6 @@ window.onload = function ()
           removeVideoDiv(remotePlayerContainer.id);
           removeVideoDiv(localPlayerContainer.id);
           // Leave the channel
-          console.log("You left the channel");
           localStorage.setItem('meet','Yapıldı')
           // Refresh the page for reuse
           window.location.reload();
@@ -327,25 +328,12 @@ window.onload = function ()
     }
 
     document.getElementById('mic').onclick = () => {
-      agoraEngine.startRecord({
-        // Kaydedilecek dosya biçimi ve adı.
-        format: "mp3",
-        // Kaydedilecek dosyanın adı.
-        name: "agora-recording",
-      }).then(() => {
-        console.log("Recording started");
-      }).catch((err) => {
-        console.log("Recording failed", err);
-      });
+      
     }
   }
 
   document.getElementById('cam').onclick = () => {
-    agoraEngine.stopRecord().then(() => {
-      console.log("Recording stopped");
-    }).catch((err) => {
-      console.log("Stopping recording failed", err);
-    });
+
 }
   /*document.getElementById('photo').onclick = async function (){
     const element = document.getElementById(1);
@@ -373,15 +361,12 @@ startBasicCall();
 // Remove the video stream from the container.
 function removeVideoDiv(elementId)
 {
-    console.log("Removing "+ elementId+"Div");
     let Div = document.getElementById(elementId);
     if (Div)
     {
         Div.remove();
     }
 };
-let isAudioEnabled = false;
-let audioStream = null;
 const handleMic = async () => {
   setMic(!mic);
 }
@@ -418,12 +403,18 @@ const  handleEmo = async(emo) =>{
       default:
         Swal.fire({
           position: 'top-start',
-          icon: 'error',
+          icon: 'info',
           text: 'Yüz tanımlanamıyor!!',
           showConfirmButton: false,
           timer: 2500,
           backdrop: false,
-          width: 300
+          width: 300,
+          position: 'top-start',
+          iconHtml: '<i class="fas fa-exclamation-circle fa-sm" style="color:red"></i>',
+          customClass: {
+            backdrop: 'my-backdrop-class',
+            popup: 'my-popup-class'
+          }
         })
         break;
   }
@@ -435,8 +426,130 @@ const handleEmoCalc = (number) => {
   if(!res){
     return 0
   }else{
-  return res
+  return Math.ceil(res)
   }
+}
+
+const arrDeneme = [
+  {
+    text:'Selam',
+    count: 1
+  },
+  {
+    text:'Selam',
+    count: 2
+  },
+  {
+    text:'Selam',
+    count: 3
+  },
+  {
+    text:'Selam',
+    count: 4
+  },
+  {
+    text:'Selam',
+    count: 5
+  },
+  {
+    text:'Selam',
+    count: 6
+  },
+  {
+    text:'Selam',
+    count: 7
+  },
+  {
+    text:'Selam',
+    count: 8
+  },
+  {
+    text:'Selam',
+    count: 9
+  },
+  {
+    text:'Selam',
+    count: 10
+  },
+  {
+    text:'Selam',
+    count: 11
+  },
+  {
+    text:'Selam',
+    count: 12
+  },
+  {
+    text:'Selam',
+    count: 13
+  },
+  {
+    text:'Selam',
+    count: 14
+  },
+  {
+    text:'Selam',
+    count: 15
+  },
+  {
+    text:'Selam',
+    count: 16
+  },
+  {
+    text:'Selam',
+    count: 17
+  },
+  {
+    text:'Selam',
+    count: 18
+  },
+  {
+    text:'Selam',
+    count: 19
+  },
+  {
+    text:'Selam',
+    count: 20
+  }
+]
+
+const handleRoot = async () => {
+    const response = await axios.get(`https://api.teamlogos.tech/api/talk/find?reservation_id=${localStorage.getItem('reservation_id')}`,{
+      headers: {
+        'x-access-token': localStorage.getItem('token'),
+      }});
+    console.log(response.data);
+    const res = await response.data.talk.word.map((item)=>
+    <div class="col" width={80} height={80} style={{marginTop:'10px'}}>
+      <CircularProgressbarWithChildren value={item.count} maxValue={response.data.totalCount} styles={{
+        path: {
+          // Path color
+          stroke: `#533AED`,
+          // Whether to use rounded or flat corners on the ends - can use 'butt' or 'round'
+          strokeLinecap: 'butt',
+          // Customize transition animation
+          transition: 'stroke-dashoffset 0.5s ease 0s',
+          // Rotate the path
+          transform: 'rotate(0.15turn)',
+          transformOrigin: 'center center',
+        },
+        trail: {
+          // Trail color
+          stroke: '#6c6c6c7d',
+          // Whether to use rounded or flat corners on the ends - can use 'butt' or 'round'
+          strokeLinecap: 'butt',
+          // Rotate the trail
+          transform: 'rotate(0.15turn)',
+          transformOrigin: 'center center',
+        },}}>
+        <div id='circleTitle'>{item.word}</div>
+        <div id='circleText'>
+            {item.count}
+        </div>
+      </CircularProgressbarWithChildren>
+    </div>
+    );
+    await setRoot(res);
 }
 
   return (
@@ -450,20 +563,95 @@ const handleEmoCalc = (number) => {
                 <button type="button" id="mic" style={{display:'none'}} onClick={()=>handleMic()}><FeatherIcon icon={mic?'mic':'mic-off'} color='#FFFFFF' size="45" style={{marginLeft:'auto',marginRight:'auto'}} stroke-width="2.5"/></button>
                 <button type="button" id="cam" style={{display:'none'}} onClick={()=>setCam(!cam)}><FeatherIcon icon={cam?'video':'video-off'} color='#FFFFFF' size="45" style={{marginLeft:'auto',marginRight:'auto'}} stroke-width="2.5"/></button>
                 <div id='talk' style={{display:'none'}}>
-                    <div style={{display:'flex',flexDirection:'column', alignItems:'center',padding:'50px 76px 80px 76px'}}>
-                      <button onClick={()=> handleEmo('happy')}>asdassad</button>
-                      <img src={!emoImg? user : emoImg} alt='Duygu Durumu' width={200} height={200}></img>
+                    <div style={{display:'flex',flexDirection:'column', alignItems:'center',padding:'60px 36px 0px 36px'}}>
+                      <button onClick={()=> handleRoot('sad')}>asdassad</button>
+                      <img src={!emoImg? user : emoImg} alt='Duygu Durumu' style={{marginBottom:'82px'}} width={200} height={200}></img>
                       <div style={{display:'flex',flexDirection:'column'}}>
-                        <div style={{width:'400px',display:'flex',flexDirection:'row', alignItems:'center'}}>
+                        <div style={{width:'400px',display:'flex',flexDirection:'row', alignItems:'center', marginBottom:'10px'}}>
                           <div id='textProcess' style={{color: '#403D56',marginBottom:'0px'}}>Mutlu</div>
                           <div style={{display:'flex',flexDirection:'row'}}>
-                            <div id='process' style={{width:`${2.5*handleEmoCalc(happyCount)}px`}}></div>
+                            <div id='process' style={{width:`${2*handleEmoCalc(happyCount)}px`}}></div>
                             <div id='textProcess' style={{color: '#403D56',marginBottom:'0px', width:'65px'}}>{`% ${handleEmoCalc(happyCount)}`}</div>
                           </div>
                         </div>
+                        <div style={{width:'400px',display:'flex',flexDirection:'row', alignItems:'center', marginBottom:'10px'}}>
+                          <div id='textProcess' style={{color: '#403D56',marginBottom:'0px'}}>Üzgün</div>
+                          <div style={{display:'flex',flexDirection:'row' }}>
+                            <div id='process' style={{width:`${2*handleEmoCalc(sadCount)}px`}}></div>
+                            <div id='textProcess' style={{color: '#403D56',marginBottom:'0px', width:'65px'}}>{`% ${handleEmoCalc(sadCount)}`}</div>
+                          </div>
+                        </div>
+                        <div style={{width:'400px',display:'flex',flexDirection:'row', alignItems:'center', marginBottom:'10px'}}>
+                          <div id='textProcess' style={{color: '#403D56',marginBottom:'0px'}}>İğrenme</div>
+                          <div style={{display:'flex',flexDirection:'row' }}>
+                            <div id='process' style={{width:`${2*handleEmoCalc(disgustCount)}px`}}></div>
+                            <div id='textProcess' style={{color: '#403D56',marginBottom:'0px', width:'65px'}}>{`% ${handleEmoCalc(disgustCount)}`}</div>
+                          </div>
+                        </div>
+                        <div style={{width:'400px',display:'flex',flexDirection:'row', alignItems:'center', marginBottom:'10px'}}>
+                          <div id='textProcess' style={{color: '#403D56',marginBottom:'0px'}}>Korku</div>
+                          <div style={{display:'flex',flexDirection:'row' }}>
+                            <div id='process' style={{width:`${2*handleEmoCalc(fearCount)}px`}}></div>
+                            <div id='textProcess' style={{color: '#403D56',marginBottom:'0px', width:'65px'}}>{`% ${handleEmoCalc(fearCount)}`}</div>
+                          </div>
+                        </div>
+                        <div style={{width:'400px',display:'flex',flexDirection:'row', alignItems:'center', marginBottom:'10px'}}>
+                          <div id='textProcess' style={{color: '#403D56',marginBottom:'0px'}}>Şaşkın</div>
+                          <div style={{display:'flex',flexDirection:'row' }}>
+                            <div id='process' style={{width:`${2*handleEmoCalc(suprisedCount)}px`}}></div>
+                            <div id='textProcess' style={{color: '#403D56',marginBottom:'0px', width:'65px'}}>{`% ${handleEmoCalc(suprisedCount)}`}</div>
+                          </div>
+                        </div>
+                        <div style={{width:'400px',display:'flex',flexDirection:'row', alignItems:'center', marginBottom:'10px'}}>
+                          <div id='textProcess' style={{color: '#403D56',marginBottom:'0px'}}>Öfke</div>
+                          <div style={{display:'flex',flexDirection:'row' }}>
+                            <div id='process' style={{width:`${2*handleEmoCalc(angerCount)}px`}}></div>
+                            <div id='textProcess' style={{color: '#403D56',marginBottom:'0px', width:'65px'}}>{`% ${handleEmoCalc(angerCount)}`}</div>
+                          </div>
+                        </div>
+                        <div style={{width:'400px',display:'flex',flexDirection:'row', alignItems:'center', marginBottom:'10px'}}>
+                          <div id='textProcess' style={{color: '#403D56',marginBottom:'0px'}}>Nört</div>
+                          <div style={{display:'flex',flexDirection:'row' }}>
+                            <div id='process' style={{width:`${2*handleEmoCalc(naturalCount)}px`}}></div>
+                            <div id='textProcess' style={{color: '#403D56',marginBottom:'0px', width:'65px'}}>{`% ${handleEmoCalc(naturalCount)}`}</div>
+                          </div>
+                        </div>
                       </div>
-                      <div>3</div>
+                      <div style={{width:'100%', marginTop:'80px'}}>
+                      <div class="row row-cols-4">
+                        {/*<div class="col" width={80} height={80} style={{marginTop:'10px'}}>
+                          <CircularProgressbarWithChildren value={66} styles={{
+                            path: {
+                              // Path color
+                              stroke: `#533AED`,
+                              // Whether to use rounded or flat corners on the ends - can use 'butt' or 'round'
+                              strokeLinecap: 'butt',
+                              // Customize transition animation
+                              transition: 'stroke-dashoffset 0.5s ease 0s',
+                              // Rotate the path
+                              transform: 'rotate(0.25turn)',
+                              transformOrigin: 'center center',
+                            },
+                            trail: {
+                              // Trail color
+                              stroke: '#6c6c6c7d',
+                              // Whether to use rounded or flat corners on the ends - can use 'butt' or 'round'
+                              strokeLinecap: 'butt',
+                              // Rotate the trail
+                              transform: 'rotate(0.25turn)',
+                              transformOrigin: 'center center',
+                            },}}>
+                            <div id='circleTitle'>Asdhasd</div>
+                            <div id='circleText' style={{ fontSize: 12, marginTop: -5 }}>
+                                hkjkjh
+                            </div>
+                          </CircularProgressbarWithChildren>
+                        </div>*/
+                            root
+                        }
+                      </div>
                     </div>
+                  </div>
                 </div>
             </div>
         </div>
