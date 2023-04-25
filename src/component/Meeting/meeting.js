@@ -40,6 +40,7 @@ export default function Meeting(){
     Auth();
     const interval = setInterval(() => {
       imagePredict();
+      handleRoot();
     }, 3000);
 
     return () => clearInterval(interval);
@@ -55,7 +56,6 @@ export default function Meeting(){
         const response = await axios.post("https://ai.teamlogos.tech/upload", formData, {
           headers: { 'Content-Type': 'multipart/form-data' , 'Access-Control-Allow-Origin': '*'}
         });
-        console.log(response);
         await handleEmo(response.data.result);
       }, 'image/png');
     } catch (error) {
@@ -430,95 +430,11 @@ const handleEmoCalc = (number) => {
   }
 }
 
-const arrDeneme = [
-  {
-    text:'Selam',
-    count: 1
-  },
-  {
-    text:'Selam',
-    count: 2
-  },
-  {
-    text:'Selam',
-    count: 3
-  },
-  {
-    text:'Selam',
-    count: 4
-  },
-  {
-    text:'Selam',
-    count: 5
-  },
-  {
-    text:'Selam',
-    count: 6
-  },
-  {
-    text:'Selam',
-    count: 7
-  },
-  {
-    text:'Selam',
-    count: 8
-  },
-  {
-    text:'Selam',
-    count: 9
-  },
-  {
-    text:'Selam',
-    count: 10
-  },
-  {
-    text:'Selam',
-    count: 11
-  },
-  {
-    text:'Selam',
-    count: 12
-  },
-  {
-    text:'Selam',
-    count: 13
-  },
-  {
-    text:'Selam',
-    count: 14
-  },
-  {
-    text:'Selam',
-    count: 15
-  },
-  {
-    text:'Selam',
-    count: 16
-  },
-  {
-    text:'Selam',
-    count: 17
-  },
-  {
-    text:'Selam',
-    count: 18
-  },
-  {
-    text:'Selam',
-    count: 19
-  },
-  {
-    text:'Selam',
-    count: 20
-  }
-]
-
 const handleRoot = async () => {
     const response = await axios.get(`https://api.teamlogos.tech/api/talk/find?reservation_id=${localStorage.getItem('reservation_id')}`,{
       headers: {
         'x-access-token': localStorage.getItem('token'),
       }});
-    console.log(response.data);
     const res = await response.data.talk.word.map((item)=>
     <div class="col" width={80} height={80} style={{marginTop:'10px'}}>
       <CircularProgressbarWithChildren value={item.count} maxValue={response.data.totalCount} styles={{
