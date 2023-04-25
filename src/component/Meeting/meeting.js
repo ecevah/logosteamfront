@@ -53,7 +53,7 @@ export default function Meeting(){
         const formData = new FormData();
         formData.append('file', blob, 'image.png');
         const response = await axios.post("https://ai.teamlogos.tech/upload", formData, {
-          headers: { 'Content-Type': 'multipart/form-data' }
+          headers: { 'Content-Type': 'multipart/form-data' , 'Access-Control-Allow-Origin': '*'}
         });
         console.log(response);
         await handleEmo(response.data.result);
