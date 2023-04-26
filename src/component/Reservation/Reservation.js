@@ -26,10 +26,20 @@ import randevu from '../../img/rendevu.svg';
 import randevupurple from '../../img/randevupurple.svg';
 import logout from '../../img/logOut.svg';
 import logoutPurple from '../../img/logOutPurple.svg';
+import anger from '../../img/anger.png';
+import happy from '../../img/happy.png';
+import sad from '../../img/sad.png';
+import disgusd from '../../img/disgusd.png';
+import fear from '../../img/fear.png';
+import suprised from '../../img/suprised.png';
+import naturel from '../../img/naturel.png';
 
 import verify from '../../api/verify';
 import axios from '../../api/axios';
 import Swal from 'sweetalert2';
+import { CircularProgressbarWithChildren} from 'react-circular-progressbar';
+import 'react-circular-progressbar/dist/styles.css';
+
 
 export default function Dashboard(){
     const navigate = useNavigate();
@@ -37,7 +47,109 @@ export default function Dashboard(){
     const [counter, setCounter] = useState(0);
     const dateNow = new Date();
     const [activee, setActivee] =useState(localStorage.getItem('active'));
-
+    const [talkBtn, setTalkBtn] = useState(true)
+    const arrResa = {
+        "status": true,
+        "message": "Find Complated",
+        "reservation": {
+            "_id": "",
+            "day": "",
+            "psyc_id": {
+                "_id": "64465c33a3defbbdaf27d8fe",
+                "name": "Bora",
+                "surName": "Körpe",
+                "pass": "$2a$08$SK9STy9ZLCCXrDQf1edBFOK9UrqurYfGXfbn.vsFtkGZe0eIbKIdq",
+                "eMail": "borakorpe@gmail.com",
+                "tag": [
+                    "Bipolar Bozukluk",
+                    "Sosyal Fobi"
+                ],
+                "image": "image-1682332723536.png",
+                "unvan": "Prof. Dr.",
+                "star": [
+                    5,
+                    5,
+                    5,
+                    3,
+                    5
+                ],
+                "starAvg": [
+                    4.6
+                ],
+                "active": false,
+                "accActive": true,
+                "createAt": "2023-04-24T10:38:43.965Z",
+                "updateAt": "2023-04-24T10:38:43.965Z",
+                "__v": 5
+            },
+            "client_id": {
+                "_id": "",
+                "name": " ",
+                "surName": "",
+                "pass": "$2a$084BlRaeO5zZZzN43kEhqjPDlM1aReNzQnqYVu6",
+                "eMail": "borakorpee@gmail.com",
+                "city": "İzmir",
+                "county": "Gaziemir",
+                "job": "Mobil Developer",
+                "sex": "Erkek",
+                "favorites": [],
+                "image": "",
+                "dateOfBirth": "2023-04-24T13:25:46.797Z",
+                "createAt": "2023-04-24T13:25:46.797Z",
+                "__v": 0
+            },
+            "time": "",
+            "payCheck": true,
+            "__v": 0
+        }
+    }
+    const arrTalk = {
+        "status": true,
+        "talk": {
+            "_id": "64471d04b0706c94791a871f",
+            "reservation_id": "64468401978e155dc2498e1f",
+            "meetTime": "qweqe",
+            "Talk": [
+                "Selam",
+                "selami"
+            ],
+            "emo": {
+                "anger": {
+                    "count": 0
+                },
+                "sad": {
+                    "count": 0
+                },
+                "happy": {
+                    "count": 0
+                },
+                "surprised": {
+                    "count": 0
+                },
+                "disgust": {
+                    "count": 0
+                },
+                "fear": {
+                    "count": 0
+                },
+                "neutral": {
+                    "count": 0
+                }
+            },
+            "word": [
+                {
+                    "count": 0,
+                    "word": "",
+                    "_id": ""
+                }
+            ],
+            "__v": 0,
+            "comment": ""
+        },
+        "totalCount": 0
+    }
+    const [reservation, setReservation] = useState(arrResa);
+    const [talk, setTalk] = useState(arrTalk);
     const arrClient =
         {
             "status": true,
@@ -216,8 +328,23 @@ export default function Dashboard(){
     }
 
     const handleTalk = async (id) => {
-        await localStorage.setItem('reservation_id',id);
-        navigate('/talk');
+        const beforeRes = await
+              axios.get(`/api/reservation/find/id/${id}`, {
+                headers: {
+                  'x-access-token': localStorage.getItem('token'),
+                },
+              })
+        const afterRes = await      
+              axios.get(`/api/talk/find?reservation_id=${id}`, {
+                headers: {
+                  'x-access-token': localStorage.getItem('token'),
+                },
+              })
+            const beforeData = beforeRes.data;
+            const afterData = afterRes.data;
+            await setReservation(beforeData);
+            await setTalk(afterData);
+            console.log(talk, reservation);
     }
 
     const handleLogin = async () =>{
@@ -289,6 +416,12 @@ export default function Dashboard(){
         localStorage.setItem('img', '');     
         navigate('/');
     }
+
+    const calcDate = (dateStr) =>{
+        const date = new Date(dateStr);
+        const formattedDate = `${date.getDate()}.${date.getMonth() + 1}.${date.getFullYear()}`;
+        return formattedDate;
+    } 
 
     return (
     <>
@@ -366,7 +499,130 @@ export default function Dashboard(){
                     </div>
                 </div>
             </div>
-            <div className={styles.section}>
+            <div className={talkBtn?styles.none:styles.section} style={{paddingTop:'0px'}}>
+                <div className={`${styles.inclusive}`}>
+                    <div className={styles.contentInclusive} style={{overflow:'auto', height:'800px'}}>
+                        <div style={{display:'flex', flexDirection:'column',justifyContent:'center', alignItems: 'center'}}>
+                            <div style={{display:'flex', flexDirection:'column', justifyContent:'center', alignItems:'center', width:'50%',paddingLeft:'88px',paddingRight:'88px'}}>
+                                <div className={styles.talkClientTitleCard}>Hasta Detayları</div>
+                                <div style={{display:'flex', flexDirection:'row',justifyContent:'center', alignItems: 'center'}}>
+                                    <div>
+                                        <img src={`https://api.teamlogos.tech/uploads/${reservation.reservation.client_id.image}`} alt='Client İmage' width={100} height={100} style={{marginRight:'50px'}}></img>
+                                    </div>
+                                    <div style={{display:'flex', flexDirection:'column'}}>
+                                        <div className={styles.talkClientText}>{`İsim Soyisim: ${reservation.reservation} ${reservation.reservation}`}</div>
+                                        <div className={styles.talkClientText}>{`Tarih: ${calcDate(reservation.reservation)}`}</div>
+                                        <div className={styles.talkClientText}>{`Saat: ${reservation.reservation}`}</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div style={{display:'flex', flexDirection:'column', justifyContent:'center'}}>
+                                <div style={{width:'100%'}}>
+                                    <div className={styles.emoTitleCard}>Duygu Durumu Geçmişi</div>
+                                    <div className='row rows-col-7'>
+                                        <div className='col'>
+                                            <div style={{display:'flex', flexDirection:'column', justifyContent:'center',alignItems:'center'}}>
+                                                <img src={happy} alt='duygu' width={100} height={100}></img>
+                                                <div className={styles.emoCardTextTitle}>Mutlu</div>
+                                                <div className={styles.emoCardText}>Count</div>
+                                            </div>
+                                        </div>
+                                        <div className='col'>
+                                            <div style={{display:'flex', flexDirection:'column', justifyContent:'center',alignItems:'center'}}>
+                                                <img src={anger} alt='duygu' width={100} height={100}></img>
+                                                <div className={styles.emoCardTextTitle}>Kızgın</div>
+                                                <div className={styles.emoCardText}>Count</div>
+                                            </div>
+                                        </div>
+                                        <div className='col'>
+                                            <div style={{display:'flex', flexDirection:'column', justifyContent:'center',alignItems:'center'}}>
+                                                <img src={sad} alt='duygu' width={100} height={100}></img>
+                                                <div className={styles.emoCardTextTitle}>Üzgün</div>
+                                                <div className={styles.emoCardText}>Count</div>
+                                            </div>
+                                        </div>
+                                        <div className='col'>
+                                            <div style={{display:'flex', flexDirection:'column', justifyContent:'center',alignItems:'center'}}>
+                                                <img src={disgusd} alt='duygu' width={100} height={100}></img>
+                                                <div className={styles.emoCardTextTitle}>İğrenme</div>
+                                                <div className={styles.emoCardText}>Count</div>
+                                            </div>
+                                        </div>
+                                        <div className='col'>
+                                            <div style={{display:'flex', flexDirection:'column', justifyContent:'center',alignItems:'center'}}>
+                                                <img src={fear} alt='duygu' width={100} height={100}></img>
+                                                <div className={styles.emoCardTextTitle}>Korku</div>
+                                                <div className={styles.emoCardText}>Count</div>
+                                            </div>
+                                        </div>
+                                        <div className='col'>
+                                            <div style={{display:'flex', flexDirection:'column', justifyContent:'center',alignItems:'center'}}>
+                                                <img src={suprised} alt='duygu' width={100} height={100}></img>
+                                                <div className={styles.emoCardTextTitle}>Şaşkın</div>
+                                                <div className={styles.emoCardText}>Count</div>
+                                            </div>
+                                        </div>
+                                        <div className='col'>
+                                            <div style={{display:'flex', flexDirection:'column', justifyContent:'center',alignItems:'center'}}>
+                                                <img src={naturel} alt='duygu' width={100} height={100}></img>
+                                                <div className={styles.emoCardTextTitle}>Nötr</div>
+                                                <div className={styles.emoCardText}>Count</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div style={{display:'flex', flexDirection:'column', justifyContent:'center'}}>
+                                    <div className={styles.emoTitleCard}>Konuşma Metni</div>
+                                    <div style={{width:'90%', height:'400px', overflow:'auto'}}>
+                                        <div className={styles.talkClientText}></div>
+                                    </div>
+                                </div>
+                                <div>
+                                    <div className={styles.emoTitleCard}>Kelime Kökleri</div>
+                                    <div className='row rows-col-10' style={{height:'400px', overflow:'auto'}}>
+                                        <div class="col" width={80} height={80} style={{marginTop:'10px'}}>
+                                            <CircularProgressbarWithChildren value={12} maxValue={100} styles={{
+                                                path: {
+                                                // Path color
+                                                stroke: `#533AED`,
+                                                // Whether to use rounded or flat corners on the ends - can use 'butt' or 'round'
+                                                strokeLinecap: 'butt',
+                                                // Customize transition animation
+                                                transition: 'stroke-dashoffset 0.5s ease 0s',
+                                                // Rotate the path
+                                                transform: 'rotate(0.15turn)',
+                                                transformOrigin: 'center center',
+                                                },
+                                                trail: {
+                                                // Trail color
+                                                stroke: '#6c6c6c7d',
+                                                // Whether to use rounded or flat corners on the ends - can use 'butt' or 'round'
+                                                strokeLinecap: 'butt',
+                                                // Rotate the trail
+                                                transform: 'rotate(0.15turn)',
+                                                transformOrigin: 'center center',
+                                                },}}>
+                                                <div id='circleTitle'>word</div>
+                                                <div id='circleText'>
+                                                    count
+                                                </div>
+                                            </CircularProgressbarWithChildren>
+                                        </div>
+                                            </div>
+                                            </div>
+                            </div>
+                        </div>
+                        <div className={styles.sponsorContent}>
+                            {arrSponsor.map((item)=>
+                                <div>
+                                    <img src={item.img} alt={item.alt} width={45}/>
+                                </div>
+                            )}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div className={talkBtn?styles.section:styles.none}>
                 <div className={`${styles.inclusive}`}>
                     <div className={styles.contentInclusive}>
                         <div className={styles.sideContent}>
@@ -487,6 +743,8 @@ export default function Dashboard(){
                                 </ul>
                             </nav>
                         </div>
+
+
                     </div>
                 </div>
             </div>

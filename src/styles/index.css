@@ -171,23 +171,25 @@ section{
 #join{
   position: absolute;
   top: 50%;
-  left: 46%;
-  width: 123.21px;
-  height: 124.26px;
-  background: #53C797;
-  backdrop-filter: blur(167.637px);
-  border-radius: 33.5274px;
+  left: 45.5%;
+  width: 90.72px;
+height: 90.72px;
+background: rgba(0, 179, 131, 0.6);
+border-radius: 194.4px;
 }
 
 #goback{
   position: absolute;
   top: 50%;
-  left: 54%;
-  width: 123.21px;
-  height: 124.26px;
-  background: #FB0242;
-  backdrop-filter: blur(167.637px);
-  border-radius: 33.5274px;
+  right: 43%;
+  width: 90.72px;
+height: 90.72px;
+
+background: rgba(251, 2, 66, 0.6);
+backdrop-filter: blur(126.733px);
+/* Note: backdrop-filter has minimal browser support */
+
+border-radius: 75.5999px;
 }
 
 #leave{
@@ -224,14 +226,9 @@ section{
 
 #mic{
   position: absolute;
-  bottom: 55px;
-  left: calc(35% - 137px);
+  top: 30px;
+  left: 50px;
   z-index: 10;
-  width: 108.7px;
-  height: 108.7px;
-  background: rgba(19, 21, 23, 0.63);
-  border-radius: 71.5251px;
-  padding: 26px;
 }
 
 #cam{

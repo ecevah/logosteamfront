@@ -973,3 +973,60 @@
     margin-right: 16px;
     overflow: hidden;
 }
+
+.talkClientTitleCard{
+    border-bottom: 1px solid #E9ECEF;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 27px;
+    color: #212529;
+    margin-bottom: 50px;
+    padding-bottom: 17px;
+    width: 100%;
+    text-align: center;
+}
+
+.talkClientText{
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 13.5px;
+    line-height: 20px;
+    color: #212529;
+}
+
+.emoTitleCard{
+    width: 100%;
+    border-bottom: 1px solid #E9ECEF;
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 27px;
+    color: #212529;
+    text-align: center;
+    margin-bottom: 20px;
+    padding-bottom: 17px;
+    margin-top: 50px;
+}
+
+.emoCardTextTitle{
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 600;
+    font-size: 18px;
+    line-height: 22px;
+    color: #212529;
+    margin-top: 10px;
+}
+
+.emoCardText{
+    font-family: 'Inter';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 13.5px;
+    line-height: 15px;
+    color: #212529;
+}

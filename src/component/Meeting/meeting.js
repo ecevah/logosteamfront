@@ -24,7 +24,6 @@ import Swal from 'sweetalert2';
 export default function Meeting(){
   const [post,setPost]=useState(null);
   const [mic, setMic] = useState(true);
-  const [cam, setCam] = useState(true);
   const [emoImg, setEmoImg] = useState(null);
   let [angerCount, setAngerCount] = useState(0);
   let [happyCount, setHappyCount] = useState(0);
@@ -40,9 +39,9 @@ export default function Meeting(){
   const navigate = useNavigate();
   useEffect(() => {
     Auth();
-    const interval = setInterval(async() => {
-      await imagePredict();
-      await handleRoot();
+    const interval = setInterval(() => {
+      imagePredict();
+      handleRoot();
     }, 1000);
 
     return () => clearInterval(interval);
@@ -204,7 +203,6 @@ window.onload = function ()
         document.getElementById('logo').style.display = 'none';
         document.getElementById('leave').style.display = 'none';
         document.getElementById('mic').style.display = 'none';
-        document.getElementById('cam').style.display = 'none';
         document.getElementById('talk').style.display = 'none';
         // Destroy the local audio and video tracks.
         channelParameters.localAudioTrack.close();
@@ -227,7 +225,6 @@ window.onload = function ()
         document.getElementById('logo').style.display = 'none';
         document.getElementById('leave').style.display = 'block';
         document.getElementById('mic').style.display = 'block';
-        document.getElementById('cam').style.display = 'block';
         document.getElementById('talk').style.display = 'block';
         // Join a channel.
         await agoraEngine.join(options.appId, options.channel, options.token, options.uid);
@@ -246,7 +243,7 @@ window.onload = function ()
     // Listen to the Leave button click event.
     document.getElementById('leave').onclick = async function ()
     {
-      Swal.fire({
+        Swal.fire({
         title: 'Yorum',
         text: "Konuşmayı Yorumlamak İster Misin?",
         icon: 'warning',
@@ -271,6 +268,22 @@ window.onload = function ()
             cancelButtonText: 'Çık'
           })
           if (text) {
+            const payload = {
+              happy: happyCount,
+              angry: angerCount,
+              sad: sadCount,
+              suprised: suprisedCount,
+              disgust: disgustCount,
+              fear: fearCount,
+              neutural: naturalCount,
+              comment: text
+          }
+          console.log('sadsadsda',text)
+          const res = axios.put(`/api/talk/put?reservation_id=${localStorage.getItem('reservation_id')}&limit=20`,payload,{
+            headers: {
+              'x-access-token': localStorage.getItem('token'),
+            },
+          });
             await Swal.fire({
               icon: 'success',
               title: 'Tamamlandı',
@@ -283,7 +296,6 @@ window.onload = function ()
             document.getElementById('logo').style.display = 'block';
             document.getElementById('leave').style.display = 'none';
             document.getElementById('mic').style.display = 'none';
-            document.getElementById('cam').style.display = 'none';
             document.getElementById('talk').style.display = 'none';
             // Destroy the local audio and video tracks.
             channelParameters.localAudioTrack.close();
@@ -305,7 +317,6 @@ window.onload = function ()
             document.getElementById('logo').style.display = 'block';
             document.getElementById('leave').style.display = 'none';
             document.getElementById('mic').style.display = 'none';
-            document.getElementById('cam').style.display = 'none';
             document.getElementById('talk').style.display = 'none';
             // Destroy the local audio and video tracks.
             channelParameters.localAudioTrack.close();
@@ -324,7 +335,6 @@ window.onload = function ()
           document.getElementById('logo').style.display = 'block';
           document.getElementById('leave').style.display = 'none';
           document.getElementById('mic').style.display = 'none';
-          document.getElementById('cam').style.display = 'none';
           document.getElementById('talk').style.display = 'none';
           // Destroy the local audio and video tracks.
           channelParameters.localAudioTrack.close();
@@ -345,9 +355,6 @@ window.onload = function ()
     }
   }
 
-  document.getElementById('cam').onclick = () => {
-
-}
   /*document.getElementById('photo').onclick = async function (){
     const element = document.getElementById(1);
     html2canvas(element)
@@ -380,37 +387,35 @@ function removeVideoDiv(elementId)
         Div.remove();
     }
 };
-const handleMic = async () => {
-  setMic(!mic);
-}
+
 const  handleEmo = async(emo) =>{
   switch(emo){
       case 'angry':
-        await setAngerCount(angerCount);
+        await setAngerCount(prevCount=> prevCount+1);
         await setEmoImg(anger);
         break;
       case 'happy':
-        await setHappyCount(happyCount+1);
+        await setHappyCount(prevCount=> prevCount+1);
         await setEmoImg(happy);
         break;
       case 'sad':
-        await setSadCount(sadCount+1)
+        await setSadCount(prevCount=> prevCount+1)
         await setEmoImg(sad);
         break;  
       case 'disgust':
-        await setDisgustCount(disgustCount+1);
+        await setDisgustCount(prevCount=> prevCount+1);
         await setEmoImg(disgusd);
         break;
       case 'fear':
-        await setFearCount(fearCount+1);
+        await setFearCount(prevCount=> prevCount+1);
         await setEmoImg(fear);
       break;
       case 'surprise':
-        await setSuprisedCount(suprisedCount+1);
+        await setSuprisedCount(prevCount=> prevCount+1);
         await setEmoImg(suprised);
         break;
       case 'neutral':
-        await setNaturelCount(naturalCount+1);
+        await setNaturelCount(prevCount=> prevCount+1);
         await setEmoImg(naturel);
         break;  
       default:
@@ -478,27 +483,16 @@ const handleRoot = async () => {
     await setRoot(res);
 }
 
-const handleCam = () => {
-  document.getElementById('0').style.display='none';
-  setCam(!cam)
-}
-
-const handleNoCam = () => {
-  document.getElementById('0').style.display='block';
-  setCam(!cam)
-}
-
 
   return (
     <>
         <div className="row">
             <div>
-                <img src={logosLogo} id='logo' height={176} width={345} style={{position:'absolute', top:'35%', left:'44.5%'}} alt='logos'></img>
+                <img src={logosLogo} id='logo' height={176} width={345} style={{position:'absolute', top:'35%', left:'43.5%'}} alt='logos'></img>
                 <button type="button" id="join"><FeatherIcon icon='phone' color='#FFFFFF' size="45" style={{marginLeft:'auto',marginRight:'auto'}} stroke-width="2.5"/></button>
                 <button type="button" id="goback" onClick={()=> navigate('/reservation')}><FeatherIcon icon='log-out' color='#FFFFFF' size="45" style={{marginLeft:'auto',marginRight:'auto'}} stroke-width="2.5"/></button>
                 <button type="button" id="leave" style={{display:'none'}}><img src={phone} alt='phone' width={70} height={70}></img></button>
-                <button type="button" id="mic" style={{display:'none'}} onClick={()=>handleMic()}><FeatherIcon icon={mic?'mic':'mic-off'} color='#FFFFFF' size="45" style={{marginLeft:'auto',marginRight:'auto'}} stroke-width="2.5"/></button>
-                <button type="button" id="cam" style={{display:'none'}} onClick={cam?()=>handleCam():()=>handleNoCam()}><FeatherIcon icon={cam?'video':'video-off'} color='#FFFFFF' size="45" style={{marginLeft:'auto',marginRight:'auto'}} stroke-width="2.5"/></button>
+                <img src={logosLogo} alt='logo' id='mic' style={{display:'none'}} width={250} height={100}></img>
                 <div id='talk' style={{display:'none'}}>
                     <div style={{display:'flex',flexDirection:'column', alignItems:'center',padding:'60px 36px 0px 36px', justifyContent:'center', height:'100%'}}>
                       <img src={!emoImg? user : emoImg} alt='Duygu Durumu' style={{marginBottom:'82px'}} width={200} height={200}></img>

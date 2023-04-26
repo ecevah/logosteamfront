@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react'
+import React, {useState, useEffect, Component} from 'react'
 import Slider from "react-slick";
 import "slick-carousel/slick/slick.css"; 
 import "slick-carousel/slick/slick-theme.css";
@@ -43,150 +43,108 @@ import verify from '../../api/verify';
 import axios from '../../api/axios';
 import Swal from 'sweetalert2';
 
-export default function Dashboard(){
-    const navigate = useNavigate();
-    const [post,setPost]=useState(null);
-    const arrRes = {
-        "status": true,
-        "message": "Find Complated",
-        "reservation": {
-            "_id": "",
-            "day": "",
-            "psyc_id": {
-                "_id": "64465c33a3defbbdaf27d8fe",
-                "name": "Bora",
-                "surName": "Körpe",
-                "pass": "$2a$08$SK9STy9ZLCCXrDQf1edBFOK9UrqurYfGXfbn.vsFtkGZe0eIbKIdq",
-                "eMail": "borakorpe@gmail.com",
-                "tag": [
-                    "Bipolar Bozukluk",
-                    "Sosyal Fobi"
-                ],
-                "image": "image-1682332723536.png",
-                "unvan": "Prof. Dr.",
-                "star": [
-                    5,
-                    5,
-                    5,
-                    3,
-                    5
-                ],
-                "starAvg": [
-                    4.6
-                ],
-                "active": false,
-                "accActive": true,
-                "createAt": "2023-04-24T10:38:43.965Z",
-                "updateAt": "2023-04-24T10:38:43.965Z",
-                "__v": 5
-            },
-            "client_id": {
-                "_id": "",
-                "name": " ",
-                "surName": "",
-                "pass": "$2a$084BlRaeO5zZZzN43kEhqjPDlM1aReNzQnqYVu6",
-                "eMail": "borakorpee@gmail.com",
-                "city": "İzmir",
-                "county": "Gaziemir",
-                "job": "Mobil Developer",
-                "sex": "Erkek",
-                "favorites": [],
-                "image": "",
-                "dateOfBirth": "2023-04-24T13:25:46.797Z",
-                "createAt": "2023-04-24T13:25:46.797Z",
-                "__v": 0
-            },
-            "time": "",
-            "payCheck": true,
-            "__v": 0
-        }
+class MyComponent extends Component{
+    state = {
+        talk: []
     }
-    const arrTalk = {
-        "status": true,
-        "talk": {
-            "_id": "64471d04b0706c94791a871f",
-            "reservation_id": "64468401978e155dc2498e1f",
-            "meetTime": "qweqe",
-            "Talk": [
+
+    componentDidMount(){
+        /*axios.get(`/api/reservation/find/id/${localStorage.getItem('reservation_id')}`, {
+            headers: {
+              'x-access-token': localStorage.getItem('token'),
+            },
+          }).then(response => {
+            this.setState({ reservation: response.data, talk: []})
+          }).catch(error => {
+            console.log(error)
+          })*/
+          axios.get(`/api/talk/find?reservation_id=${localStorage.getItem('reservation_id')}`, {
+            headers: {
+              'x-access-token': localStorage.getItem('token'),
+            },
+          }).then(response=> {
+            this.setState({talk: response.data})
+          }).catch(error=>{
+            console.log(error)
+          })
+    }
+    
+    render(){
+        return(
+            <Dashboard talk={this.state.talk}/>
+        )
+    }
+}
+
+
+function Dashboard(props){
+    const navigate = useNavigate();
+    const [post,setPost]=useState(true);
+    const [open, setOpen] = useState(false);
+    const arr = {
+        status: true,
+        talk: {
+            _id: "64471d04b0706c94791a871f",
+            reservation_id: "64468401978e155dc2498e1f",
+            meetTime: "qweqe",
+            Talk: [
                 "Selam",
                 "selami"
             ],
-            "emo": {
-                "anger": {
-                    "count": 0
+            emo: {
+                anger: {
+                    count: 12
                 },
-                "sad": {
-                    "count": 0
+                sad: {
+                    count: 20
                 },
-                "happy": {
-                    "count": 0
+                happy: {
+                    count: 12
                 },
-                "surprised": {
-                    "count": 0
+                surprised: {
+                    count: 2
                 },
-                "disgust": {
-                    "count": 0
+                disgust: {},
+                fear: {
+                    count: 123
                 },
-                "fear": {
-                    "count": 0
-                },
-                "neutral": {
-                    "count": 0
+                neutral: {
+                    count: 21
                 }
             },
-            "word": [
+            word: [
                 {
-                    "count": 0,
-                    "word": "",
-                    "_id": ""
+                    count: 1,
+                    word: "Selam",
+                    _id: "64471d26b0706c94791a8723"
+                },
+                {
+                    count: 1,
+                    word: "nasılsın",
+                    _id: "64471d26b0706c94791a8724"
+                },
+                {
+                    count: 1,
+                    word: "iyimisin",
+                    "_id": "64471d26b0706c94791a8725"
+                },
+                {
+                    count: 1,
+                    word: "sağol",
+                    "_id": "64471d26b0706c94791a8726"
                 }
             ],
             "__v": 0,
-            "comment": ""
+            comment: "Alper kaçalım bugün"
         },
-        "totalCount": 0
+        totalCount: 4
     }
-    const [reservation, setReservation] = useState(arrRes);
-    const [talk, setTalk] = useState(arrTalk);
-    
-    useEffect(() => {
-        Auth();
-      }, []); 
-      
-      const Auth = async () => {
-        const token = localStorage.getItem('token');
-        const id = localStorage.getItem('reservation_id');
-        try {
-          const res = await verify(token);
-          if (res) {
-            const [beforeRes, afterRes] = await Promise.all([
-              axios.get(`/api/reservation/find/id/${id}`, {
-                headers: {
-                  'x-access-token': token,
-                },
-              }),
-              axios.get(`/api/talk/find?reservation_id=${id}`, {
-                headers: {
-                  'x-access-token': token,
-                },
-              })
-            ]);
-            const beforeData = beforeRes.data;
-            const afterData = afterRes.data;
-            setReservation(beforeData);
-            setTalk(afterData);
-            console.log(talk, reservation);
-            return true
-          } else {
-            navigate('/login');
-          }
-        } catch (err) {
-          console.error(err);
-        }
-      };
-      
-    const [open, setOpen] = useState(false)
-
+    const [list, setList] = useState(arr);
+    let talkRes = props.talk;
+    console.log(talkRes)
+    useState(()=>{
+       !talkRes||talkRes===[]? setList(arr): setList(talkRes)
+    })
     const arrHeader = [
         {
             text:'Ön Panel',
@@ -280,6 +238,7 @@ export default function Dashboard(){
         const formattedDate = `${date.getDate()}.${date.getMonth() + 1}.${date.getFullYear()}`;
         return formattedDate;
     } 
+    console.log(list.talk)
     return (
     <>
         <div className={post ? styles.none : styles.isLoading}>
@@ -364,12 +323,12 @@ export default function Dashboard(){
                                 <div className={styles.talkClientTitleCard}>Hasta Detayları</div>
                                 <div style={{display:'flex', flexDirection:'row',justifyContent:'center', alignItems: 'center'}}>
                                     <div>
-                                        <img src={`https://api.teamlogos.tech/uploads/${reservation.reservation.client_id.image}`} alt='Client İmage' width={100} height={100} style={{marginRight:'50px'}}></img>
+                                        <img src={`https://api.teamlogos.tech/uploads/${''}`} alt='Client İmage' width={100} height={100} style={{marginRight:'50px'}}></img>
                                     </div>
                                     <div style={{display:'flex', flexDirection:'column'}}>
-                                        <div className={styles.talkClientText}>{`İsim Soyisim: ${reservation.reservation} ${reservation.reservation}`}</div>
-                                        <div className={styles.talkClientText}>{`Tarih: ${calcDate(reservation.reservation)}`}</div>
-                                        <div className={styles.talkClientText}>{`Saat: ${reservation.reservation}`}</div>
+                                        <div className={styles.talkClientText}>{`İsim Soyisim: ${''} ${""}`}</div>
+                                        <div className={styles.talkClientText}>{`Tarih: ${"calcDate(2023)"}`}</div>
+                                        <div className={styles.talkClientText}>{`Saat: ${""}`}</div>
                                     </div>
                                 </div>
                             </div>
@@ -483,3 +442,5 @@ export default function Dashboard(){
     </>
   )
 }
+
+export default MyComponent;
