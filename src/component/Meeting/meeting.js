@@ -26,21 +26,23 @@ export default function Meeting(){
   const [mic, setMic] = useState(true);
   const [cam, setCam] = useState(true);
   const [emoImg, setEmoImg] = useState(null);
-  const [angerCount, setAngerCount] = useState(0);
-  const [happyCount, setHappyCount] = useState(0);
-  const [sadCount, setSadCount] = useState(0);
-  const [disgustCount, setDisgustCount] = useState(0);
-  const [fearCount, setFearCount] = useState(0);
-  const [suprisedCount, setSuprisedCount] = useState(0);
-  const [naturalCount, setNaturelCount] = useState(0);
+  let [angerCount, setAngerCount] = useState(0);
+  let [happyCount, setHappyCount] = useState(0);
+  let [sadCount, setSadCount] = useState(0);
+  let [disgustCount, setDisgustCount] = useState(0);
+  let [fearCount, setFearCount] = useState(0);
+  let [suprisedCount, setSuprisedCount] = useState(0);
+  let [naturalCount, setNaturelCount] = useState(0);
   const [root, setRoot] = useState(null);
+  const [procesComp, setProcesComp] = useState(null);
+  const [arrEmo, setArrEmo] = useState([])
 
   const navigate = useNavigate();
   useEffect(() => {
     Auth();
     const interval = setInterval(async() => {
       await imagePredict();
-      await handleRoot()
+      await handleRoot();
     }, 1000);
 
     return () => clearInterval(interval);
@@ -50,13 +52,22 @@ export default function Meeting(){
     const element = document.getElementById(1);
     try {
       const canvas = await html2canvas(element);
-      canvas.toBlob(async (blob) => {
+      const resizedCanvas = document.createElement('canvas');
+      resizedCanvas.width = 212;
+      resizedCanvas.height = 212;
+      const ctx = resizedCanvas.getContext('2d');
+      ctx.drawImage(canvas, 0, 0, 212, 212);
+
+      resizedCanvas.toBlob(async (blob) => {
         const formData = new FormData();
         formData.append('file', blob, 'image.png');
         const response = await axios.post("https://ai.teamlogos.tech/upload", formData, {
-          headers: { 'Content-Type': 'multipart/form-data'}
+          headers: { 
+            'Content-Type': 'multipart/form-data; boundary=<calculated when request is sent>',
+            'Content-Length': '<calculated when request is sent>',
+            'Host': '<calculated when request is sent>'
+          }
         });
-        console.log(response);
         await handleEmo(response.data.result);
       }, 'image/png');
     } catch (error) {
@@ -375,7 +386,7 @@ const handleMic = async () => {
 const  handleEmo = async(emo) =>{
   switch(emo){
       case 'angry':
-        await setAngerCount(angerCount+1);
+        await setAngerCount(angerCount);
         await setEmoImg(anger);
         break;
       case 'happy':
@@ -477,6 +488,7 @@ const handleNoCam = () => {
   setCam(!cam)
 }
 
+
   return (
     <>
         <div className="row">
@@ -492,56 +504,56 @@ const handleNoCam = () => {
                       <img src={!emoImg? user : emoImg} alt='Duygu Durumu' style={{marginBottom:'82px'}} width={200} height={200}></img>
                       <div style={{display:'flex',flexDirection:'column'}}>
 
-<div style={{width:'400px',display:'flex',flexDirection:'row', alignItems:'center', marginBottom:'10px'}}>
-  <div id='textProcess' style={{color: '#403D56',marginBottom:'0px'}}>Mutlu</div>
-  <div style={{display:'flex',flexDirection:'row'}}>
-  <div id='process' style={{width:`${2*handleEmoCalc(happyCount)}px`}}></div>
-  <div id='textProcess' style={{color: '#403D56',marginBottom:'0px', width:'65px'}}>{`% ${handleEmoCalc(happyCount)}`}</div>
-  </div>
-</div>
-<div style={{width:'400px',display:'flex',flexDirection:'row', alignItems:'center', marginBottom:'10px'}}>
-<div id='textProcess' style={{color: '#403D56',marginBottom:'0px'}}>Üzgün</div>
-<div style={{display:'flex',flexDirection:'row' }}>
-  <div id='process' style={{width:`${2*handleEmoCalc(sadCount)}px`}}></div>
-  <div id='textProcess' style={{color: '#403D56',marginBottom:'0px', width:'65px'}}>{`% ${handleEmoCalc(sadCount)}`}</div>
-</div>
-</div>
-<div style={{width:'400px',display:'flex',flexDirection:'row', alignItems:'center', marginBottom:'10px'}}>
-<div id='textProcess' style={{color: '#403D56',marginBottom:'0px'}}>İğrenme</div>
-<div style={{display:'flex',flexDirection:'row' }}>
-  <div id='process' style={{width:`${2*handleEmoCalc(disgustCount)}px`}}></div>
-  <div id='textProcess' style={{color: '#403D56',marginBottom:'0px', width:'65px'}}>{`% ${handleEmoCalc(disgustCount)}`}</div>
-</div>
-</div>
-<div style={{width:'400px',display:'flex',flexDirection:'row', alignItems:'center', marginBottom:'10px'}}>
-<div id='textProcess' style={{color: '#403D56',marginBottom:'0px'}}>Korku</div>
-<div style={{display:'flex',flexDirection:'row' }}>
-  <div id='process' style={{width:`${2*handleEmoCalc(fearCount)}px`}}></div>
-  <div id='textProcess' style={{color: '#403D56',marginBottom:'0px', width:'65px'}}>{`% ${handleEmoCalc(fearCount)}`}</div>
-</div>
-</div>
-<div style={{width:'400px',display:'flex',flexDirection:'row', alignItems:'center', marginBottom:'10px'}}>
-<div id='textProcess' style={{color: '#403D56',marginBottom:'0px'}}>Şaşkın</div>
-<div style={{display:'flex',flexDirection:'row' }}>
-  <div id='process' style={{width:`${2*handleEmoCalc(suprisedCount)}px`}}></div>
-  <div id='textProcess' style={{color: '#403D56',marginBottom:'0px', width:'65px'}}>{`% ${handleEmoCalc(suprisedCount)}`}</div>
-</div>
-</div>
-<div style={{width:'400px',display:'flex',flexDirection:'row', alignItems:'center', marginBottom:'10px'}}>
-<div id='textProcess' style={{color: '#403D56',marginBottom:'0px'}}>Öfke</div>
-<div style={{display:'flex',flexDirection:'row' }}>
-  <div id='process' style={{width:`${2*handleEmoCalc(angerCount)}px`}}></div>
-  <div id='textProcess' style={{color: '#403D56',marginBottom:'0px', width:'65px'}}>{`% ${handleEmoCalc(angerCount)}`}</div>
-</div>
-</div>
-<div style={{width:'400px',display:'flex',flexDirection:'row', alignItems:'center', marginBottom:'10px'}}>
-<div id='textProcess' style={{color: '#403D56',marginBottom:'0px'}}>Nötr</div>
-<div style={{display:'flex',flexDirection:'row' }}>
-  <div id='process' style={{width:`${2*handleEmoCalc(naturalCount)}px`}}></div>
-  <div id='textProcess' style={{color: '#403D56',marginBottom:'0px', width:'65px'}}>{`% ${handleEmoCalc(naturalCount)}`}</div>
-</div>
-</div>
-</div> 
+        <div style={{width:'400px',display:'flex',flexDirection:'row', alignItems:'center', marginBottom:'10px'}}>
+          <div id='textProcess' style={{color: '#403D56',marginBottom:'0px'}}>Mutlu</div>
+          <div style={{display:'flex',flexDirection:'row'}}>
+          <div id='process' style={{width:`${2*handleEmoCalc(happyCount)}px`}}></div>
+          <div id='textProcess' style={{color: '#403D56',marginBottom:'0px', width:'65px'}}>{`% ${handleEmoCalc(happyCount)}`}</div>
+          </div>
+        </div>
+        <div style={{width:'400px',display:'flex',flexDirection:'row', alignItems:'center', marginBottom:'10px'}}>
+        <div id='textProcess' style={{color: '#403D56',marginBottom:'0px'}}>Üzgün</div>
+        <div style={{display:'flex',flexDirection:'row' }}>
+          <div id='process' style={{width:`${2*handleEmoCalc(sadCount)}px`}}></div>
+          <div id='textProcess' style={{color: '#403D56',marginBottom:'0px', width:'65px'}}>{`% ${handleEmoCalc(sadCount)}`}</div>
+        </div>
+        </div>
+        <div style={{width:'400px',display:'flex',flexDirection:'row', alignItems:'center', marginBottom:'10px'}}>
+        <div id='textProcess' style={{color: '#403D56',marginBottom:'0px'}}>İğrenme</div>
+        <div style={{display:'flex',flexDirection:'row' }}>
+          <div id='process' style={{width:`${2*handleEmoCalc(disgustCount)}px`}}></div>
+          <div id='textProcess' style={{color: '#403D56',marginBottom:'0px', width:'65px'}}>{`% ${handleEmoCalc(disgustCount)}`}</div>
+        </div>
+        </div>
+        <div style={{width:'400px',display:'flex',flexDirection:'row', alignItems:'center', marginBottom:'10px'}}>
+        <div id='textProcess' style={{color: '#403D56',marginBottom:'0px'}}>Korku</div>
+        <div style={{display:'flex',flexDirection:'row' }}>
+          <div id='process' style={{width:`${2*handleEmoCalc(fearCount)}px`}}></div>
+          <div id='textProcess' style={{color: '#403D56',marginBottom:'0px', width:'65px'}}>{`% ${handleEmoCalc(fearCount)}`}</div>
+        </div>
+        </div>
+        <div style={{width:'400px',display:'flex',flexDirection:'row', alignItems:'center', marginBottom:'10px'}}>
+        <div id='textProcess' style={{color: '#403D56',marginBottom:'0px'}}>Şaşkın</div>
+        <div style={{display:'flex',flexDirection:'row' }}>
+          <div id='process' style={{width:`${2*handleEmoCalc(suprisedCount)}px`}}></div>
+          <div id='textProcess' style={{color: '#403D56',marginBottom:'0px', width:'65px'}}>{`% ${handleEmoCalc(suprisedCount)}`}</div>
+        </div>
+        </div>
+        <div style={{width:'400px',display:'flex',flexDirection:'row', alignItems:'center', marginBottom:'10px'}}>
+        <div id='textProcess' style={{color: '#403D56',marginBottom:'0px'}}>Öfke</div>
+        <div style={{display:'flex',flexDirection:'row' }}>
+          <div id='process' style={{width:`${2*handleEmoCalc(angerCount)}px`}}></div>
+          <div id='textProcess' style={{color: '#403D56',marginBottom:'0px', width:'65px'}}>{`% ${handleEmoCalc(angerCount)}`}</div>
+        </div>
+        </div>
+        <div style={{width:'400px',display:'flex',flexDirection:'row', alignItems:'center', marginBottom:'10px'}}>
+        <div id='textProcess' style={{color: '#403D56',marginBottom:'0px'}}>Nötr</div>
+        <div style={{display:'flex',flexDirection:'row' }}>
+          <div id='process' style={{width:`${2*handleEmoCalc(naturalCount)}px`}}></div>
+          <div id='textProcess' style={{color: '#403D56',marginBottom:'0px', width:'65px'}}>{`% ${handleEmoCalc(naturalCount)}`}</div>
+        </div>
+        </div>
+        </div>
                       <div style={{width:'100%', marginTop:'80px'}}>
                       <div class="row row-cols-4">
                         {/*<div class="col" width={80} height={80} style={{marginTop:'10px'}}>
