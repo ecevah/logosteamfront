@@ -328,23 +328,8 @@ export default function Dashboard(){
     }
 
     const handleTalk = async (id) => {
-        const beforeRes = await
-              axios.get(`/api/reservation/find/id/${id}`, {
-                headers: {
-                  'x-access-token': localStorage.getItem('token'),
-                },
-              })
-        const afterRes = await      
-              axios.get(`/api/talk/find?reservation_id=${id}`, {
-                headers: {
-                  'x-access-token': localStorage.getItem('token'),
-                },
-              })
-            const beforeData = beforeRes.data;
-            const afterData = afterRes.data;
-            await setReservation(beforeData);
-            await setTalk(afterData);
-            console.log(talk, reservation);
+        localStorage.setItem('reservation_id',id);
+        navigate('/talk');
     }
 
     const handleLogin = async () =>{
