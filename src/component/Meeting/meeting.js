@@ -53,7 +53,7 @@ export default function Meeting(){
       canvas.toBlob(async (blob) => {
         const formData = new FormData();
         formData.append('file', blob, 'image.png');
-        const response = await axios.post("http://34.65.228.18.5000/upload", formData, {
+        const response = await axios.post("https://ai.teamlogos.tech/upload", formData, {
           headers: { 'Content-Type': 'multipart/form-data'}
         });
         console.log(response);
