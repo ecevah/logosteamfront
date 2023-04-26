@@ -14,7 +14,7 @@ import Pay from './component/Pay/Pay';
 import Deneme from './component/deneme/deneme';
 import Settings from './component/Settings/Settings';
 import Forgot from './component/Forgot/Forgot';
-import Talk from './component/Talk2/Talk';
+import Talk from './component/Talk/Talk';
 
 function App() {
   return (

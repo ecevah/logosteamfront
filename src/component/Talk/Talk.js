@@ -45,33 +45,33 @@ import Swal from 'sweetalert2';
 
 export default function Dashboard(){
     const navigate = useNavigate();
-    const [post,setPost]=useState(null);
+    const [post,setPost]=useState(true);
     const arrRes = {
-        "status": true,
-        "message": "Find Complated",
-        "reservation": {
-            "_id": "",
-            "day": "",
-            "psyc_id": {
-                "_id": "64465c33a3defbbdaf27d8fe",
-                "name": "Bora",
-                "surName": "Körpe",
-                "pass": "$2a$08$SK9STy9ZLCCXrDQf1edBFOK9UrqurYfGXfbn.vsFtkGZe0eIbKIdq",
-                "eMail": "borakorpe@gmail.com",
-                "tag": [
+        status: false,
+        message: "Find Complated",
+        reservation: {
+            _id: "",
+            day: "",
+            psyc_id: {
+                _id: "64465c33a3defbbdaf27d8fe",
+                name: "Bora",
+                surName: "Körpe",
+                pass: "$2a$08$SK9STy9ZLCCXrDQf1edBFOK9UrqurYfGXfbn.vsFtkGZe0eIbKIdq",
+                eMail: "borakorpe@gmail.com",
+                tag: [
                     "Bipolar Bozukluk",
                     "Sosyal Fobi"
                 ],
-                "image": "image-1682332723536.png",
-                "unvan": "Prof. Dr.",
-                "star": [
+                image: "image-1682332723536.png",
+                unvan: "Prof. Dr.",
+                star: [
                     5,
                     5,
                     5,
                     3,
                     5
                 ],
-                "starAvg": [
+                starAvg: [
                     4.6
                 ],
                 "active": false,
@@ -80,78 +80,68 @@ export default function Dashboard(){
                 "updateAt": "2023-04-24T10:38:43.965Z",
                 "__v": 5
             },
-            "client_id": {
-                "_id": "",
-                "name": " ",
-                "surName": "",
-                "pass": "$2a$084BlRaeO5zZZzN43kEhqjPDlM1aReNzQnqYVu6",
-                "eMail": "borakorpee@gmail.com",
-                "city": "İzmir",
-                "county": "Gaziemir",
-                "job": "Mobil Developer",
-                "sex": "Erkek",
-                "favorites": [],
-                "image": "",
-                "dateOfBirth": "2023-04-24T13:25:46.797Z",
-                "createAt": "2023-04-24T13:25:46.797Z",
-                "__v": 0
+            client_id: {
+                _id: "",
+                name: " ",
+                surName: "",
+                pass: "$2a$084BlRaeO5zZZzN43kEhqjPDlM1aReNzQnqYVu6",
+                eMail: "borakorpee@gmail.com",
+                city: "İzmir",
+                county: "Gaziemir",
+                job: "Mobil Developer",
+                sex: "Erkek",
+                favorites: [],
+                image: "",
+                dateOfBirth: "2023-04-24T13:25:46.797Z",
+                createAt: "2023-04-24T13:25:46.797Z",
+                __v: 0
             },
-            "time": "",
+            time: "",
             "payCheck": true,
             "__v": 0
         }
     }
     const arrTalk = {
-        "status": true,
-        "talk": {
+        status: false,
+        talk: {
             "_id": "64471d04b0706c94791a871f",
-            "reservation_id": "64468401978e155dc2498e1f",
-            "meetTime": "qweqe",
-            "Talk": [
-                "Selam",
-                "selami"
+            reservation_id: "",
+            meetTime: "qweqe",
+            Talk: [
+                "",
+                ""
             ],
-            "emo": {
-                "anger": {
-                    "count": 0
-                },
-                "sad": {
-                    "count": 0
-                },
-                "happy": {
-                    "count": 0
-                },
-                "surprised": {
-                    "count": 0
-                },
-                "disgust": {
-                    "count": 0
-                },
-                "fear": {
-                    "count": 0
-                },
-                "neutral": {
-                    "count": 0
-                }
+            emo: {
+                anger: 0,
+                sad: 0,
+                happy: 0,
+                surprised: 0,
+                disgust: 0,
+                fear: 0,
+                neutral: 0
             },
-            "word": [
+            word: [
                 {
-                    "count": 0,
-                    "word": "",
+                    count: 0,
+                    word: "",
                     "_id": ""
                 }
             ],
             "__v": 0,
-            "comment": ""
+            comment: ""
         },
-        "totalCount": 0
+        totalCount: 0
     }
     const [reservation, setReservation] = useState(arrRes);
     const [talk, setTalk] = useState(arrTalk);
     
     useEffect(() => {
-        Auth();
-      }, []); 
+        if(talk.status===true&&reservation.status===true){
+        }
+        else{
+            Auth();
+        }
+      }, [reservation,talk]); 
       
       const Auth = async () => {
         const token = localStorage.getItem('token');
@@ -176,7 +166,6 @@ export default function Dashboard(){
             setReservation(beforeData);
             setTalk(afterData);
             console.log(talk, reservation);
-            return true
           } else {
             navigate('/login');
           }
@@ -191,7 +180,7 @@ export default function Dashboard(){
         {
             text:'Ön Panel',
             href:'/dashboard',
-            active: 'active',
+            active: '',
             icon: onpanel,
             purple: onpanelpurple
         },
@@ -273,6 +262,11 @@ export default function Dashboard(){
         localStorage.setItem('tag', '');
         localStorage.setItem('img', '');     
         navigate('/');
+    }
+    
+    
+    const arrayToString = (arr) => {
+        return arr.join(" ");
     }
 
     const calcDate = (dateStr) =>{
@@ -358,7 +352,7 @@ export default function Dashboard(){
             </div>
             <div className={styles.section} style={{paddingTop:'0px'}}>
                 <div className={`${styles.inclusive}`}>
-                    <div className={styles.contentInclusive} style={{overflow:'auto', height:'800px'}}>
+                    <div className={styles.contentInclusive} id='example' style={{overflow:'auto', height:'800px'}}>
                         <div style={{display:'flex', flexDirection:'column',justifyContent:'center', alignItems: 'center'}}>
                             <div style={{display:'flex', flexDirection:'column', justifyContent:'center', alignItems:'center', width:'50%',paddingLeft:'88px',paddingRight:'88px'}}>
                                 <div className={styles.talkClientTitleCard}>Hasta Detayları</div>
@@ -367,9 +361,9 @@ export default function Dashboard(){
                                         <img src={`https://api.teamlogos.tech/uploads/${reservation.reservation.client_id.image}`} alt='Client İmage' width={100} height={100} style={{marginRight:'50px'}}></img>
                                     </div>
                                     <div style={{display:'flex', flexDirection:'column'}}>
-                                        <div className={styles.talkClientText}>{`İsim Soyisim: ${reservation.reservation} ${reservation.reservation}`}</div>
-                                        <div className={styles.talkClientText}>{`Tarih: ${calcDate(reservation.reservation)}`}</div>
-                                        <div className={styles.talkClientText}>{`Saat: ${reservation.reservation}`}</div>
+                                        <div className={styles.talkClientText}>{`İsim Soyisim: ${reservation.reservation.client_id.name} ${reservation.reservation.client_id.surName}`}</div>
+                                        <div className={styles.talkClientText}>{`Tarih: ${calcDate(reservation.reservation.day)}`}</div>
+                                        <div className={styles.talkClientText}>{`Saat: ${reservation.reservation.time}`}</div>
                                     </div>
                                 </div>
                             </div>
@@ -381,64 +375,65 @@ export default function Dashboard(){
                                             <div style={{display:'flex', flexDirection:'column', justifyContent:'center',alignItems:'center'}}>
                                                 <img src={happy} alt='duygu' width={100} height={100}></img>
                                                 <div className={styles.emoCardTextTitle}>Mutlu</div>
-                                                <div className={styles.emoCardText}>Count</div>
+                                                <div className={styles.emoCardText}>{talk.talk.emo.happy}</div>
                                             </div>
                                         </div>
                                         <div className='col'>
                                             <div style={{display:'flex', flexDirection:'column', justifyContent:'center',alignItems:'center'}}>
                                                 <img src={anger} alt='duygu' width={100} height={100}></img>
                                                 <div className={styles.emoCardTextTitle}>Kızgın</div>
-                                                <div className={styles.emoCardText}>Count</div>
+                                                <div className={styles.emoCardText}>{talk.talk.emo.anger}</div>
                                             </div>
                                         </div>
                                         <div className='col'>
                                             <div style={{display:'flex', flexDirection:'column', justifyContent:'center',alignItems:'center'}}>
                                                 <img src={sad} alt='duygu' width={100} height={100}></img>
                                                 <div className={styles.emoCardTextTitle}>Üzgün</div>
-                                                <div className={styles.emoCardText}>Count</div>
+                                                <div className={styles.emoCardText}>{talk.talk.emo.sad}</div>
                                             </div>
                                         </div>
                                         <div className='col'>
                                             <div style={{display:'flex', flexDirection:'column', justifyContent:'center',alignItems:'center'}}>
                                                 <img src={disgusd} alt='duygu' width={100} height={100}></img>
                                                 <div className={styles.emoCardTextTitle}>İğrenme</div>
-                                                <div className={styles.emoCardText}>Count</div>
+                                                <div className={styles.emoCardText}>{talk.talk.emo.disgust}</div>
                                             </div>
                                         </div>
                                         <div className='col'>
                                             <div style={{display:'flex', flexDirection:'column', justifyContent:'center',alignItems:'center'}}>
                                                 <img src={fear} alt='duygu' width={100} height={100}></img>
                                                 <div className={styles.emoCardTextTitle}>Korku</div>
-                                                <div className={styles.emoCardText}>Count</div>
+                                                <div className={styles.emoCardText}>{talk.talk.emo.fear}</div>
                                             </div>
                                         </div>
                                         <div className='col'>
                                             <div style={{display:'flex', flexDirection:'column', justifyContent:'center',alignItems:'center'}}>
                                                 <img src={suprised} alt='duygu' width={100} height={100}></img>
                                                 <div className={styles.emoCardTextTitle}>Şaşkın</div>
-                                                <div className={styles.emoCardText}>Count</div>
+                                                <div className={styles.emoCardText}>{talk.talk.emo.surprised}</div>
                                             </div>
                                         </div>
                                         <div className='col'>
                                             <div style={{display:'flex', flexDirection:'column', justifyContent:'center',alignItems:'center'}}>
                                                 <img src={naturel} alt='duygu' width={100} height={100}></img>
                                                 <div className={styles.emoCardTextTitle}>Nötr</div>
-                                                <div className={styles.emoCardText}>Count</div>
+                                                <div className={styles.emoCardText}>{talk.talk.emo.neutral}</div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                                 <div style={{display:'flex', flexDirection:'column', justifyContent:'center'}}>
                                     <div className={styles.emoTitleCard}>Konuşma Metni</div>
-                                    <div style={{width:'90%', height:'400px', overflow:'auto'}}>
-                                        <div className={styles.talkClientText}></div>
+                                    <div id='example' style={{width:'90%', height:'400px', overflow:'auto'}}>
+                                        <div className={styles.talkClientText}>{arrayToString(talk.talk.Talk)}</div>
                                     </div>
                                 </div>
                                 <div>
                                     <div className={styles.emoTitleCard}>Kelime Kökleri</div>
-                                    <div className='row rows-col-10' style={{height:'400px', overflow:'auto'}}>
-                                        <div class="col" width={80} height={80} style={{marginTop:'10px'}}>
-                                            <CircularProgressbarWithChildren value={12} maxValue={100} styles={{
+                                    <div className='row rows-col-10' id='example' style={{height:'400px', overflow:'auto'}}>
+                                        {talk.talk.word.map((item)=>
+                                            <div class="col" width={80} height={80} style={{marginTop:'10px'}}>
+                                            <CircularProgressbarWithChildren value={item.count} maxValue={talk.totalCount} styles={{
                                                 path: {
                                                 // Path color
                                                 stroke: `#533AED`,
@@ -459,14 +454,15 @@ export default function Dashboard(){
                                                 transform: 'rotate(0.15turn)',
                                                 transformOrigin: 'center center',
                                                 },}}>
-                                                <div id='circleTitle'>word</div>
+                                                <div id='circleTitle'>{item.word}</div>
                                                 <div id='circleText'>
-                                                    count
+                                                    {item.count}
                                                 </div>
                                             </CircularProgressbarWithChildren>
                                         </div>
-                                            </div>
-                                            </div>
+                                        )}
+                                        </div>
+                                    </div>
                             </div>
                         </div>
                         <div className={styles.sponsorContent}>
