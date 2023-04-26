@@ -30,11 +30,15 @@ export default function Meeting(){
     const element = document.getElementById(1);
     try {
       const canvas = await html2canvas(element);
-      const img = canvas.toDataURL('image/png');
-      const response = await axios.post("https://www.teamlogos.tech/image/predict", {
-        "image": img
-      });
-      console.log(response.data.result);
+      canvas.toBlob(async (blob) => {
+        const formData = new FormData();
+        formData.append('file', blob, 'image.png');
+        const response = await axios.post("https://ai.teamlogos.tech/upload", formData, {
+          headers: { 'Content-Type': 'multipart/form-data' , 'Access-Control-Allow-Origin': '*'}
+        });
+        console.log(response)
+      }, 'image/png');
+      
     } catch (error) {
       console.error(error);
     }
@@ -62,7 +66,7 @@ export default function Meeting(){
     // Set the channel name.
     channel: 'wdj',
     // Pass your temp token here.
-    token: '007eJxTYFAJbny83E1g5ymBiSWmyvGsHxLfmRnoRPU86vu1SPhGRZ4Cg2FSommqkaWpmZmhhUmiiVGiuZm5qYGFeVpSYlpyYpqFy17XlIZARgar7zEsjAwQCOIzM5SnZDEwAADKxR30',
+    token: '007eJxTYDiQ/bhNKjtqSfmWYy+S3go7MFt09e/ePK97w4Hc+elt1xcoMBgmJZqmGlmampkZWpgkmhglmpuZmxpYmKclJaYlJ6ZZtId7pDQEMjKUvb7MwAiFID4zQ3lKFgMDALDpIRQ',
     // Set the user ID.
     uid: 0,
 };

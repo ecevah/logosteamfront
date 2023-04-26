@@ -227,7 +227,18 @@ export default function Dashboard(){
             <div className={styles.section}>
                 <div className={`${styles.inclusive}`}>
                     <div className={styles.contentInclusive}>
-                        
+                        <div style={{display:'flex', flexDirection:'col', alignItems: 'center'}}>
+                            <div>
+                                <div>
+                                    <img src='' alt='Client İmage' width={100} height={100}></img>
+                                </div>
+                                <div>
+                                    <div></div>
+                                    <div></div>
+                                    <div></div>
+                                </div>
+                            </div>
+                        </div>
                         <div className={styles.sponsorContent}>
                             {arrSponsor.map((item)=>
                                 <div>
