@@ -103,7 +103,7 @@ export default function Dashboard(){
     }
     const arrTalk = {
         status: false,
-        talk: {
+        talk: [{
             "_id": "64471d04b0706c94791a871f",
             reservation_id: "",
             meetTime: "qweqe",
@@ -129,17 +129,19 @@ export default function Dashboard(){
             ],
             "__v": 0,
             comment: ""
-        },
+        }],
         totalCount: 0
     }
     const [reservation, setReservation] = useState(arrRes);
     const [talk, setTalk] = useState(arrTalk);
     
     useEffect(() => {
-        if(talk.status===true&&reservation.status===true){
+        if(talk.status===true && reservation.status===true){
+            console.log(reservation)
         }
         else{
             Auth();
+            console.log(reservation)
         }
       }, [reservation,talk]); 
       
@@ -165,7 +167,6 @@ export default function Dashboard(){
             const afterData = afterRes.data;
             setReservation(beforeData);
             setTalk(afterData);
-            console.log(talk, reservation);
           } else {
             navigate('/login');
           }
@@ -274,6 +275,7 @@ export default function Dashboard(){
         const formattedDate = `${date.getDate()}.${date.getMonth() + 1}.${date.getFullYear()}`;
         return formattedDate;
     } 
+    console.log(talk.talk)
     return (
     <>
         <div className={post ? styles.none : styles.isLoading}>
@@ -375,49 +377,49 @@ export default function Dashboard(){
                                             <div style={{display:'flex', flexDirection:'column', justifyContent:'center',alignItems:'center'}}>
                                                 <img src={happy} alt='duygu' width={100} height={100}></img>
                                                 <div className={styles.emoCardTextTitle}>Mutlu</div>
-                                                <div className={styles.emoCardText}>{talk.talk.emo.happy}</div>
+                                                <div className={styles.emoCardText}>{talk.talk[0].emo.happy}</div>
                                             </div>
                                         </div>
                                         <div className='col'>
                                             <div style={{display:'flex', flexDirection:'column', justifyContent:'center',alignItems:'center'}}>
                                                 <img src={anger} alt='duygu' width={100} height={100}></img>
                                                 <div className={styles.emoCardTextTitle}>Kızgın</div>
-                                                <div className={styles.emoCardText}>{talk.talk.emo.anger}</div>
+                                                <div className={styles.emoCardText}>{talk.talk[0].emo.anger}</div>
                                             </div>
                                         </div>
                                         <div className='col'>
                                             <div style={{display:'flex', flexDirection:'column', justifyContent:'center',alignItems:'center'}}>
                                                 <img src={sad} alt='duygu' width={100} height={100}></img>
                                                 <div className={styles.emoCardTextTitle}>Üzgün</div>
-                                                <div className={styles.emoCardText}>{talk.talk.emo.sad}</div>
+                                                <div className={styles.emoCardText}>{talk.talk[0].emo.sad}</div>
                                             </div>
                                         </div>
                                         <div className='col'>
                                             <div style={{display:'flex', flexDirection:'column', justifyContent:'center',alignItems:'center'}}>
                                                 <img src={disgusd} alt='duygu' width={100} height={100}></img>
                                                 <div className={styles.emoCardTextTitle}>İğrenme</div>
-                                                <div className={styles.emoCardText}>{talk.talk.emo.disgust}</div>
+                                                <div className={styles.emoCardText}>{talk.talk[0].emo.disgust}</div>
                                             </div>
                                         </div>
                                         <div className='col'>
                                             <div style={{display:'flex', flexDirection:'column', justifyContent:'center',alignItems:'center'}}>
                                                 <img src={fear} alt='duygu' width={100} height={100}></img>
                                                 <div className={styles.emoCardTextTitle}>Korku</div>
-                                                <div className={styles.emoCardText}>{talk.talk.emo.fear}</div>
+                                                <div className={styles.emoCardText}>{talk.talk[0].emo.fear}</div>
                                             </div>
                                         </div>
                                         <div className='col'>
                                             <div style={{display:'flex', flexDirection:'column', justifyContent:'center',alignItems:'center'}}>
                                                 <img src={suprised} alt='duygu' width={100} height={100}></img>
                                                 <div className={styles.emoCardTextTitle}>Şaşkın</div>
-                                                <div className={styles.emoCardText}>{talk.talk.emo.surprised}</div>
+                                                <div className={styles.emoCardText}>{talk.talk[0].emo.surprised}</div>
                                             </div>
                                         </div>
                                         <div className='col'>
                                             <div style={{display:'flex', flexDirection:'column', justifyContent:'center',alignItems:'center'}}>
                                                 <img src={naturel} alt='duygu' width={100} height={100}></img>
                                                 <div className={styles.emoCardTextTitle}>Nötr</div>
-                                                <div className={styles.emoCardText}>{talk.talk.emo.neutral}</div>
+                                                <div className={styles.emoCardText}>{talk.talk[0].emo.neutral}</div>
                                             </div>
                                         </div>
                                     </div>
@@ -425,13 +427,13 @@ export default function Dashboard(){
                                 <div style={{display:'flex', flexDirection:'column', justifyContent:'center'}}>
                                     <div className={styles.emoTitleCard}>Konuşma Metni</div>
                                     <div id='example' style={{width:'90%', height:'400px', overflow:'auto'}}>
-                                        <div className={styles.talkClientText}>{arrayToString(talk.talk.Talk)}</div>
+                                        <div className={styles.talkClientText}>{talk.talk[0].Talk}</div>
                                     </div>
                                 </div>
                                 <div>
                                     <div className={styles.emoTitleCard}>Kelime Kökleri</div>
                                     <div className='row rows-col-10' id='example' style={{height:'400px', overflow:'auto'}}>
-                                        {talk.talk.word.map((item)=>
+                                        {talk.talk[0].word.map((item)=>
                                             <div class="col" width={80} height={80} style={{marginTop:'10px'}}>
                                             <CircularProgressbarWithChildren value={item.count} maxValue={talk.totalCount} styles={{
                                                 path: {

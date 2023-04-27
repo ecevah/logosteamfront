@@ -96,7 +96,7 @@ export default function Meeting(){
     // Set the channel name.
     channel: 'wdj',
     // Pass your temp token here.
-    token: '007eJxTYDiQ/bhNKjtqSfmWYy+S3go7MFt09e/ePK97w4Hc+elt1xcoMBgmJZqmGlmampkZWpgkmhglmpuZmxpYmKclJaYlJ6ZZtId7pDQEMjKUvb7MwAiFID4zQ3lKFgMDALDpIRQ=',
+    token: '007eJxTYDjdlK7+3OnzF/sVUyNmzZCaWPVq+sJEbtWJwY5lt90/J0xUYDBMSjRNNbI0NTMztDBJNDFKNDczNzWwME9LSkxLTkyzKOb1SmkIZGRoeT6VmZEBAkF8ZobylCwGBgBkpB+U',
     // Set the user ID.
     uid: 0,
 };
@@ -279,7 +279,7 @@ window.onload = function ()
               comment: text
           }
           console.log('sadsadsda',text)
-          const res = axios.put(`/api/talk/put?reservation_id=${localStorage.getItem('reservation_id')}&limit=20`,payload,{
+          const res = axios.post(`/api/talk/put?reservation_id=${localStorage.getItem('reservation_id')}&limit=20`,payload,{
             headers: {
               'x-access-token': localStorage.getItem('token'),
             },
@@ -450,7 +450,8 @@ const handleRoot = async () => {
       headers: {
         'x-access-token': localStorage.getItem('token'),
       }});
-    const res = await response.data.talk.word.map((item)=>
+      console.log(response)
+    const res = await response.data.talk[0].word.map((item)=>
     <div class="col" width={80} height={80} style={{marginTop:'10px'}}>
       <CircularProgressbarWithChildren value={item.count} maxValue={response.data.totalCount} styles={{
         path: {

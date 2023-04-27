@@ -361,7 +361,7 @@ export default function Dashboard(){
               Swal.fire({
                 icon: 'success',
                 title: 'Silindi!',
-                text: 'Reservasyon Silindi!',
+                text: 'Rezervasyon Silindi!',
                 confirmButtonColor: '#8C10B8',
                 confirmButtonText: 'Tamam'
             }).then((result)=> {
@@ -622,7 +622,7 @@ export default function Dashboard(){
                             </div>
                         </div>
                         <div style={{display:'flex',flexDirection:'row', justifyContent:'space-between', width:'100%'}}>
-                            <div className={styles.title}>{`Reservasyonlar`}</div>
+                            <div className={styles.title}>{`Rezervasyonlar`}</div>
                             <div style={{display:'flex', flexDirection:'row', justifyContent:'flex-end',  alignItems:'center',}}>
                                 <div className={activee ? styles.activeIcon : styles.unActiveIcon}></div>
                                 <div>
