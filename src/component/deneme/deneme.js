@@ -4,8 +4,18 @@ import {useNavigate} from 'react-router-dom';
 import phone from '../../img/phoneIcon.svg';
 import html2canvas from 'html2canvas';
 import FeatherIcon from 'feather-icons-react';
+import { CircularProgressbarWithChildren} from 'react-circular-progressbar';
+import 'react-circular-progressbar/dist/styles.css';
 
 import logosLogo from '../../img/logosLogoLight.svg';
+import anger from '../../img/anger.png';
+import happy from '../../img/happy.png';
+import sad from '../../img/sad.png';
+import disgusd from '../../img/disgusd.png';
+import fear from '../../img/fear.png';
+import suprised from '../../img/suprised.png';
+import naturel from '../../img/naturel.png';
+import user from '../../img/user.svg';
 
 import verify from '../../api/verify';
 import axios from 'axios';
@@ -14,14 +24,25 @@ import Swal from 'sweetalert2';
 export default function Meeting(){
   const [post,setPost]=useState(null);
   const [mic, setMic] = useState(true);
-  const [cam, setCam] = useState(true);
+  const [emoImg, setEmoImg] = useState(null);
+  let [angerCount, setAngerCount] = useState(0);
+  let [happyCount, setHappyCount] = useState(0);
+  let [sadCount, setSadCount] = useState(0);
+  let [disgustCount, setDisgustCount] = useState(0);
+  let [fearCount, setFearCount] = useState(0);
+  let [suprisedCount, setSuprisedCount] = useState(0);
+  let [naturalCount, setNaturelCount] = useState(0);
+  const [root, setRoot] = useState(null);
+  const [procesComp, setProcesComp] = useState(null);
+  const [arrEmo, setArrEmo] = useState([])
 
   const navigate = useNavigate();
   useEffect(() => {
     Auth();
     const interval = setInterval(() => {
       imagePredict();
-    }, 3000);
+      handleRoot();
+    }, 1000);
 
     return () => clearInterval(interval);
   }, []);
@@ -30,15 +51,24 @@ export default function Meeting(){
     const element = document.getElementById(1);
     try {
       const canvas = await html2canvas(element);
-      canvas.toBlob(async (blob) => {
+      const resizedCanvas = document.createElement('canvas');
+      resizedCanvas.width = 212;
+      resizedCanvas.height = 212;
+      const ctx = resizedCanvas.getContext('2d');
+      ctx.drawImage(canvas, 0, 0, 212, 212);
+
+      resizedCanvas.toBlob(async (blob) => {
         const formData = new FormData();
         formData.append('file', blob, 'image.png');
         const response = await axios.post("https://ai.teamlogos.tech/upload", formData, {
-          headers: { 'Content-Type': 'multipart/form-data' , 'Access-Control-Allow-Origin': '*'}
+          headers: { 
+            'Content-Type': 'multipart/form-data; boundary=<calculated when request is sent>',
+            'Content-Length': '<calculated when request is sent>',
+            'Host': '<calculated when request is sent>'
+          }
         });
-        console.log(response)
+        await handleEmo(response.data.result);
       }, 'image/png');
-      
     } catch (error) {
       console.error(error);
     }
@@ -47,7 +77,7 @@ export default function Meeting(){
     const Auth = async () => {
         const token = localStorage.getItem('token');
         const id = localStorage.getItem('id');
-      
+
         try {
             const res = await verify(token);
             if (res) {
@@ -66,9 +96,9 @@ export default function Meeting(){
     // Set the channel name.
     channel: 'wdj',
     // Pass your temp token here.
-    token: '007eJxTYDiQ/bhNKjtqSfmWYy+S3go7MFt09e/ePK97w4Hc+elt1xcoMBgmJZqmGlmampkZWpgkmhglmpuZmxpYmKclJaYlJ6ZZtId7pDQEMjKUvb7MwAiFID4zQ3lKFgMDALDpIRQ',
+    token: '007eJxTYDjdlK7+3OnzF/sVUyNmzZCaWPVq+sJEbtWJwY5lt90/J0xUYDBMSjRNNbI0NTMztDBJNDFKNDczNzWwME9LSkxLTkyzKOb1SmkIZGRoeT6VmZEBAkF8ZobylCwGBgBkpB+U',
     // Set the user ID.
-    uid: 0,
+    uid: 0
 };
 
 let channelParameters =
@@ -213,7 +243,7 @@ window.onload = function ()
     // Listen to the Leave button click event.
     document.getElementById('leave').onclick = async function ()
     {
-      Swal.fire({
+        Swal.fire({
         title: 'Yorum',
         text: "Konuşmayı Yorumlamak İster Misin?",
         icon: 'warning',
@@ -238,6 +268,22 @@ window.onload = function ()
             cancelButtonText: 'Çık'
           })
           if (text) {
+            const payload = {
+              happy: happyCount,
+              angry: angerCount,
+              sad: sadCount,
+              suprised: suprisedCount,
+              disgust: disgustCount,
+              fear: fearCount,
+              neutural: naturalCount,
+              comment: text
+          }
+          console.log('sadsadsda',text)
+          const res = axios.post(`/api/talk/put?reservation_id=${localStorage.getItem('reservation_id')}&limit=20`,payload,{
+            headers: {
+              'x-access-token': localStorage.getItem('token'),
+            },
+          });
             await Swal.fire({
               icon: 'success',
               title: 'Tamamlandı',
@@ -245,7 +291,18 @@ window.onload = function ()
               confirmButtonColor: '#8C10B8',
               confirmButtonText: 'Tamam'
             })
-            navigate('/reservation');
+            document.getElementById('join').style.display = 'block';
+            document.getElementById('goback').style.display = 'block';
+            document.getElementById('logo').style.display = 'block';
+            document.getElementById('leave').style.display = 'none';
+            document.getElementById('mic').style.display = 'none';
+            document.getElementById('talk').style.display = 'none';
+            // Destroy the local audio and video tracks.
+            channelParameters.localAudioTrack.close();
+            channelParameters.localVideoTrack.close();
+            // Remove the containers you created for the local video and remote video.
+            removeVideoDiv(remotePlayerContainer.id);
+            window.location.reload();
           }
           else{
             await Swal.fire({
@@ -260,7 +317,7 @@ window.onload = function ()
             document.getElementById('logo').style.display = 'block';
             document.getElementById('leave').style.display = 'none';
             document.getElementById('mic').style.display = 'none';
-            document.getElementById('cam').style.display = 'none';
+            document.getElementById('talk').style.display = 'none';
             // Destroy the local audio and video tracks.
             channelParameters.localAudioTrack.close();
             channelParameters.localVideoTrack.close();
@@ -268,7 +325,6 @@ window.onload = function ()
             removeVideoDiv(remotePlayerContainer.id);
             removeVideoDiv(localPlayerContainer.id);
             // Leave the channel
-            console.log("You left the channel");
             localStorage.setItem('meet','Yapıldı')
             // Refresh the page for reuse
             window.location.reload();
@@ -279,7 +335,7 @@ window.onload = function ()
           document.getElementById('logo').style.display = 'block';
           document.getElementById('leave').style.display = 'none';
           document.getElementById('mic').style.display = 'none';
-          document.getElementById('cam').style.display = 'none';
+          document.getElementById('talk').style.display = 'none';
           // Destroy the local audio and video tracks.
           channelParameters.localAudioTrack.close();
           channelParameters.localVideoTrack.close();
@@ -287,7 +343,6 @@ window.onload = function ()
           removeVideoDiv(remotePlayerContainer.id);
           removeVideoDiv(localPlayerContainer.id);
           // Leave the channel
-          console.log("You left the channel");
           localStorage.setItem('meet','Yapıldı')
           // Refresh the page for reuse
           window.location.reload();
@@ -321,32 +376,208 @@ startBasicCall();
 // Remove the video stream from the container.
 function removeVideoDiv(elementId)
 {
-    console.log("Removing "+ elementId+"Div");
     let Div = document.getElementById(elementId);
     if (Div)
     {
         Div.remove();
     }
 };
-let isAudioEnabled = false;
-let audioStream = null;
-const handleMic = async () => {
-  setMic(!mic);
+
+const  handleEmo = async(emo) =>{
+  switch(emo){
+      case 'angry':
+        await setAngerCount(prevCount=> prevCount+1);
+        await setEmoImg(anger);
+        break;
+      case 'happy':
+        await setHappyCount(prevCount=> prevCount+1);
+        await setEmoImg(happy);
+        break;
+      case 'sad':
+        await setSadCount(prevCount=> prevCount+1)
+        await setEmoImg(sad);
+        break;  
+      case 'disgust':
+        await setDisgustCount(prevCount=> prevCount+1);
+        await setEmoImg(disgusd);
+        break;
+      case 'fear':
+        await setFearCount(prevCount=> prevCount+1);
+        await setEmoImg(fear);
+      break;
+      case 'surprise':
+        await setSuprisedCount(prevCount=> prevCount+1);
+        await setEmoImg(suprised);
+        break;
+      case 'neutral':
+        await setNaturelCount(prevCount=> prevCount+1);
+        await setEmoImg(naturel);
+        break;  
+      default:
+        Swal.fire({
+          position: 'top-start',
+          icon: 'info',
+          text: 'Yüz tanımlanamıyor!!',
+          showConfirmButton: false,
+          timer: 2500,
+          backdrop: false,
+          width: 300,
+          position: 'top-start',
+          iconHtml: '<i class="fas fa-exclamation-circle fa-sm" style="color:red"></i>',
+          customClass: {
+            backdrop: 'my-backdrop-class',
+            popup: 'my-popup-class'
+          }
+        })
+        break;
+  }
+} 
+
+const handleEmoCalc = (number) => {
+  const total = (happyCount + angerCount + sadCount + disgustCount + fearCount + suprisedCount + naturalCount);
+  const percentage = (number * 100)/total;
+  const res = Math.round(percentage);
+  return res || 0;
 }
+
+const handleRoot = async () => {
+  const response = await axios.get(`https://api.teamlogos.tech/api/talk/find?reservation_id=${localStorage.getItem('reservation_id')}`,{
+    headers: {
+      'x-access-token': localStorage.getItem('token'),
+    }});
+    console.log(response)
+  const res = await response.data.talk[0].word.map((item)=>
+  <div class="col" width={80} height={80} style={{marginTop:'10px'}}>
+    <CircularProgressbarWithChildren value={item.count} maxValue={response.data.totalCount} styles={{
+      path: {
+        // Path color
+        stroke: `#533AED`,
+        // Whether to use rounded or flat corners on the ends - can use 'butt' or 'round'
+        strokeLinecap: 'butt',
+        // Customize transition animation
+        transition: 'stroke-dashoffset 0.5s ease 0s',
+        // Rotate the path
+        transform: 'rotate(0.15turn)',
+        transformOrigin: 'center center',
+      },
+      trail: {
+        // Trail color
+        stroke: '#6c6c6c7d',
+        // Whether to use rounded or flat corners on the ends - can use 'butt' or 'round'
+        strokeLinecap: 'butt',
+        // Rotate the trail
+        transform: 'rotate(0.15turn)',
+        transformOrigin: 'center center',
+      },}}>
+      <div id='circleTitle'>{item.word}</div>
+      <div id='circleText'>
+          {item.count}
+      </div>
+    </CircularProgressbarWithChildren>
+  </div>
+  );
+  await setRoot(res);
+}
+
   return (
     <>
         <div className="row">
             <div>
-                <img src={logosLogo} id='logo' height={176} width={345} style={{position:'absolute', top:'35%', left:'44.5%'}} alt='logos'></img>
+                <img src={logosLogo} id='logo' height={176} width={345} style={{position:'absolute', top:'35%', left:'43.5%'}} alt='logos'></img>
                 <button type="button" id="join"><FeatherIcon icon='phone' color='#FFFFFF' size="45" style={{marginLeft:'auto',marginRight:'auto'}} stroke-width="2.5"/></button>
                 <button type="button" id="goback" onClick={()=> navigate('/reservation')}><FeatherIcon icon='log-out' color='#FFFFFF' size="45" style={{marginLeft:'auto',marginRight:'auto'}} stroke-width="2.5"/></button>
                 <button type="button" id="leave" style={{display:'none'}}><img src={phone} alt='phone' width={70} height={70}></img></button>
-                <button type="button" id="mic" style={{display:'none'}} onClick={()=>handleMic()}><FeatherIcon icon={mic?'mic':'mic-off'} color='#FFFFFF' size="45" style={{marginLeft:'auto',marginRight:'auto'}} stroke-width="2.5"/></button>
-                <button type="button" id="cam" style={{display:'none'}} onClick={()=>setCam(!cam)}><FeatherIcon icon={cam?'video':'video-off'} color='#FFFFFF' size="45" style={{marginLeft:'auto',marginRight:'auto'}} stroke-width="2.5"/></button>
+                <img src={logosLogo} alt='logo' id='mic' style={{display:'none'}} width={250} height={100}></img>
                 <div id='talk' style={{display:'none'}}>
-                    <div>Konuşşma metni: adasdsasadsad</div>
-                    <div>Duygu durumu</div>
-                    <div>Kullanılan Kelimeler</div>
+                    <div style={{display:'flex',flexDirection:'column', alignItems:'center',padding:'60px 36px 0px 36px', justifyContent:'center', height:'100%'}}>
+                      <img src={!emoImg? user : emoImg} alt='Duygu Durumu' style={{marginBottom:'82px'}} width={200} height={200}></img>
+                      <div style={{display:'flex',flexDirection:'column'}}>
+
+        <div style={{width:'400px',display:'flex',flexDirection:'row', alignItems:'center', marginBottom:'10px'}}>
+          <div id='textProcess' style={{color: '#403D56',marginBottom:'0px'}}>Mutlu</div>
+          <div style={{display:'flex',flexDirection:'row'}}>
+          <div id='process' style={{width:`${2*handleEmoCalc(happyCount)}px`}}></div>
+          <div id='textProcess' style={{color: '#403D56',marginBottom:'0px', width:'65px'}}>{`% ${handleEmoCalc(happyCount)}`}</div>
+          </div>
+        </div>
+        <div style={{width:'400px',display:'flex',flexDirection:'row', alignItems:'center', marginBottom:'10px'}}>
+        <div id='textProcess' style={{color: '#403D56',marginBottom:'0px'}}>Üzgün</div>
+        <div style={{display:'flex',flexDirection:'row' }}>
+          <div id='process' style={{width:`${2*handleEmoCalc(sadCount)}px`}}></div>
+          <div id='textProcess' style={{color: '#403D56',marginBottom:'0px', width:'65px'}}>{`% ${handleEmoCalc(sadCount)}`}</div>
+        </div>
+        </div>
+        <div style={{width:'400px',display:'flex',flexDirection:'row', alignItems:'center', marginBottom:'10px'}}>
+        <div id='textProcess' style={{color: '#403D56',marginBottom:'0px'}}>İğrenme</div>
+        <div style={{display:'flex',flexDirection:'row' }}>
+          <div id='process' style={{width:`${2*handleEmoCalc(disgustCount)}px`}}></div>
+          <div id='textProcess' style={{color: '#403D56',marginBottom:'0px', width:'65px'}}>{`% ${handleEmoCalc(disgustCount)}`}</div>
+        </div>
+        </div>
+        <div style={{width:'400px',display:'flex',flexDirection:'row', alignItems:'center', marginBottom:'10px'}}>
+        <div id='textProcess' style={{color: '#403D56',marginBottom:'0px'}}>Korku</div>
+        <div style={{display:'flex',flexDirection:'row' }}>
+          <div id='process' style={{width:`${2*handleEmoCalc(fearCount)}px`}}></div>
+          <div id='textProcess' style={{color: '#403D56',marginBottom:'0px', width:'65px'}}>{`% ${handleEmoCalc(fearCount)}`}</div>
+        </div>
+        </div>
+        <div style={{width:'400px',display:'flex',flexDirection:'row', alignItems:'center', marginBottom:'10px'}}>
+        <div id='textProcess' style={{color: '#403D56',marginBottom:'0px'}}>Şaşkın</div>
+        <div style={{display:'flex',flexDirection:'row' }}>
+          <div id='process' style={{width:`${2*handleEmoCalc(suprisedCount)}px`}}></div>
+          <div id='textProcess' style={{color: '#403D56',marginBottom:'0px', width:'65px'}}>{`% ${handleEmoCalc(suprisedCount)}`}</div>
+        </div>
+        </div>
+        <div style={{width:'400px',display:'flex',flexDirection:'row', alignItems:'center', marginBottom:'10px'}}>
+        <div id='textProcess' style={{color: '#403D56',marginBottom:'0px'}}>Öfke</div>
+        <div style={{display:'flex',flexDirection:'row' }}>
+          <div id='process' style={{width:`${2*handleEmoCalc(angerCount)}px`}}></div>
+          <div id='textProcess' style={{color: '#403D56',marginBottom:'0px', width:'65px'}}>{`% ${handleEmoCalc(angerCount)}`}</div>
+        </div>
+        </div>
+        <div style={{width:'400px',display:'flex',flexDirection:'row', alignItems:'center', marginBottom:'10px'}}>
+        <div id='textProcess' style={{color: '#403D56',marginBottom:'0px'}}>Nötr</div>
+        <div style={{display:'flex',flexDirection:'row' }}>
+          <div id='process' style={{width:`${2*handleEmoCalc(naturalCount)}px`}}></div>
+          <div id='textProcess' style={{color: '#403D56',marginBottom:'0px', width:'65px'}}>{`% ${handleEmoCalc(naturalCount)}`}</div>
+        </div>
+        </div>
+        </div>
+                      <div style={{width:'100%', marginTop:'80px'}}>
+                      <div class="row row-cols-4">
+                        {/*<div class="col" width={80} height={80} style={{marginTop:'10px'}}>
+                          <CircularProgressbarWithChildren value={66} styles={{
+                            path: {
+                              // Path color
+                              stroke: `#533AED`,
+                              // Whether to use rounded or flat corners on the ends - can use 'butt' or 'round'
+                              strokeLinecap: 'butt',
+                              // Customize transition animation
+                              transition: 'stroke-dashoffset 0.5s ease 0s',
+                              // Rotate the path
+                              transform: 'rotate(0.25turn)',
+                              transformOrigin: 'center center',
+                            },
+                            trail: {
+                              // Trail color
+                              stroke: '#6c6c6c7d',
+                              // Whether to use rounded or flat corners on the ends - can use 'butt' or 'round'
+                              strokeLinecap: 'butt',
+                              // Rotate the trail
+                              transform: 'rotate(0.25turn)',
+                              transformOrigin: 'center center',
+                            },}}>
+                            <div id='circleTitle'>Asdhasd</div>
+                            <div id='circleText' style={{ fontSize: 12, marginTop: -5 }}>
+                                hkjkjh
+                            </div>
+                          </CircularProgressbarWithChildren>
+                        </div>*/
+                            root
+                        }
+                      </div>
+                    </div>
+                  </div>
                 </div>
             </div>
         </div>

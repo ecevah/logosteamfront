@@ -5,6 +5,8 @@ import "slick-carousel/slick/slick-theme.css";
 import FeatherIcon from 'feather-icons-react';
 import { CircularProgressbarWithChildren} from 'react-circular-progressbar';
 import 'react-circular-progressbar/dist/styles.css';
+import openaiApi from "../../api/openai";
+import Chatbot from '../ChatBot/ChatBot';
 
 import {useNavigate} from 'react-router-dom';
 
@@ -137,11 +139,11 @@ export default function Dashboard(){
     
     useEffect(() => {
         if(talk.status===true && reservation.status===true){
-            console.log(reservation)
+            console.log(talk.talk[0].emo.surprised);
         }
         else{
             Auth();
-            console.log(reservation)
+            console.log(talk.talk[0].emo.surprised);
         }
       }, [reservation,talk]); 
       
@@ -265,17 +267,32 @@ export default function Dashboard(){
         navigate('/');
     }
     
-    
-    const arrayToString = (arr) => {
-        return arr.join(" ");
-    }
+    async function getOpenaiResponse(message) {
+        try {
+          const response = await openaiApi.post("", {
+            prompt: `User: ${message}\nAI:`,
+            max_tokens: 150,
+            n: 1,
+            stop: null,
+            temperature: 0.5,
+          });
+      
+          if (response.data.choices && response.data.choices.length > 0) {
+            return response.data.choices[0].text.trim();
+          } else {
+            return "Üzgünüm, bir hata oluştu. Lütfen tekrar deneyin.";
+          }
+        } catch (error) {
+          console.error(error);
+          return "Üzgünüm, bir hata oluştu. Lütfen tekrar deneyin.";
+        }
+      }
 
     const calcDate = (dateStr) =>{
         const date = new Date(dateStr);
         const formattedDate = `${date.getDate()}.${date.getMonth() + 1}.${date.getFullYear()}`;
         return formattedDate;
     } 
-    console.log(talk.talk)
     return (
     <>
         <div className={post ? styles.none : styles.isLoading}>
@@ -412,7 +429,7 @@ export default function Dashboard(){
                                             <div style={{display:'flex', flexDirection:'column', justifyContent:'center',alignItems:'center'}}>
                                                 <img src={suprised} alt='duygu' width={100} height={100}></img>
                                                 <div className={styles.emoCardTextTitle}>Şaşkın</div>
-                                                <div className={styles.emoCardText}>{talk.talk[0].emo.surprised}</div>
+                                                <div className={styles.emoCardText}>12</div>
                                             </div>
                                         </div>
                                         <div className='col'>
@@ -432,7 +449,7 @@ export default function Dashboard(){
                                 </div>
                                 <div>
                                     <div className={styles.emoTitleCard}>Kelime Kökleri</div>
-                                    <div className='row rows-col-10' id='example' style={{height:'400px', overflow:'auto'}}>
+                                    <div className='row row-cols-2 row-cols-lg-6' id='example' style={{height:'400px', overflow:'auto'}}>
                                         {talk.talk[0].word.map((item)=>
                                             <div class="col" width={80} height={80} style={{marginTop:'10px'}}>
                                             <CircularProgressbarWithChildren value={item.count} maxValue={talk.totalCount} styles={{

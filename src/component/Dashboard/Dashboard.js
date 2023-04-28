@@ -218,7 +218,7 @@ export default function Dashboard(){
             setActivee(!activee);
         }
         catch{
-
+            console.log('Hata');
         }
     }
 

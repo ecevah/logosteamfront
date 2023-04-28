@@ -169,21 +169,19 @@ section{
 }
 
 #join{
-  position: absolute;
-  top: 50%;
-  left: 45.5%;
   width: 90.72px;
 height: 90.72px;
 background: rgba(0, 179, 131, 0.6);
 border-radius: 194.4px;
+margin-right: 15px;
+
 }
 
 #goback{
-  position: absolute;
-  top: 50%;
-  right: 43%;
+
   width: 90.72px;
 height: 90.72px;
+margin-left: 15px;
 
 background: rgba(251, 2, 66, 0.6);
 backdrop-filter: blur(126.733px);
@@ -227,7 +225,7 @@ border-radius: 75.5999px;
 #mic{
   position: absolute;
   top: 30px;
-  left: 50px;
+  right: 90px;
   z-index: 10;
 }
 

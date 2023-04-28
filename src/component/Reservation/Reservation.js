@@ -105,7 +105,7 @@ export default function Dashboard(){
     }
     const arrTalk = {
         "status": true,
-        "talk": {
+        "talk": [{
             "_id": "64471d04b0706c94791a871f",
             "reservation_id": "64468401978e155dc2498e1f",
             "meetTime": "qweqe",
@@ -145,9 +145,9 @@ export default function Dashboard(){
             ],
             "__v": 0,
             "comment": ""
-        },
+        }],
         "totalCount": 0
-    }
+    };
     const [reservation, setReservation] = useState(arrResa);
     const [talk, setTalk] = useState(arrTalk);
     const arrClient =
@@ -334,6 +334,7 @@ export default function Dashboard(){
 
     const handleLogin = async () =>{
         try{
+            localStorage.setItem('reservation_id','644a2f9a16f7ec3a141a0b3f')
             await axios.put(`/api/psyc/active/update?id=${localStorage.getItem('id')}&token=${localStorage.getItem('token')}&active=false`);
             navigate('/meet');
         }

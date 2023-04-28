@@ -38,6 +38,14 @@ export default function Meeting(){
 
   const navigate = useNavigate();
   useEffect(() => {
+    if(localStorage.getItem('meet')<2){
+      function myFunction() {
+        console.log("2 seconds have passed");
+      }
+      setTimeout(myFunction, 700);
+      localStorage.setItem('meet', temp=>localStorage.setItem('meet')+1);
+      window.location.reload();
+    }
     Auth();
     const interval = setInterval(() => {
       imagePredict();
@@ -96,7 +104,7 @@ export default function Meeting(){
     // Set the channel name.
     channel: 'wdj',
     // Pass your temp token here.
-    token: '007eJxTYDjdlK7+3OnzF/sVUyNmzZCaWPVq+sJEbtWJwY5lt90/J0xUYDBMSjRNNbI0NTMztDBJNDFKNDczNzWwME9LSkxLTkyzKOb1SmkIZGRoeT6VmZEBAkF8ZobylCwGBgBkpB+U',
+    token: '007eJxTYPiQ8PZiR7XPXpY/De9fLl8eXdwQkzdp0uwmacnCjN98KsEKDIZJiaapRpamZmaGFiaJJkaJ5mbmpgYW5mlJiWnJiWkWvO3eKQ2BjAyxMesZGKEQxGdmKE/JYmAAAIVHH0o=',
     // Set the user ID.
     uid: 0,
 };
@@ -114,6 +122,7 @@ let channelParameters =
     // A variable to hold the remote user id.s
     remoteUid: 1,
 };
+let currentRTCConnection = null;
 async function startBasicCall()
 {
 // Create an instance of the Agora Engine
@@ -220,6 +229,13 @@ window.onload = function ()
     // Listen to the Join button click event.
     document.getElementById("join").onclick = async function ()
     {
+      if (currentRTCConnection) {
+        currentRTCConnection.close();
+        currentRTCConnection = null;
+      }
+
+      // Create a new RTCPeerConnection instance.
+      currentRTCConnection = new RTCPeerConnection();
         document.getElementById('join').style.display = 'none';
         document.getElementById('goback').style.display = 'none';
         document.getElementById('logo').style.display = 'none';
@@ -240,10 +256,10 @@ window.onload = function ()
         channelParameters.localVideoTrack.play(localPlayerContainer);
         console.log("publish success!");
     }
-    // Listen to the Leave button click event.
+
     document.getElementById('leave').onclick = async function ()
     {
-        Swal.fire({
+        await Swal.fire({
         title: 'Yorum',
         text: "Konuşmayı Yorumlamak İster Misin?",
         icon: 'warning',
@@ -254,6 +270,22 @@ window.onload = function ()
         cancelButtonText: 'Çık'
       }).then(async(result) => {
         if (result.isConfirmed) {
+          /*const payload = {
+            happy: happyCount,
+            angry: angerCount,
+            sad: sadCount,
+            surprised: suprisedCount,
+            disgust: disgustCount,
+            fear: fearCount,
+            neutral: naturalCount,
+            word: '  '
+        }
+        const res = await axios.post(`https://api.teamlogos.tech/api/talk/put?reservation_id=${localStorage.getItem('reservation_id')}`,payload,{
+          headers: {
+            'x-access-token': localStorage.getItem('token'),
+          },
+        })*/
+        console.log(angerCount,sadCount);
             const { value: text } = await Swal.fire({
             input: 'textarea',
             inputLabel: 'Yorum',
@@ -268,22 +300,6 @@ window.onload = function ()
             cancelButtonText: 'Çık'
           })
           if (text) {
-            const payload = {
-              happy: happyCount,
-              angry: angerCount,
-              sad: sadCount,
-              suprised: suprisedCount,
-              disgust: disgustCount,
-              fear: fearCount,
-              neutural: naturalCount,
-              comment: text
-          }
-          console.log('sadsadsda',text)
-          const res = axios.post(`/api/talk/put?reservation_id=${localStorage.getItem('reservation_id')}&limit=20`,payload,{
-            headers: {
-              'x-access-token': localStorage.getItem('token'),
-            },
-          });
             await Swal.fire({
               icon: 'success',
               title: 'Tamamlandı',
@@ -300,8 +316,14 @@ window.onload = function ()
             // Destroy the local audio and video tracks.
             channelParameters.localAudioTrack.close();
             channelParameters.localVideoTrack.close();
+            if (currentRTCConnection) {
+              currentRTCConnection.close();
+              currentRTCConnection = null;
+            }
+            localStorage.setItem('meet',0)
             // Remove the containers you created for the local video and remote video.
             removeVideoDiv(remotePlayerContainer.id);
+            removeVideoDiv(localPlayerContainer.id);
             window.location.reload();
           }
           else{
@@ -325,7 +347,11 @@ window.onload = function ()
             removeVideoDiv(remotePlayerContainer.id);
             removeVideoDiv(localPlayerContainer.id);
             // Leave the channel
-            localStorage.setItem('meet','Yapıldı')
+            localStorage.setItem('meet',0)
+            if (currentRTCConnection) {
+              currentRTCConnection.close();
+              currentRTCConnection = null;
+            }
             // Refresh the page for reuse
             window.location.reload();
           }
@@ -342,17 +368,17 @@ window.onload = function ()
           // Remove the containers you created for the local video and remote video.
           removeVideoDiv(remotePlayerContainer.id);
           removeVideoDiv(localPlayerContainer.id);
+          if (currentRTCConnection) {
+            currentRTCConnection.close();
+            currentRTCConnection = null;
+          }
           // Leave the channel
-          localStorage.setItem('meet','Yapıldı')
           // Refresh the page for reuse
           window.location.reload();
         }
       })
     }
-
-    document.getElementById('mic').onclick = () => {
-      
-    }
+    // Listen to the Leave button click event.
   }
 
   /*document.getElementById('photo').onclick = async function (){
@@ -481,21 +507,43 @@ const handleRoot = async () => {
       </CircularProgressbarWithChildren>
     </div>
     );
+    await setProcesComp(response.data.talk[0].word);
     await setRoot(res);
 }
 
+const put = async() =>{
+  const payload = {
+    happy: happyCount,
+    angry: angerCount,
+    sad: sadCount,
+    surprised: suprisedCount,
+    disgust: disgustCount,
+    fear: fearCount,
+    neutral: naturalCount,
+    word: '  '
+}
+const res = await axios.post(`https://api.teamlogos.tech/api/talk/put?reservation_id=${localStorage.getItem('reservation_id')}`,payload,{
+  headers: {
+    'x-access-token': localStorage.getItem('token'),
+  },
+})
+}
 
   return (
     <>
         <div className="row">
             <div>
-                <img src={logosLogo} id='logo' height={176} width={345} style={{position:'absolute', top:'35%', left:'43.5%'}} alt='logos'></img>
+              <div style={{position: 'absolute', width:'350px', height:'350px', top:'40%',left:'40%'}}>
+                <img src={logosLogo} height={176} width={345} id='logo' style={{}} alt='logos'></img>
+                <div style={{display:'flex', flexDirection:'row', justifyContent:'center', alignItems:'center', marginTop:'15px'}}>
                 <button type="button" id="join"><FeatherIcon icon='phone' color='#FFFFFF' size="45" style={{marginLeft:'auto',marginRight:'auto'}} stroke-width="2.5"/></button>
                 <button type="button" id="goback" onClick={()=> navigate('/reservation')}><FeatherIcon icon='log-out' color='#FFFFFF' size="45" style={{marginLeft:'auto',marginRight:'auto'}} stroke-width="2.5"/></button>
+                </div>
+                </div>
                 <button type="button" id="leave" style={{display:'none'}}><img src={phone} alt='phone' width={70} height={70}></img></button>
-                <img src={logosLogo} alt='logo' id='mic' style={{display:'none'}} width={250} height={100}></img>
                 <div id='talk' style={{display:'none'}}>
                     <div style={{display:'flex',flexDirection:'column', alignItems:'center',padding:'60px 36px 0px 36px', justifyContent:'center', height:'100%'}}>
+                    <button type='button' id='mic' style={{display:'none'}} onClick={()=>put()}><img src={logosLogo} alt='logo' width={250} height={100}></img></button>
                       <img src={!emoImg? user : emoImg} alt='Duygu Durumu' style={{marginBottom:'82px'}} width={200} height={200}></img>
                       <div style={{display:'flex',flexDirection:'column'}}>
 
